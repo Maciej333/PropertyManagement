@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="wclassth=device-wclassth, initial-scale=1.0">
+	   <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <title>Zarządzanie Nieruchomościami</title>
+</head>
+
+<body>
+    <div class="header">
+       <div class="name">Zarządzanie Nieruchomościami</div>
+    </div>
+
+    <div class="navigation smallHide">
+        <ul>
+            <li><button class="buttonNav">O nas</button></li>
+            <li><button class="buttonNav">Kontakt</button></li>
+            <li id="rightLi"><button class="buttonNav">Login</button></li>
+        </ul>
+    </div>
+    <div class="smallNav">
+        <div class="smallNavHeader">  
+            <span class="clickShow">Menu ..</span>
+        </div>
+        <div class="smallNavToggle" style="display: none;">
+            <div class="navigation mediumHide">
+                <ul>
+                    <li><button class="buttonNav">O nas</button></li>
+                    <li><button class="buttonNav">Kontakt</button></li>
+                    <li id="rightLi"><button class="buttonNav">Login</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="indexContent">
+        <div id="indexContentText">
+            You Live <br>
+            We Manage
+        </div>
+    </div>
+
+    <div id="indexFootbar">
+        <div id="indexFootbarText">
+            Strona Zarządcy Nieruchomości <br>
+            Wykonał Maciej Rogowski
+        </div>
+    </div>
+
+</body>
+</html>
