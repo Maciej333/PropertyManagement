@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -54,6 +54,11 @@
                 <p id="loginSubmit">
                     <input type="submit" value="Login"><br>
                 </p>
+                
+                
+                <a th:href="@{/user/user}">TymczacoweUser</a><br>
+                <a th:href="@{/manager/manager}">TymczacoweManager</a>
+                
             </form> 
         </div>
     </div>
