@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="wclassth=device-wclassth, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <title>Zarządzanie Nieruchomościami</title>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="name">Zarządzanie Nieruchomościami </div>
+    </div>
+
+    <div class="navigation smallHide">
+        <ul>
+            <li><button class="buttonNav" onclick="location.href='/main/index'">O nas</button></li>
+            <li><button class="buttonNav" onclick="location.href='/main/contact'">Kontakt</button></li>
+            <li id="rightLi"><button class="buttonNav" onclick="location.href='/main/index'">Login</button></li>
+        </ul>
+    </div>
+    <div class="smallNav">
+        <div class="smallNavHeader">  
+            <span class="clickShow">Menu ..</span>
+        </div>
+        <div class="smallNavToggle" style="display: none;">
+            <div class="navigation mediumHide">
+                <ul>
+                    <li><button class="buttonNav" onclick="location.href='/main/index'">O nas</button></li>
+                    <li><button class="buttonNav" onclick="location.href='/main/contact'">Kontakt</button></li>
+                    <li id="rightLi"><button class="buttonNav" onclick="location.href='/main/index'">Login</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="contactContent">
+        <div id="contactContentText">
+            <div id="contactManager">
+                <div id="contactManagerPic">
+                    <img id='contactManagerAvatar' th:src="@{/images/Avatar.png}" alt="avatar">
+                </div>
+                <div id="contactManagerText">
+                    <p><b>Jan Kowalski</b> <br>
+                    Licencjonowany zarządca nr XYZ
+                    </p>
+                </div>
+            </div>
+            <div id="contactManagerDescription">
+                <p style="text-align: center;">O mnie:</p>
+                <p style="text-indent: 10%;">Posiadam 20 letnie doświadczenie w zarządzaniu nieruchomościami, dotyczy to zarówno obiektów zamieszkania zbiorowego, jak i domków jednorodzinnych. Zarządzanie to sztuka, począwszy od drobnych napraw, księgowości, znajomości prawa do organizacji remontów głownych. W przypadu pytań zapraszam do kontaktu.
+                </p>
+                <p>W wolnym czasie oddaje się czytaniu książek o tematyce fantasy.</p>
+            </div>
+            <div id="contactManagerInfo">        
+                <p>Kontakt:</p>
+                <p>Numer: 111 222 333<br>
+                Email: email@email.com<br>
+                Adres: Warszawa ul.XYZ AA m. B
+                </p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
