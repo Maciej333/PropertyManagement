@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="wclassth=device-wclassth, initial-scale=1.0">
-    
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    
+    <link rel="stylesheet" href="../css/style.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script th:src="@{/js/clickShow.js}"></script>
 	
@@ -41,31 +40,21 @@
         </div>
     </div>
 
-    <div id="contactContent">
-        <div id="contactContentText">
-            <div id="contactManager">
-                <div id="contactManagerPic">
-                    <img id='contactManagerAvatar' th:src="@{/images/Avatar.png}" alt="avatar">
-                </div>
-                <div id="contactManagerText">
-                    <p><b>Jan Kowalski</b> <br>
-                    Licencjonowany zarządca nr XYZ
-                    </p>
-                </div>
-            </div>
-            <div id="contactManagerDescription">
-                <p style="text-align: center;">O mnie:</p>
-                <p style="text-indent: 10%;">Posiadam 20 letnie doświadczenie w zarządzaniu nieruchomościami, dotyczy to zarówno obiektów zamieszkania zbiorowego, jak i domków jednorodzinnych. Zarządzanie to sztuka, począwszy od drobnych napraw, księgowości, znajomości prawa do organizacji remontów głownych. W przypadu pytań zapraszam do kontaktu.
+    <div id="loginContent">
+        <div id="loginContentText">           
+            <form autocomplete="off">
+                <p id="toLogin">
+                    <label for="inLogin">Login</label>
+                    <input type="text" id="inLogin"> <br>
                 </p>
-                <p>W wolnym czasie oddaje się czytaniu książek o tematyce fantasy.</p>
-            </div>
-            <div id="contactManagerInfo">        
-                <p>Kontakt:</p>
-                <p>Numer: 111 222 333<br>
-                Email: email@email.com<br>
-                Adres: Warszawa ul.XYZ AA m. B
+                <p id="toPassword">
+                    <label for="inPassword">Hasło</label>
+                    <input type="password" id="inPassword"><br>
                 </p>
-            </div>
+                <p id="loginSubmit">
+                    <input type="submit" value="Login"><br>
+                </p>
+            </form> 
         </div>
     </div>
 

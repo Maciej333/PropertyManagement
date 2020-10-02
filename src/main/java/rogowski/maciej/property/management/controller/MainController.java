@@ -17,4 +17,9 @@ public class MainController {
 	public String showContact() {
 		return "/contact";
 	}
+	
+	@GetMapping("/login")
+	public String showLogin() {
+		return "/login";
+	}
 }
