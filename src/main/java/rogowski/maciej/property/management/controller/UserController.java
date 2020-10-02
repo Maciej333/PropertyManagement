@@ -10,6 +10,6 @@ public class UserController {
 
 	@GetMapping("/user")
 	public String showUser(){
-		return "/user/user.html";
+		return "/user/user";
 	}
 }

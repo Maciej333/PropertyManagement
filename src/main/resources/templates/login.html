@@ -42,23 +42,24 @@
 
     <div id="loginContent">
         <div id="loginContentText">           
-            <form autocomplete="off">
+            <form autocomplete="off" th:action="@{/authenticate}" method="POST">
                 <p id="toLogin">
                     <label for="inLogin">Login</label>
-                    <input type="text" id="inLogin"> <br>
+                    <input type="text" name="username" id="inLogin"> <br>
                 </p>
                 <p id="toPassword">
                     <label for="inPassword">Hasło</label>
-                    <input type="password" id="inPassword"><br>
+                    <input type="password" name="password" id="inPassword"><br>
                 </p>
                 <p id="loginSubmit">
                     <input type="submit" value="Login"><br>
                 </p>
-                
-                
-                <a th:href="@{/user/user}">TymczacoweUser</a><br>
-                <a th:href="@{/manager/manager}">TymczacoweManager</a>
-                
+        		<div th:if="${param.error}">
+						Invalid username and password.
+				</div>
+				<div th:if="${param.logout}">
+						You have been logged out.
+				</div>
             </form> 
         </div>
     </div>

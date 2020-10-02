@@ -10,7 +10,7 @@ public class ManagerController {
 
 	@GetMapping("/manager")
 	public String showUser(){
-		return "/manager/manager.html";
+		return "/manager/manager";
 	}
 	
 }
