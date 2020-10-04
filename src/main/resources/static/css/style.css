@@ -225,6 +225,63 @@
         margin-top: -2px;
         float: right;
     }
+    /* user/user =============== */
+    .user{
+        overflow: auto;
+        background-color: rgb(240,240,240);
+        position: relative;
+        border: 2px solid black;
+        font-size: 2vh; 
+        width: 400px; 
+        height: 25vh; 
+        top: 10%;
+        margin: 0 auto; 
+    }
+    .inLabel{
+        position: absolute;
+        left: 10%;
+        width: 35%;
+        text-align: right;
+        padding-right: 10px;
+        color: black;
+        font-size: 2vh;
+    }
+    
+    .inText{
+        position: absolute;
+        left:45%;
+        width: 35%;
+        text-align: left;
+        padding-left: 20px;
+        color: black;
+    }
+    .userOnButton{
+        position: relative;
+        width: 400px;
+        top: 10%;
+        margin: 0 auto;
+    }
+    .userButton{
+        border-radius:0px 0px 10px 10px;
+        border: 1px solid rgb(27, 27, 27);
+        float: right;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

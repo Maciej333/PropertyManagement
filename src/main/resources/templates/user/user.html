@@ -1,1 +1,80 @@
-user
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="wclassth=device-wclassth, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script th:src="@{/js/clickShow.js}"></script>
+	
+    <title>Zarządzanie Nieruchomościami</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="name">Zarządzanie Nieruchomościami </div>
+    </div>
+
+	<div class="navigation smallHide">
+        <ul>
+            <li><button class="buttonNav" onclick="location.href='/user/user'">Użytkownik</button></li>
+            <li><button class="buttonNav" onclick="location.href='/user/user'">Wspólnota</button></li>
+            <li><button class="buttonNav" onclick="location.href='/user/user'">Zgłoszenia</button></li>
+            <li id="rightLi">
+            	<form th:action="@{/logout}" method="POST">
+            		<input type="submit" class="buttonNav" value="Wyloguj">
+            	</form>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="smallNav">
+        <div class="smallNavHeader">  
+            <span class="clickShow">Menu ..</span>
+        </div>
+        <div class="smallNavToggle" style="display: none;">
+            <div class="navigation mediumHide">
+                <ul>
+                    <li><button class="buttonNav" onclick="location.href='/user/user'">Użytkownik</button></li>
+		            <li><button class="buttonNav" onclick="location.href='/user/user'">Wspólnota</button></li>
+		            <li><button class="buttonNav" onclick="location.href='/user/user'">Zgłoszenia</button></li>
+		            <li id="rightLi">
+		            	<form th:action="@{/logout}" method="POST">
+		            		<input type="submit" class="buttonNav" value="Wyloguj">
+		            	</form>
+		            </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+   
+	<div class="userInfo user">
+        <div class="inLabel">
+            <p>Imie:</p>
+            <p>Nazwisko:</p>
+            <p>Telefon:</p>
+            <p>Wspólnota:</p>
+            <p>Lokal:</p>
+        </div>
+        <div class="inText">
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+        </div>
+    </div>
+    <div class="userOnButton">
+        <button class="buttonNav userButton">zmień hasło</button>
+        <button class="buttonNav userButton">Edytuj</button>
+    </div>
+
+
+
+
+
+</body>
+
+</html>
