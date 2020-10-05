@@ -288,7 +288,19 @@
     .newWidth{
         width: 90%;
     }
-    
+    .userPassword{
+        display: none;
+        background-color: rgb(240,240,240);
+        position: relative;
+        width: 500px;
+        height: 25%;
+        min-height: 250px;
+        top: 10%;
+        margin: 0 auto;
+        border: 2px solid black;
+        font-size: 15px;
+        line-height: 25px;
+    }
     
     
     
@@ -387,11 +399,14 @@
    		}
    		/* user/user =============== */
    		.user{ 
-        width: 90%; 
+       		width: 90%; 
 	    }
 	    .userOnButton{
 	        width: 90%;
 	    }
+	    .userPassword{
+        	width: 90%;
+    	}
 	}
     
     

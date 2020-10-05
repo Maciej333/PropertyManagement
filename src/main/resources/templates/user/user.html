@@ -117,7 +117,43 @@
         </form>
     </div>
 
-
+	<div class="userPassword">
+        <span style="display: inline-block; margin: 15px;"><b>Zmiana hasła</b></span>
+        
+        <form th:object="${user}" th:action="@{/user/userPassword}" method="POST">    
+	       <Input type="hidden" th:field="*{login}"></Input> 
+	       <div th:object="${userPasswordModel}">    
+	           <p>
+	               <span class="newLab">
+	                   Stare hasło:
+	               </span>
+	               <span class="newCont">
+	                   <Input class="newWidth" type="password" th:field="*{oldPassword}"></Input>
+	               </span>
+	           </p>
+	           <p>
+	               <span class="newLab">
+	                   Nowe hasło:
+	               </span>
+	               <span class="newCont">
+	                   <Input class="newWidth" type="password" th:field="*{newPassword}"></Input>
+	               </span>
+	           </p>
+	           <p>
+	               <span class="newLab">
+	                   Powtórz hasło:
+	               </span>
+	               <span class="newCont">
+	                   <Input class="newWidth" type="password" th:field="*{confirmNewPassword}"></Input>
+	               </span>
+	           </p>
+	           <span style="position: relative; float: right; right: 10%;">
+	               <input type="submit" name="Zmień">
+	               <button>Cofnij</button>
+	           </span>
+	           </div>
+	       </form>
+    </div>
 
 
 
