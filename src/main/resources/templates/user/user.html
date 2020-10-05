@@ -58,18 +58,28 @@
             <p>Wspólnota:</p>
             <p>Lokal:</p>
         </div>
-        <div class="inText">
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
+        <div class="inText" th:object="${user}">
+            <p th:text="*{firstName}"></p>
+            <p th:text="*{lastName}"></p>
+            <p th:text="*{number}"></p>
+            <p th:object="${property}" th:text="*{name}"></p>
+            <p th:text="*{apartmentNumber}"></p>
+            
         </div>
     </div>
     <div class="userOnButton">
         <button class="buttonNav userButton">zmień hasło</button>
         <button class="buttonNav userButton">Edytuj</button>
     </div>
+
+
+
+
+
+
+
+
+
 
 
 
