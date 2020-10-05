@@ -108,6 +108,5 @@ public class User {
 	public void setApartmentNumber(String apartmentNumber) {
 		this.apartmentNumber = apartmentNumber;
 	}
-   
-	
+  
 }

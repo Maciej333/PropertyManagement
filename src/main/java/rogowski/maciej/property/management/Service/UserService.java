@@ -6,4 +6,5 @@ public interface UserService {
 	
 	public User findById(String id);
 
+	public void save(User user);
 }

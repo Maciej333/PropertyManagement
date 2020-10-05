@@ -266,8 +266,28 @@
         border: 1px solid rgb(27, 27, 27);
         float: right;
     }
+	.userEdit{
+        display: none;
+        height: 25vh;
+    }
+    .newLab{
+        position: relative;
+        width: 30%;
+        float: left;
+        margin-left: 5%;
+        text-align: right;
+    }
     
+    .newCont{
+        position: relative;
+        display: block;
+        margin-left: 40%;
+        text-align: left;
+    }
     
+    .newWidth{
+        width: 90%;
+    }
     
     
     
@@ -365,6 +385,13 @@
 	    #loginContent{
         	width: 90%;
    		}
+   		/* user/user =============== */
+   		.user{ 
+        width: 90%; 
+	    }
+	    .userOnButton{
+	        width: 90%;
+	    }
 	}
     
     

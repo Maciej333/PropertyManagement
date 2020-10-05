@@ -8,6 +8,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script th:src="@{/js/clickShow.js}"></script>
+	<script th:src="@{/js/userBtnAction.js}"></script>
 	
     <title>Zarządzanie Nieruchomościami</title>
 </head>
@@ -68,11 +69,53 @@
         </div>
     </div>
     <div class="userOnButton">
-        <button class="buttonNav userButton">zmień hasło</button>
-        <button class="buttonNav userButton">Edytuj</button>
+        <button class="buttonNav userButton" id="userChangePassword">zmień hasło</button>
+        <button class="buttonNav userButton" id="userEditInfo">Edytuj</button>
     </div>
 
-
+	<div class="userEdit user">
+        <form th:object="${user}" th:action="@{/user/userUpdate}" method="POST">
+            <Input type="hidden" th:field="*{login}"></Input>
+            <p>
+                <span class="newLab">
+                    Imie:
+                </span>
+                <span class="newCont">
+                    <Input class="newWidth" type="text" th:field="*{firstName}" th:value="*{firstName}"></Input>
+                </span>
+            </p>
+            <p>
+                <span class="newLab">
+                    Nazwisko:
+                </span>
+                <span class="newCont">
+                    <Input class="newWidth" type="text" th:field="*{lastName}" th:value="*{lastName}"></Input>
+                </span>
+            </p>
+            <p>
+                <span class="newLab">
+                    Telefon:
+                </span>
+                <span class="newCont">
+                    <Input class="newWidth" type="text" th:field="*{number}" th:value="*{number}"></Input>
+                </span>
+            </p>
+            <p>
+                <span class="newLab">
+                    Lokal:
+                </span>
+                <span class="newCont">
+                    <Input class="newWidth" type="text" th:field="*{apartmentNumber}" th:value="*{apartmentNumber}"></Input>
+                </span>
+            </p>
+            <p>
+                <span style="position: relative; float: right; right: 10%;">
+                    <input type="submit" name="Zmień">
+                    <button>Cofnij</button>
+                </span>
+            </p>
+        </form>
+    </div>
 
 
 
