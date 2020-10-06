@@ -1,22 +1,20 @@
 package rogowski.maciej.property.management.entity;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
+import rogowski.maciej.property.management.validation.PasswordMatch;
+
+@PasswordMatch
 public class UserPasswordModel {
 
 	@NotBlank(message="old password is required")
 	private String oldPassword;
 	
 	@NotBlank(message="new password is required")
-	@NotNull(message="password cannot be empty")
-	@Min(value=6, message="password must be at least 6 char length")
+	@Pattern(regexp = "[\\w|\\.|!]{6,}", message="password must be at least 6 char length, can contain letters, digits, _ , . or !")
 	private String newPassword;
 	
-	@NotBlank(message="new password is required")
-	@NotNull(message="password cannot be empty")
-	@Min(value=6, message="password must be at least 6 char length")
 	private String confirmNewPassword;
 	
 	public UserPasswordModel() {
@@ -46,5 +44,5 @@ public class UserPasswordModel {
 	public void setConfirmNewPassword(String confirmNewPassword) {
 		this.confirmNewPassword = confirmNewPassword;
 	}
-	
+
 }

@@ -134,9 +134,7 @@
 	                   <Input class="newWidth" type="password" th:field="*{oldPassword}"></Input>
 	               </span>
 	           </p>
-	           
 	           <div th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}" style="color:red; margin: -10px;"></div>
-	        
 	           <p>
 	               <span class="newLab">
 	                   Nowe hasło:
@@ -145,9 +143,7 @@
 	                   <Input class="newWidth" type="password" th:field="*{newPassword}"></Input>
 	               </span>
 	           </p>
-	           
 	           <div th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}" style="color:red; margin: -10px;"></div>
-
 	           <p>
 	               <span class="newLab">
 	                   Powtórz hasło:
@@ -156,9 +152,7 @@
 	                   <Input class="newWidth" type="password" th:field="*{confirmNewPassword}"></Input>
 	               </span>
 	           </p>
-	           
-	           <div th:if="${#fields.hasErrors('confirmNewPassword')}" th:errors="*{confirmNewPassword}" style="color:red; margin: -10px;"></div>
-	           
+	           <div th:if="${#fields.hasGlobalErrors()}"  th:errors="*{global}" style="color:red"></div>
 	           <div>
 		           <span style="position: relative; float: right; right: 80px;">
 		               <input type="submit" name="Zmień">
