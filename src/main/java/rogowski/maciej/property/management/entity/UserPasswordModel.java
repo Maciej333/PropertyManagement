@@ -1,12 +1,25 @@
 package rogowski.maciej.property.management.entity;
 
-public class userPasswordModel {
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
+public class UserPasswordModel {
+
+	@NotBlank(message="old password is required")
 	private String oldPassword;
+	
+	@NotBlank(message="new password is required")
+	@NotNull(message="password cannot be empty")
+	@Min(value=6, message="password must be at least 6 char length")
 	private String newPassword;
+	
+	@NotBlank(message="new password is required")
+	@NotNull(message="password cannot be empty")
+	@Min(value=6, message="password must be at least 6 char length")
 	private String confirmNewPassword;
 	
-	public userPasswordModel() {
+	public UserPasswordModel() {
 		
 	}
 

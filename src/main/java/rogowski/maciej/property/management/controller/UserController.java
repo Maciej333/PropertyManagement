@@ -1,27 +1,29 @@
 package rogowski.maciej.property.management.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import rogowski.maciej.property.management.Service.UserService;
 import rogowski.maciej.property.management.entity.Property;
 import rogowski.maciej.property.management.entity.User;
-import rogowski.maciej.property.management.entity.userPasswordModel;
+import rogowski.maciej.property.management.entity.UserPasswordModel;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 	
 	private UserService userService;
-	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	@Autowired
 	public UserController(UserService theUserService) {
@@ -44,7 +46,10 @@ public class UserController {
 		theModel.addAttribute("user", theUser);			
 		Property theProperty = theUser.getProperty();
 		theModel.addAttribute("property", theProperty);	
-		theModel.addAttribute("userPasswordModel", new userPasswordModel());
+
+	    if (!theModel.containsAttribute("userPasswordModel")) {
+	    	theModel.addAttribute("userPasswordModel", new UserPasswordModel());
+	    }
 		return "/user/user";
 	}
 
@@ -57,21 +62,13 @@ public class UserController {
 	}
 	
 	@PostMapping("/userPassword")
-	public String changeUserPassword(@ModelAttribute("userPasswordModel") userPasswordModel theUserPasswordModel, @ModelAttribute("user") User theUser){ 		
-		theUser = userService.findById(theUser.getLogin());
-		String oldPassword = theUserPasswordModel.getOldPassword();
-		String rawPassword = theUserPasswordModel.getNewPassword();
-		String confirmRawPassword = theUserPasswordModel.getConfirmNewPassword();
-		if(rawPassword.equals(confirmRawPassword)) {
-			if( passwordEncoder.matches(oldPassword, theUser.getPassword().substring(8, 68)) ) {			
-				theUser.setPassword("{bcrypt}"+passwordEncoder.encode(rawPassword));
-				userService.save(theUser);
-				return "redirect:/user/user";
-			}else {
-				return "redirect:/user/user?display=userPass";
-			}
-		}else {
+	public String changeUserPassword(@ModelAttribute("userPasswordModel") @Valid  UserPasswordModel theUserPasswordModel, BindingResult bindingResult, @ModelAttribute("user") User theUser, RedirectAttributes attr){ 		
+		if(bindingResult.hasErrors()) {
+			attr.addFlashAttribute("org.springframework.validation.BindingResult.userPasswordModel", bindingResult);
+			attr.addFlashAttribute("userPasswordModel", theUserPasswordModel);
 			return "redirect:/user/user?display=userPass";
+		}else {
+			return "redirect:/user/user";
 		}
 	}
 	
