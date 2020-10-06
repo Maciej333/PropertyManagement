@@ -13,7 +13,11 @@
     <title>Zarządzanie Nieruchomościami</title>
 </head>
 
-<body>
+<body th:object="${userInfo}">
+	
+	<p id="defineDisplay" th:text="*{whatToDisplay}" style="display:none"></p>
+	
+	
     <div class="header">
         <div class="name">Zarządzanie Nieruchomościami </div>
     </div>
@@ -50,8 +54,8 @@
             </div>
         </div>
     </div>
-   
-	<div class="userInfo user">
+
+	<div class="userInfo user" th:object="${user}">
         <div class="inLabel">
             <p>Imie:</p>
             <p>Nazwisko:</p>
@@ -59,18 +63,17 @@
             <p>Wspólnota:</p>
             <p>Lokal:</p>
         </div>
-        <div class="inText" th:object="${user}">
+        <div class="inText" >
             <p th:text="*{firstName}"></p>
             <p th:text="*{lastName}"></p>
             <p th:text="*{number}"></p>
             <p th:object="${property}" th:text="*{name}"></p>
-            <p th:text="*{apartmentNumber}"></p>
-            
+            <p th:text="*{apartmentNumber}"></p>  
         </div>
     </div>
     <div class="userOnButton">
-        <button class="buttonNav userButton" id="userChangePassword">zmień hasło</button>
-        <button class="buttonNav userButton" id="userEditInfo">Edytuj</button>
+        <button class="buttonNav userButton" id="userChangePassword" onclick='location.href="/user/user?display=userPass"'>zmień hasło</button>
+        <button class="buttonNav userButton" id="userEditInfo" onclick='location.href="/user/user?display=userEdit"'>Edytuj</button>
     </div>
 
 	<div class="userEdit user">
@@ -111,7 +114,7 @@
             <p>
                 <span style="position: relative; float: right; right: 10%;">
                     <input type="submit" name="Zmień">
-                    <button>Cofnij</button>
+                    <button onclick='location.href="/user/user"'>Cofnij</button>
                 </span>
             </p>
         </form>
@@ -147,22 +150,15 @@
 	                   <Input class="newWidth" type="password" th:field="*{confirmNewPassword}"></Input>
 	               </span>
 	           </p>
-	           <span style="position: relative; float: right; right: 10%;">
+	           <span style="position: relative; float: right; right: 80px;">
 	               <input type="submit" name="Zmień">
-	               <button>Cofnij</button>
+	               
 	           </span>
-	           </div>
-	       </form>
-    </div>
 
-
-
-
-
-
-
-
-
+	        </div>
+	     </form>
+	     <button style="position: relative; float: right; right: -35px; top: 2px;" onclick='location.href="/user/user"'>Cofnij</button>
+    </div>	
 
 </body>
 
