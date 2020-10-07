@@ -8,12 +8,15 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script th:src="@{/js/clickShow.js}"></script>
+	<script th:src="@{/js/userPropertyBtnAction.js}"></script>	
 		
     <title>Zarządzanie Nieruchomościami</title>
 </head>
 
-<body>
+<body th:object="${propertyInfo}">
 	
+	<p id="defineDisplay" th:text="*{whatToDisplay}" style="display:none"></p>
+		
     <div class="header">
         <div class="name">Zarządzanie Nieruchomościami </div>
     </div>
@@ -54,13 +57,13 @@
     <div class="content">
         <div class="contentText">
 
-            <p id="associationTitle" style="font-size: 3vh; margin: 10px;">Ogłoszenia</p>
+            <p id="associationTitle" style="font-size: 3vh; margin: 10px;"></p>
 
             <div class="inMenu smallHide">
-                <button class="inMenuButton active">Aktualne</button>
-                <button class="inMenuButton">Wszystkie</button>
-                <button class="inMenuButton">Przeszłe</button>
-                <button class="inMenuButton onRight">Zarząd</button>
+                <button class="inMenuButton current" onclick='location.href="/user/property"'>Aktualne</button>
+                <button class="inMenuButton all" onclick='location.href="/user/property?display=all"'>Wszystkie</button>
+                <button class="inMenuButton previous" onclick='location.href="/user/property?display=previous"'>Przeszłe</button>
+                <button class="inMenuButton onRight managers" onclick='location.href="/user/property?display=all"'>Zarząd</button>
             </div>
             <div class="smallNav">
                 <div class="smallNavHeader">  
@@ -68,10 +71,10 @@
                 </div>
                 <div class="smallNavToggle" style="display: none;">
                     <div class="inMenu mediumHide">
-		                <button class="inMenuButton active">Aktualne</button>
-		                <button class="inMenuButton">Wszystkie</button>
-		                <button class="inMenuButton">Przeszłe</button>
-		                <button class="inMenuButton onRight">Zarząd</button>
+		                <button class="inMenuButton current" onclick='location.href="/user/property"'>Aktualne</button>
+		                <button class="inMenuButton all" onclick='location.href="/user/property?display=all"'>Wszystkie</button>
+		                <button class="inMenuButton previous" onclick='location.href="/user/property?display=previous"'>Przeszłe</button>
+		                <button class="inMenuButton onRight managers" onclick='location.href="/user/property?display=all"'>Zarząd</button>
                     </div>
                 </div>
             </div>
@@ -82,7 +85,7 @@
                 <span style="position: relative; float: right; right: 5%;">Info</span>
             </div>
 
-			<div th:each="announcementEl : ${announcementList}">
+			<div th:each="announcementEl : ${announcementList}" if="announcementShowDiv">
 	            <div class="announcement">
 	                <div class="inHeader">
 	                    <div class="announcementTitle" th:text="${announcementEl.title}"></div>

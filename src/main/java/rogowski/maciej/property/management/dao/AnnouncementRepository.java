@@ -11,4 +11,8 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Inte
 
 	@Query(value = "SELECT * FROM announcement a WHERE a.date_to < DATE(?1)", nativeQuery = true )
 	public List<Announcement> getAnnByLessDate(String searchDate);
+	
+	@Query(value = "SELECT * FROM announcement a WHERE a.date_to >= DATE(?1) AND a.date_from <= DATE(?1)", nativeQuery = true )
+	public List<Announcement> getAnnByCurrentDate(String searchDate);
+
 }

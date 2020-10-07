@@ -7,4 +7,8 @@ import rogowski.maciej.property.management.entity.Announcement;
 public interface AnnouncementService {
 
 	public List<Announcement> getAnnByLessDate();
+	
+	public List<Announcement> getAnnByCurrentDate();
+	
+	public List<Announcement> getAllAnn();
 }

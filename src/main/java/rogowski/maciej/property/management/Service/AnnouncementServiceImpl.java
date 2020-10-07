@@ -1,8 +1,5 @@
 package rogowski.maciej.property.management.Service;
 
-import org.apache.juli.logging.Log;
-import org.apache.juli.logging.LogFactory;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,8 +12,6 @@ import rogowski.maciej.property.management.entity.Announcement;
 @Service
 public class AnnouncementServiceImpl implements AnnouncementService {
 
-	private Log logger = LogFactory.getLog(this.getClass());
-	
 	private AnnouncementRepository  announcementRepository;
 	
 	@Autowired
@@ -26,14 +21,19 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
 	@Override
 	public List<Announcement> getAnnByLessDate() {
-		List<Announcement> annList= announcementRepository.getAnnByLessDate(LocalDate.now().toString());
-		
-		for(Announcement a: annList) {
-			logger.info("==================== Wczytano "+a.getTitle());
-		}
-		
-		return annList;
+		return announcementRepository.getAnnByLessDate(LocalDate.now().toString());
 	}
+
+	@Override
+	public List<Announcement> getAnnByCurrentDate() {
+		return announcementRepository.getAnnByCurrentDate(LocalDate.now().toString());
+	}
+
+	@Override
+	public List<Announcement> getAllAnn() {
+		return announcementRepository.findAll();
+	}
+
 	
 
 }

@@ -93,8 +93,20 @@ public class UserController {
 	}
 	
 	@GetMapping("/property")
-	public String showProperty(Model theModel) {
-		theModel.addAttribute("announcementList", announcementService.getAnnByLessDate());
+	public String showProperty(Model theModel, @RequestParam(name="display", required = false) String display) {
+		if(display != null) {
+			if(display.equals("previous")) {
+				theModel.addAttribute("propertyInfo", new DisplayParameter("previous"));
+				theModel.addAttribute("announcementList", announcementService.getAnnByLessDate());
+			}
+			if(display.equals("all")) {
+				theModel.addAttribute("propertyInfo", new DisplayParameter("all"));
+				theModel.addAttribute("announcementList", announcementService.getAllAnn());
+			}
+		}else {
+			theModel.addAttribute("propertyInfo", new DisplayParameter("current"));
+			theModel.addAttribute("announcementList", announcementService.getAnnByCurrentDate());
+		}
 		return "/user/property";
 	}
 	
