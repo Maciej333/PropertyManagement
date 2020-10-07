@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="wclassth=device-wclassth, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script th:src="@{/js/clickShow.js}"></script>
+	<script th:src="@{/js/userNotificationBtnAction.js}"></script>		
+		
+    <title>Zarządzanie Nieruchomościami</title>
+</head>
+
+<body th:object="${notificationInfo}">
+		
+	<p id="defineDisplay" th:text="*{whatToDisplay}" style="display:none"></p>
+			
+    <div class="header">
+        <div class="name">Zarządzanie Nieruchomościami </div>
+    </div>
+
+	<div class="navigation smallHide">
+        <ul>
+            <li><button class="buttonNav" onclick="location.href='/user/user'">Użytkownik</button></li>
+            <li><button class="buttonNav" onclick="location.href='/user/property'">Wspólnota</button></li>
+            <li><button class="buttonNav" onclick="location.href='/user/notification'">Zgłoszenia</button></li>
+            <li id="rightLi">
+            	<form th:action="@{/logout}" method="POST">
+            		<input type="submit" class="buttonNav" value="Wyloguj">
+            	</form>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="smallNav">
+        <div class="smallNavHeader">  
+            <span class="clickShow">Menu ..</span>
+        </div>
+        <div class="smallNavToggle" style="display: none;">
+            <div class="navigation mediumHide">
+                <ul>
+                    <li><button class="buttonNav" onclick="location.href='/user/user'">Użytkownik</button></li>
+		            <li><button class="buttonNav" onclick="location.href='/user/property'">Wspólnota</button></li>
+		            <li><button class="buttonNav" onclick="location.href='/user/notification'">Zgłoszenia</button></li>
+		            <li id="rightLi">
+		            	<form th:action="@{/logout}" method="POST">
+		            		<input type="submit" class="buttonNav" value="Wyloguj">
+		            	</form>
+		            </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="contentText">
+			
+			<p style="font-size: 3vh; margin: 10px;">Zgłoszenia</p>
+
+            <div class="inMenu smallHide">
+                <button class="inMenuButton responseNotif" onclick='location.href="/user/notification"'>Rozpatrzone</button>
+                <button class="inMenuButton sentNotif" onclick='location.href="/user/notification?display=sent"'>Wysłane</button>
+                <button class="inMenuButton allNotif" onclick='location.href="/user/notification?display=all"'>Wszystkie</button>
+                <button class="inMenuButton onRight newNotif" onclick='location.href="/user/notification?display=new"'>Nowe Zgłoszenie</button>
+            </div>
+            <div class="smallNav">
+                <div class="smallNavHeader">  
+                    <span class="clickShow">Menu zgłoszeń ..</span>
+                </div>
+                <div class="smallNavToggle" style="display: none;">
+                    <div class="inMenu mediumHide">
+		                <button class="inMenuButton responseNotif" onclick='location.href="/user/notification"'>Rozpatrzone</button>
+		                <button class="inMenuButton sentNotif" onclick='location.href="/user/notification?display=sent"'>Wysłane</button>
+		                <button class="inMenuButton allNotif" onclick='location.href="/user/notification?display=all"'>Wszystkie</button>
+		                <button class="inMenuButton onRight newNotif" onclick='location.href="/user/notification?display=new"'>Nowe Zgłoszenie</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info">
+                <span style="float: left; margin-left: 10%;">Nazwa Zgłoszenia</span>
+                <span>Data</span>
+                <span style="position: relative; float: right; right: 5%;">Info</span>
+            </div>
+
+            
+			
+			
+			
+        </div>
+    </div>
+    
+</body>
+
+</html>

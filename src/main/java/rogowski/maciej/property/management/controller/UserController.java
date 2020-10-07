@@ -116,4 +116,22 @@ public class UserController {
 		return "/user/property";
 	}
 	
+	@GetMapping("/notification")
+	public String showNotification(Model theModel, @RequestParam(name="display", required = false) String display) {
+		if(display != null) {
+			if(display.equals("sent")) {
+				theModel.addAttribute("notificationInfo", new DisplayParameter("sent"));
+			}
+			if(display.equals("all")) {
+				theModel.addAttribute("notificationInfo", new DisplayParameter("all"));
+			}
+			if(display.equals("new")) {
+				theModel.addAttribute("notificationInfo", new DisplayParameter("new"));
+			}
+		}else {
+			theModel.addAttribute("notificationInfo", new DisplayParameter("response"));
+		}
+		
+		return "/user/notification";
+	}
 }

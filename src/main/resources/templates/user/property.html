@@ -25,7 +25,7 @@
         <ul>
             <li><button class="buttonNav" onclick="location.href='/user/user'">Użytkownik</button></li>
             <li><button class="buttonNav" onclick="location.href='/user/property'">Wspólnota</button></li>
-            <li><button class="buttonNav" onclick="location.href='/user/user'">Zgłoszenia</button></li>
+            <li><button class="buttonNav" onclick="location.href='/user/notification'">Zgłoszenia</button></li>
             <li id="rightLi">
             	<form th:action="@{/logout}" method="POST">
             		<input type="submit" class="buttonNav" value="Wyloguj">
@@ -43,7 +43,7 @@
                 <ul>
                     <li><button class="buttonNav" onclick="location.href='/user/user'">Użytkownik</button></li>
 		            <li><button class="buttonNav" onclick="location.href='/user/property'">Wspólnota</button></li>
-		            <li><button class="buttonNav" onclick="location.href='/user/user'">Zgłoszenia</button></li>
+		            <li><button class="buttonNav" onclick="location.href='/user/notification'">Zgłoszenia</button></li>
 		            <li id="rightLi">
 		            	<form th:action="@{/logout}" method="POST">
 		            		<input type="submit" class="buttonNav" value="Wyloguj">
@@ -67,7 +67,7 @@
             </div>
             <div class="smallNav">
                 <div class="smallNavHeader">  
-                    <span class="clickShow">Menu wspólnoty ..</span></span>
+                    <span class="clickShow">Menu wspólnoty ..</span>
                 </div>
                 <div class="smallNavToggle" style="display: none;">
                     <div class="inMenu mediumHide">
