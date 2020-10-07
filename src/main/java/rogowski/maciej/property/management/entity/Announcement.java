@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,8 +17,9 @@ public class Announcement {
 	@Column(name="id")
 	private int id;
 	
-	@Column(name="property_id")
-	private int propertyId;
+	@ManyToOne
+	@JoinColumn(name="property_id")
+	private Property property;
 	
 	@Column(name="title")
 	private String title;
@@ -42,12 +45,12 @@ public class Announcement {
 		this.id = id;
 	}
 
-	public int getPropertyId() {
-		return propertyId;
+	public Property getProperty() {
+		return property;
 	}
 
-	public void setPropertyId(int propertyId) {
-		this.propertyId = propertyId;
+	public void setProperty(Property property) {
+		this.property = property;
 	}
 
 	public String getTitle() {
@@ -81,5 +84,5 @@ public class Announcement {
 	public void setAnnouncementText(String announcementText) {
 		this.announcementText = announcementText;
 	}
-	
+
 }

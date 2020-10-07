@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import rogowski.maciej.property.management.dao.AnnouncementRepository;
 import rogowski.maciej.property.management.entity.Announcement;
+import rogowski.maciej.property.management.entity.Property;
 
 @Service
 public class AnnouncementServiceImpl implements AnnouncementService {
@@ -20,18 +21,18 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	}
 
 	@Override
-	public List<Announcement> getAnnByLessDate() {
-		return announcementRepository.getAnnByLessDate(LocalDate.now().toString());
+	public List<Announcement> getAnnByLessDate(int id) {
+		return announcementRepository.getAnnByLessDate(id, LocalDate.now().toString());
 	}
 
 	@Override
-	public List<Announcement> getAnnByCurrentDate() {
-		return announcementRepository.getAnnByCurrentDate(LocalDate.now().toString());
+	public List<Announcement> getAnnByCurrentDate(int id) {
+		return announcementRepository.getAnnByCurrentDate(id, LocalDate.now().toString());
 	}
 
 	@Override
-	public List<Announcement> getAllAnn() {
-		return announcementRepository.findAll();
+	public List<Announcement> getAllAnn(Property property){
+		return announcementRepository.findByProperty(property);
 	}
 
 	

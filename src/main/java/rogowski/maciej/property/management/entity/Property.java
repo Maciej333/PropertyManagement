@@ -24,6 +24,9 @@ public class Property {
 	@OneToMany(mappedBy="property")
 	private List<User> user;
 	
+	@OneToMany(mappedBy="property")
+	private List<Announcement> announcements;
+	
 	public Property() {
 		
 	}
@@ -58,6 +61,14 @@ public class Property {
 
 	public void setUser(List<User> user) {
 		this.user = user;
+	}
+
+	public List<Announcement> getAnnouncements() {
+		return announcements;
+	}
+
+	public void setAnnouncements(List<Announcement> announcements) {
+		this.announcements = announcements;
 	}
 	
 	
