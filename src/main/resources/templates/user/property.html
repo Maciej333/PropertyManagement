@@ -82,22 +82,20 @@
                 <span style="position: relative; float: right; right: 5%;">Info</span>
             </div>
 
-            <div class="announcement">
-                <div class="inHeader">
-                    <div class="announcementTitle">Przegląd Instalacji kominowej</div>
-                    <div class="announcementDate">1.10.2020 - 1.10.2020</div>
-                    <div class="downArrow clickShow rightDiv"></div>
-                </div>
-                <div class="toToggle" style="display: none;">
-                    <p style="text-indent: 10%;">
-                    	W podanych datach, w godzinach od 12:00 do 18:00 odbędzie się przegląd instalacji, 
-                    	który przeprowadzi firma KominyCSS. Prosimy o obecność w lokalach, 
-                    	bądź kontakt do przedstawiciela firmy pod numerem: xxx xxx xxx
-                    </p>
-                    <p style="float: right">Z wyrazami szacunku Zarządca</p>
-                </div>
-            </div>
-
+			<div th:each="announcementEl : ${announcementList}">
+	            <div class="announcement">
+	                <div class="inHeader">
+	                    <div class="announcementTitle" th:text="${announcementEl.title}"></div>
+	                    <div class="announcementDate" th:text="${announcementEl.dateFrom + '-' + announcementEl.dateTo}"></div>
+	                    <div class="downArrow clickShow rightDiv"></div>
+	                </div>
+	                <div class="toToggle" style="display: none;">
+	                    <p style="text-indent: 10%;" th:text="${announcementEl.announcementText}">
+	                    </p>
+	                    <p style="float: right">Z wyrazami szacunku Zarządca</p>
+	                </div>
+	            </div>
+			</div>
 
 
 

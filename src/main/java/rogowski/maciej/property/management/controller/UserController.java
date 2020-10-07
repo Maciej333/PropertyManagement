@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import rogowski.maciej.property.management.Service.AnnouncementService;
 import rogowski.maciej.property.management.Service.UserService;
 import rogowski.maciej.property.management.entity.Property;
 import rogowski.maciej.property.management.entity.User;
@@ -25,10 +26,12 @@ import rogowski.maciej.property.management.entity.UserPasswordModel;
 public class UserController {
 	
 	private UserService userService;
+	private AnnouncementService announcementService;
 	
 	@Autowired
-	public UserController(UserService theUserService) {
+	public UserController(UserService theUserService, AnnouncementService theAnnouncementService) {
 		userService = theUserService;
+		announcementService = theAnnouncementService;
 	}
 	
 	@GetMapping("/user")
@@ -90,8 +93,8 @@ public class UserController {
 	}
 	
 	@GetMapping("/property")
-	public String showProperty() {
-		
+	public String showProperty(Model theModel) {
+		theModel.addAttribute("announcementList", announcementService.getAnnByLessDate());
 		return "/user/property";
 	}
 	
