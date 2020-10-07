@@ -32,7 +32,6 @@
         left: 50%;
         transform: translate(-50%,-50%);
     }
-       
     .navigation{
         border: 3px solid rgb(48, 48, 48);
         border-radius: 10px;
@@ -68,7 +67,6 @@
     .buttonNav:hover{
         background-color: rgb(124, 124, 124);
     } 
-    
     .smallNavHeader{
         display: none;
         border: 3px solid rgb(48, 48, 48);
@@ -83,7 +81,6 @@
     .mediumHide{
         display: none;
     }
-
     #indexContent{
         height: 50%;
         width: 100%;
@@ -425,7 +422,32 @@
         text-align: left;
     }
     
-    
+	/* user/notification =============== */
+    #newNotificationShowDiv{
+        display: none; 
+        position: relative;
+        margin: 5% auto;
+        padding-bottom: 2%;
+        height: 40%; 
+        width: 70%;
+        border: 2px solid black;
+        border-radius: 5px;
+        box-shadow: 11px 9px 18px -8px rgba(0,0,0,0.75);
+    }
+	.responseBtnDiv{
+        width: 100%;
+        border-top: 1px solid black;
+    }
+    .responseBtn{
+        float: right;
+        margin: 10px;
+    }
+    .divToResponse{
+        display: none;
+        width: 100%;
+        margin: 0 auto;
+        height: 120px;
+    }
     
     
     
@@ -567,7 +589,17 @@
 	    .managers{
 	        width: 280px;
 	    }
-    	
+	    
+	    /* user/notification =============== */
+	    #newNotificationDiv{
+	        width: 95%;
+	        left: 2.2%;
+	        margin: 0;
+	        margin-top: 5%;
+	    }
+    	.divToResponse{
+	        margin: 0 auto;
+	    }
 	}
     
     

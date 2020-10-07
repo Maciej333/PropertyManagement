@@ -85,8 +85,50 @@
                 <span style="position: relative; float: right; right: 5%;">Info</span>
             </div>
 
-            
+            <div th:each="notificationtEl : ${notificationList}" id="notificationShowDiv">
+	            <div class="announcement">
+	                <div class="inHeader">
+	                    <div class="announcementTitle" th:text="${notificationtEl.notification.title}"></div>
+	                    <div class="announcementDate" th:text="${notificationtEl.notification.sendDate}"></div>
+	                    <div class="downArrow clickShow rightDiv"></div>
+	                </div>
+	                <div class="toToggle" style="display: none;">
+
+		                <div class="notification">
+	                        <p th:text="${notificationtEl.notification.notificationText}"></p>
+	                        <p style="text-align: right;" th:text="${notificationtEl.notification.sender.firstName + ' ' + notificationtEl.notification.sender.lastName}"></p>
+	                    </div>
+	                    
+	                    <div th:each="notificationtResponseEl : ${notificationtEl.notificationResponseList}">
+	                    	<div style="border-top: 1px solid black;">
+	                    		<p th:text="${notificationtResponseEl.notificationText}"></p>
+	                        	<p style="text-align: right;" th:text="${notificationtResponseEl.sender.firstName + ' ' + notificationtResponseEl.sender.lastName}"></p>
+	                        </div>
+	                    </div>
+	                    
+	                    <div class="responseBtnDiv">
+	                        <button class="responseBtn">Response</button>
+	                    </div>
+	                    <div class="divToResponse" style="display: none">
+	                        <textarea style="width: 100%; height: 45px; resize: none;"></textarea>
+	                        <span style="position: relative; float: right; right: 5%;">
+	                            <input type="submit" name="Zmień" style="margin: 10px 0">
+	                        </span>
+	                    </div>
+	                    
+	                    
+	                    
+	                    
+	                    
+	                </div>
+	            </div>
+			</div>
 			
+			<div id="newNotificationShowDiv">
+
+			
+			
+			</div>
 			
 			
         </div>

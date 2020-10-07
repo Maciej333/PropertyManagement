@@ -1,5 +1,8 @@
 package rogowski.maciej.property.management.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import rogowski.maciej.property.management.Service.AnnouncementService;
+import rogowski.maciej.property.management.Service.NotificationService;
 import rogowski.maciej.property.management.Service.UserService;
+import rogowski.maciej.property.management.entity.Notification;
+import rogowski.maciej.property.management.entity.NotificationModel;
 import rogowski.maciej.property.management.entity.Property;
 import rogowski.maciej.property.management.entity.User;
 import rogowski.maciej.property.management.entity.UserPasswordModel;
@@ -27,11 +33,13 @@ public class UserController {
 	
 	private UserService userService;
 	private AnnouncementService announcementService;
+	private NotificationService notificationService;
 	
 	@Autowired
-	public UserController(UserService theUserService, AnnouncementService theAnnouncementService) {
+	public UserController(UserService theUserService, AnnouncementService theAnnouncementService, NotificationService theNotificationService) {
 		userService = theUserService;
 		announcementService = theAnnouncementService;
+		notificationService = theNotificationService;
 	}
 	
 	@GetMapping("/user")
@@ -117,20 +125,35 @@ public class UserController {
 	}
 	
 	@GetMapping("/notification")
-	public String showNotification(Model theModel, @RequestParam(name="display", required = false) String display) {
+	public String showNotification(Authentication authentication, Model theModel, @RequestParam(name="display", required = false) String display) {
+		User theUser = userService.findById(authentication.getName());
+		List<NotificationModel> notificationModelList = new ArrayList<>();
+		for(Notification n : notificationService.getUserNotification(theUser.getLogin(), theUser.getLogin())) {
+			notificationModelList.add(new NotificationModel(n));
+		}
+		for(NotificationModel nm : notificationModelList) {
+			nm.setNotificationResponseList(notificationService.getResponseNotification(nm.getNotification().getId()));
+		}	
+		
 		if(display != null) {
+			theModel.addAttribute("notifcationUser", theUser);
 			if(display.equals("sent")) {
+				theModel.addAttribute("notificationList", notificationModelList);
 				theModel.addAttribute("notificationInfo", new DisplayParameter("sent"));
 			}
 			if(display.equals("all")) {
+				theModel.addAttribute("notificationList", notificationModelList);
 				theModel.addAttribute("notificationInfo", new DisplayParameter("all"));
 			}
 			if(display.equals("new")) {
 				theModel.addAttribute("notificationInfo", new DisplayParameter("new"));
 			}
 		}else {
+			theModel.addAttribute("notificationList", notificationModelList);
 			theModel.addAttribute("notificationInfo", new DisplayParameter("response"));
 		}
+		
+		
 		
 		return "/user/notification";
 	}
