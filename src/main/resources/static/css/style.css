@@ -227,15 +227,14 @@
     }
     /* user/user =============== */
     .user{
-        overflow: auto;
         background-color: rgb(240,240,240);
         position: relative;
         border: 2px solid black;
         font-size: 2vh; 
         width: 400px; 
-        height: 25vh; 
         top: 10%;
         margin: 0 auto; 
+        padding-bottom: 40px;
     }
     .inLabel{
         position: absolute;
@@ -265,10 +264,6 @@
         border-radius:0px 0px 10px 10px;
         border: 1px solid rgb(27, 27, 27);
         float: right;
-    }
-	.userEdit{
-        display: none;
-        height: 25vh;
     }
     .newLab{
         position: relative;

@@ -17,6 +17,8 @@ public class UserPasswordModel {
 	
 	private String confirmNewPassword;
 	
+	private String confirmOldPassword;
+	
 	public UserPasswordModel() {
 		
 	}
@@ -43,6 +45,14 @@ public class UserPasswordModel {
 
 	public void setConfirmNewPassword(String confirmNewPassword) {
 		this.confirmNewPassword = confirmNewPassword;
+	}
+
+	public String getConfirmOldPassword() {
+		return confirmOldPassword;
+	}
+
+	public void setConfirmOldPassword(String confirmOldPassword) {
+		this.confirmOldPassword = confirmOldPassword;
 	}
 
 }

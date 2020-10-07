@@ -55,7 +55,7 @@
         </div>
     </div>
 
-	<div class="userInfo user" th:object="${user}">
+	<div class="userInfo user" th:object="${user}" style="height: 20vh;">
         <div class="inLabel">
             <p>Imie:</p>
             <p>Nazwisko:</p>
@@ -87,6 +87,7 @@
                     <Input class="newWidth" type="text" th:field="*{firstName}" th:value="*{firstName}"></Input>
                 </span>
             </p>
+            <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="color:red; margin: -10px; font-size: 1.5vh;"></div>
             <p>
                 <span class="newLab">
                     Nazwisko:
@@ -95,6 +96,7 @@
                     <Input class="newWidth" type="text" th:field="*{lastName}" th:value="*{lastName}"></Input>
                 </span>
             </p>
+            <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color:red; margin: -10px; font-size: 1.5vh;"></div>
             <p>
                 <span class="newLab">
                     Telefon:
@@ -103,6 +105,7 @@
                     <Input class="newWidth" type="text" th:field="*{number}" th:value="*{number}"></Input>
                 </span>
             </p>
+            <div th:if="${#fields.hasErrors('number')}" th:errors="*{number}" style="color:red; margin: -10px; font-size: 1.5vh;"></div>
             <p>
                 <span class="newLab">
                     Lokal:
@@ -111,13 +114,14 @@
                     <Input class="newWidth" type="text" th:field="*{apartmentNumber}" th:value="*{apartmentNumber}"></Input>
                 </span>
             </p>
+            <div th:if="${#fields.hasErrors('apartmentNumber')}" th:errors="*{apartmentNumber}" style="color:red; margin: -10px; font-size: 1.5vh;"></div>
             <p>
-                <span style="position: relative; float: right; right: 10%;">
+                <span style="position: relative; float: right; right: 80px;">
                     <input type="submit" name="Zmień">
-                    <button onclick='location.href="/user/user"'>Cofnij</button>
                 </span>
             </p>
         </form>
+        <button style="position: relative; float: right; right: -35px; top: 2px;" onclick='location.href="/user/user"'>Cofnij</button>
     </div>
 
 	<div class="userPassword">
@@ -152,11 +156,11 @@
 	                   <Input class="newWidth" type="password" th:field="*{confirmNewPassword}"></Input>
 	               </span>
 	           </p>
+	           <div th:if="*{confirmOldPassword}==${'Old password mismatch'}"  th:text="*{confirmOldPassword}" style="color:red"></div>
 	           <div th:if="${#fields.hasGlobalErrors()}"  th:errors="*{global}" style="color:red"></div>
 	           <div>
 		           <span style="position: relative; float: right; right: 80px;">
 		               <input type="submit" name="Zmień">
-		               
 		           </span>
 	           </div>
 
