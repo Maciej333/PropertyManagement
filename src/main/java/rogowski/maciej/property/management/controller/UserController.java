@@ -105,6 +105,10 @@ public class UserController {
 				theModel.addAttribute("propertyInfo", new DisplayParameter("all"));
 				theModel.addAttribute("announcementList", announcementService.getAllAnn(property));
 			}
+			if(display.equals("managers")) {
+				theModel.addAttribute("propertyInfo", new DisplayParameter("managers"));
+				theModel.addAttribute("managersList", userService.getAllManagersOfProperty(property.getId()));
+			}
 		}else {
 			theModel.addAttribute("propertyInfo", new DisplayParameter("current"));
 			theModel.addAttribute("announcementList", announcementService.getAnnByCurrentDate(property.getId()));

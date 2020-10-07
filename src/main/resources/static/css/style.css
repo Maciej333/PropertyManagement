@@ -398,7 +398,32 @@
         left: 5%;
         border-top: rgb(48, 48, 48) 1px solid;
     } 
-    
+    .managers{
+        position: relative;
+        margin-top: 20px;
+        line-height: 3vh;
+        border: 2px solid black;
+        border-radius: 5px;
+        box-shadow: 11px 9px 18px -8px rgba(0,0,0,0.75);
+        min-height: 16vh;
+        width: 350px;
+        margin: 20px auto 0;
+    }
+    .managersLabal{
+        position: absolute;
+        height: 100%;
+        width: 45%;
+        top: 5%;
+        text-align: right;
+    }  
+    .managersFill{
+        position: absolute;
+        height: 100%;
+        width: 50%;
+        left: 47%;
+        top: 5%;
+        text-align: left;
+    }
     
     
     
@@ -538,6 +563,9 @@
 	    }
 	    .announcementTitle{
 	        margin-left: 10%;
+	    }
+	    .managers{
+	        width: 280px;
 	    }
     	
 	}
