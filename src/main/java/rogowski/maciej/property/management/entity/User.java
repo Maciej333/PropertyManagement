@@ -42,6 +42,9 @@ public class User {
 	@Column(name="apartment_number")
 	private int apartmentNumber;
 
+	@Column(name="user_property_role")
+	private String userPropertyRole;
+	
     public User() {
     	
     }
@@ -100,6 +103,14 @@ public class User {
 
 	public void setApartmentNumber(int apartmentNumber) {
 		this.apartmentNumber = apartmentNumber;
+	}
+
+	public String getUserPropertyRole() {
+		return userPropertyRole;
+	}
+
+	public void setUserPropertyRole(String userPropertyRole) {
+		this.userPropertyRole = userPropertyRole;
 	}
 
 }

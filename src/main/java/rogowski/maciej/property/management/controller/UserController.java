@@ -68,6 +68,7 @@ public class UserController {
 		}else {
 			theUser.setPassword(userService.findById(theUser.getLogin()).getPassword());
 			theUser.setProperty(userService.findById(theUser.getLogin()).getProperty());
+			theUser.setUserPropertyRole(userService.findById(theUser.getLogin()).getUserPropertyRole());
 			userService.save(theUser);
 			return "redirect:/user/user";
 		}
