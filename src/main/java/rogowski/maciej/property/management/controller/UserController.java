@@ -89,4 +89,10 @@ public class UserController {
 		}
 	}
 	
+	@GetMapping("/property")
+	public String showProperty() {
+		
+		return "/user/property";
+	}
+	
 }
