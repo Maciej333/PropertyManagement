@@ -9,4 +9,6 @@ public interface NotificationService {
 	public List<Notification> getUserNotification(String sender, String receiver);
 	
 	public List<Notification> getResponseNotification(int responseId);
+	
+	public void save(Notification notification);
 }

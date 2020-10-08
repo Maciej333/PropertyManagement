@@ -1,5 +1,6 @@
 package rogowski.maciej.property.management.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,13 +129,14 @@ public class UserController {
 	public String showNotification(Authentication authentication, Model theModel, @RequestParam(name="display", required = false) String display) {
 		User theUser = userService.findById(authentication.getName());
 		List<NotificationModel> notificationModelList = new ArrayList<>();
+		Notification notification = new Notification();
 		for(Notification n : notificationService.getUserNotification(theUser.getLogin(), theUser.getLogin())) {
 			notificationModelList.add(new NotificationModel(n));
 		}
 		for(NotificationModel nm : notificationModelList) {
 			nm.setNotificationResponseList(notificationService.getResponseNotification(nm.getNotification().getId()));
 		}	
-		
+		theModel.addAttribute("responseNotification", notification);
 		if(display != null) {
 			theModel.addAttribute("notifcationUser", theUser);
 			if(display.equals("sent")) {
@@ -152,9 +154,20 @@ public class UserController {
 			theModel.addAttribute("notificationList", notificationModelList);
 			theModel.addAttribute("notificationInfo", new DisplayParameter("response"));
 		}
-		
-		
-		
 		return "/user/notification";
+	}
+	
+	
+	
+	
+	@PostMapping("/notification")
+	public String addResponse(@ModelAttribute("responseNotification") Notification notification) {
+		notification.setTitle(notification.getNotification().getTitle());
+		notification.setSendDate(LocalDate.now());		
+		notification.setSender(notification.getNotification().getSender());
+		notification.setReceiver(notification.getNotification().getReceiver());
+		notification.setNewTO(notification.getNotification().getReceiver());
+		notificationService.save(notification);
+		return "redirect:/user/notification";
 	}
 }

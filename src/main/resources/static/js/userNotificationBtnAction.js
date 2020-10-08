@@ -23,8 +23,5 @@ $(document).ready(function(){
 		$(".info").hide();
 		$(".newNotif").addClass("active");
     }
-    
-	$(".responseBtn").click(function(){
-		$(".divToResponse").toggle();
-	});
+
 });

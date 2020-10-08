@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -14,6 +16,7 @@ import javax.persistence.Table;
 public class Notification {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
 	
@@ -30,6 +33,10 @@ public class Notification {
 	@OneToOne
 	@JoinColumn(name="receiver")
 	private User receiver;
+	
+	@OneToOne
+	@JoinColumn(name="new_to")
+	private User newTO;
 	
 	@Column(name="notification_text")
 	private String notificationText;
@@ -82,6 +89,14 @@ public class Notification {
 		this.receiver = receiver;
 	}
 
+	public User getNewTO() {
+		return newTO;
+	}
+
+	public void setNewTO(User newTO) {
+		this.newTO = newTO;
+	}
+
 	public String getNotificationText() {
 		return notificationText;
 	}
@@ -97,5 +112,5 @@ public class Notification {
 	public void setNotification(Notification notification) {
 		this.notification = notification;
 	}
-
+	
 }

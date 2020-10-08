@@ -28,4 +28,9 @@ public class NotificationServiceImpl implements NotificationService {
 		return notificationRepository.findResponseNotification(responseId);
 	}
 
+	@Override
+	public void save(Notification notification) {
+		notificationRepository.save(notification);
+	}
+
 }

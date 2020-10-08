@@ -107,13 +107,18 @@
 	                    </div>
 	                    
 	                    <div class="responseBtnDiv">
-	                        <button class="responseBtn">Response</button>
+	                        <button class="responseBtn clickShow">Response</button>
 	                    </div>
-	                    <div class="divToResponse" style="display: none">
-	                        <textarea style="width: 100%; height: 45px; resize: none;"></textarea>
-	                        <span style="position: relative; float: right; right: 5%;">
-	                            <input type="submit" name="Zmień" style="margin: 10px 0">
-	                        </span>
+	                    <div class="divToResponse" th:object="${responseNotification}">
+	                    											
+	                    	<form th:action="@{/user/notification}" method="POST">
+		                        <input type="hidden" th:name="notification" th:value="(*{notification} != null)? *{notification} : ${notificationtEl.notification.id}">
+		                        
+		                        <textarea style="width: 100%; height: 45px; resize: none;" th:field="*{notificationText}"></textarea>
+		                        <span style="position: relative; float: right; right: 5%;">
+		                            <input type="submit" name="Add" style="margin: 10px 0">
+		                        </span>
+	                        </form>
 	                    </div>
 	                    
 	                    
