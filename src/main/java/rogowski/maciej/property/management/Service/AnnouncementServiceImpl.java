@@ -32,7 +32,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
 	@Override
 	public List<Announcement> getAllAnn(Property property){
-		return announcementRepository.findByProperty(property);
+		return announcementRepository.findAllByPropertyOrderByIdDesc(property);
 	}
 
 	
