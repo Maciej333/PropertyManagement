@@ -172,23 +172,27 @@ public class UserController {
 	
 	@PostMapping("/notification")
 	public String addResponse(Authentication authentication, @ModelAttribute("responseNotification") Notification notification, @RequestParam(name="do", required = false) String toDo) {
+		User currentUser = userService.findById(authentication.getName());
+		User admin = userService.findById("admin1");	
 		if(toDo != null) {
 			if(toDo.equals("mark")) {
 				Notification changeMark = notificationService.findById(notification.getNotification().getId());
 				changeMark.setNewTO(null);
 				notificationService.save(changeMark);
-				System.out.println("Mark");
+			}
+			if(toDo.equals("add")) {
+				notification.setSendDate(LocalDate.now());		
+				notification.setSender(currentUser);
+				notification.setReceiver(admin);	
+				notification.setNewTO(admin);
+				notificationService.save(notification);
 			}
 		}else {
-			User currentUser = userService.findById(authentication.getName());
-			User admin = userService.findById("admin1");
-			
 			notification.setTitle(notification.getNotification().getTitle());
 			notification.setSendDate(LocalDate.now());		
 			notification.setSender(currentUser);
 			notification.setReceiver(admin);	
 			notificationService.save(notification);
-			
 			Notification changeMark = notificationService.findById(notification.getNotification().getId());
 			changeMark.setNewTO(admin);
 			notificationService.save(changeMark);
