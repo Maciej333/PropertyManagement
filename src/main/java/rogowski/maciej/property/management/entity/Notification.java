@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="notification")
@@ -21,7 +21,7 @@ public class Notification {
 	@Column(name="id")
 	private int id;
 	
-	@NotNull(message="title cannot be empty")
+	@NotEmpty(message="title cannot be empty")
 	@Column(name="title")
 	private String title;
 	
@@ -40,7 +40,7 @@ public class Notification {
 	@JoinColumn(name="new_to")
 	private User newTO;
 	
-	@NotNull(message="text cannot be empty")
+	@NotEmpty(message="text cannot be empty")
 	@Column(name="notification_text")
 	private String notificationText;
 	

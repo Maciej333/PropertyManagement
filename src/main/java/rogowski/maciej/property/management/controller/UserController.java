@@ -129,9 +129,9 @@ public class UserController {
 	public String showNotification(Authentication authentication, Model theModel, @RequestParam(name="display", required = false) String display) {
 		User theUser = userService.findById(authentication.getName());
 		List<NotificationModel> notificationModelList = new ArrayList<>();
-		Notification notification = new Notification();
-		theModel.addAttribute("responseNotification", notification);
-		
+	    if (!theModel.containsAttribute("responseNotification")) {
+	    	theModel.addAttribute("responseNotification", new Notification());
+	    }
 		if(display != null) {
 			theModel.addAttribute("notifcationUser", theUser);
 			if(display.equals("send")) {
@@ -171,9 +171,12 @@ public class UserController {
 	}
 	
 	@PostMapping("/notification")
-	public String addResponse(Authentication authentication, @ModelAttribute("responseNotification") Notification notification, @RequestParam(name="do", required = false) String toDo) {
+	public String addResponse(@ModelAttribute("responseNotification") @Valid  Notification notification, BindingResult bindingResult, 
+			@RequestParam(name="do", required = false) String toDo, RedirectAttributes attr, Authentication authentication) {
+		
 		User currentUser = userService.findById(authentication.getName());
 		User admin = userService.findById("admin1");	
+		
 		if(toDo != null) {
 			if(toDo.equals("mark")) {
 				Notification changeMark = notificationService.findById(notification.getNotification().getId());
@@ -181,6 +184,11 @@ public class UserController {
 				notificationService.save(changeMark);
 			}
 			if(toDo.equals("add")) {
+				if(bindingResult.hasErrors()) {
+					attr.addFlashAttribute("org.springframework.validation.BindingResult.responseNotification", bindingResult);
+					attr.addFlashAttribute("responseNotification", notification);
+					return "redirect:/user/notification?display=newNotif";
+				}
 				notification.setSendDate(LocalDate.now());		
 				notification.setSender(currentUser);
 				notification.setReceiver(admin);	
@@ -188,6 +196,11 @@ public class UserController {
 				notificationService.save(notification);
 			}
 		}else {
+			if(bindingResult.hasErrors()) {
+				attr.addFlashAttribute("org.springframework.validation.BindingResult.responseNotification", bindingResult);
+				attr.addFlashAttribute("responseNotification", notification);
+				return "redirect:/user/notification?display=all";
+			}
 			notification.setTitle(notification.getNotification().getTitle());
 			notification.setSendDate(LocalDate.now());		
 			notification.setSender(currentUser);
