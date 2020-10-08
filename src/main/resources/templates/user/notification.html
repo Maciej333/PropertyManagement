@@ -60,10 +60,10 @@
 			<p style="font-size: 3vh; margin: 10px;">Zgłoszenia</p>
 
             <div class="inMenu smallHide">
-                <button class="inMenuButton responseNotif" onclick='location.href="/user/notification"'>Rozpatrzone</button>
-                <button class="inMenuButton sentNotif" onclick='location.href="/user/notification?display=sent"'>Wysłane</button>
+                <button class="inMenuButton responseNotif" onclick='location.href="/user/notification"'>Nowe</button>
+                <button class="inMenuButton sentNotif" onclick='location.href="/user/notification?display=send"'>Wysłane</button>
                 <button class="inMenuButton allNotif" onclick='location.href="/user/notification?display=all"'>Wszystkie</button>
-                <button class="inMenuButton onRight newNotif" onclick='location.href="/user/notification?display=new"'>Nowe Zgłoszenie</button>
+                <button class="inMenuButton onRight newNotif" onclick='location.href="/user/notification?display=newNotif"'>Nowe Zgłoszenie</button>
             </div>
             <div class="smallNav">
                 <div class="smallNavHeader">  
@@ -71,10 +71,10 @@
                 </div>
                 <div class="smallNavToggle" style="display: none;">
                     <div class="inMenu mediumHide">
-		                <button class="inMenuButton responseNotif" onclick='location.href="/user/notification"'>Rozpatrzone</button>
-		                <button class="inMenuButton sentNotif" onclick='location.href="/user/notification?display=sent"'>Wysłane</button>
+		                <button class="inMenuButton responseNotif" onclick='location.href="/user/notification"'>Nowe</button>
+		                <button class="inMenuButton sentNotif" onclick='location.href="/user/notification?display=send"'>Wysłane</button>
 		                <button class="inMenuButton allNotif" onclick='location.href="/user/notification?display=all"'>Wszystkie</button>
-		                <button class="inMenuButton onRight newNotif" onclick='location.href="/user/notification?display=new"'>Nowe Zgłoszenie</button>
+		                <button class="inMenuButton onRight newNotif" onclick='location.href="/user/notification?display=newNotif"'>Nowe Zgłoszenie</button>
                     </div>
                 </div>
             </div>
@@ -108,6 +108,10 @@
 	                    
 	                    <div class="responseBtnDiv">
 	                        <button class="responseBtn clickShow">Response</button>
+	                        <form th:action="@{/user/notification?do=mark}" method="POST" th:object="${responseNotification}">
+	                        	<input type="hidden" th:name="notification" th:value="(*{notification} != null)? *{notification} : ${notificationtEl.notification.id}">
+	                    		<button class="responseBtn" id="notificationMark" style="display: none">Oznacz jako przeczytane</button>
+	                    	</form>
 	                    </div>
 	                    <div class="divToResponse" th:object="${responseNotification}">
 	                    											

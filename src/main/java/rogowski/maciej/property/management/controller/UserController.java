@@ -130,44 +130,69 @@ public class UserController {
 		User theUser = userService.findById(authentication.getName());
 		List<NotificationModel> notificationModelList = new ArrayList<>();
 		Notification notification = new Notification();
-		for(Notification n : notificationService.getUserNotification(theUser.getLogin(), theUser.getLogin())) {
-			notificationModelList.add(new NotificationModel(n));
-		}
-		for(NotificationModel nm : notificationModelList) {
-			nm.setNotificationResponseList(notificationService.getResponseNotification(nm.getNotification().getId()));
-		}	
 		theModel.addAttribute("responseNotification", notification);
+		
 		if(display != null) {
 			theModel.addAttribute("notifcationUser", theUser);
-			if(display.equals("sent")) {
+			if(display.equals("send")) {
+				for(Notification n : notificationService.getUserSendNotification(theUser.getLogin())) {
+					notificationModelList.add(new NotificationModel(n));
+				}
+				for(NotificationModel nm : notificationModelList) {
+					nm.setNotificationResponseList(notificationService.getResponseNotification(nm.getNotification().getId()));
+				}	
 				theModel.addAttribute("notificationList", notificationModelList);
-				theModel.addAttribute("notificationInfo", new DisplayParameter("sent"));
+				theModel.addAttribute("notificationInfo", new DisplayParameter("send"));
 			}
 			if(display.equals("all")) {
+				for(Notification n : notificationService.getUserNotification(theUser.getLogin(), theUser.getLogin())) {
+					notificationModelList.add(new NotificationModel(n));
+				}
+				for(NotificationModel nm : notificationModelList) {
+					nm.setNotificationResponseList(notificationService.getResponseNotification(nm.getNotification().getId()));
+				}	
 				theModel.addAttribute("notificationList", notificationModelList);
 				theModel.addAttribute("notificationInfo", new DisplayParameter("all"));
 			}
-			if(display.equals("new")) {
-				theModel.addAttribute("notificationInfo", new DisplayParameter("new"));
+			if(display.equals("newNotif")) {
+				theModel.addAttribute("notificationInfo", new DisplayParameter("newNotif"));
 			}
 		}else {
+			for(Notification n : notificationService.getUserNewNotification(theUser.getLogin())) {
+				notificationModelList.add(new NotificationModel(n));
+			}		
+			for(NotificationModel nm : notificationModelList) {
+				nm.setNotificationResponseList(notificationService.getResponseNotification(nm.getNotification().getId()));
+			}	
 			theModel.addAttribute("notificationList", notificationModelList);
-			theModel.addAttribute("notificationInfo", new DisplayParameter("response"));
+			theModel.addAttribute("notificationInfo", new DisplayParameter("new"));
 		}
 		return "/user/notification";
 	}
 	
-	
-	
-	
 	@PostMapping("/notification")
-	public String addResponse(@ModelAttribute("responseNotification") Notification notification) {
-		notification.setTitle(notification.getNotification().getTitle());
-		notification.setSendDate(LocalDate.now());		
-		notification.setSender(notification.getNotification().getSender());
-		notification.setReceiver(notification.getNotification().getReceiver());
-		notification.setNewTO(notification.getNotification().getReceiver());
-		notificationService.save(notification);
+	public String addResponse(Authentication authentication, @ModelAttribute("responseNotification") Notification notification, @RequestParam(name="do", required = false) String toDo) {
+		if(toDo != null) {
+			if(toDo.equals("mark")) {
+				Notification changeMark = notificationService.findById(notification.getNotification().getId());
+				changeMark.setNewTO(null);
+				notificationService.save(changeMark);
+				System.out.println("Mark");
+			}
+		}else {
+			User currentUser = userService.findById(authentication.getName());
+			User admin = userService.findById("admin1");
+			
+			notification.setTitle(notification.getNotification().getTitle());
+			notification.setSendDate(LocalDate.now());		
+			notification.setSender(currentUser);
+			notification.setReceiver(admin);	
+			notificationService.save(notification);
+			
+			Notification changeMark = notificationService.findById(notification.getNotification().getId());
+			changeMark.setNewTO(admin);
+			notificationService.save(changeMark);
+		}
 		return "redirect:/user/notification";
 	}
 }
