@@ -207,7 +207,7 @@
 	                            	<input type="hidden" name="id" th:value="${propertyEl.id}">
 	     							<input type="submit" class="clickableBtn" id="editBtn" value="">
 	                            </form>
-	                            <form th:object="${propertyEdit}" th:action="@{/manager/propertyDelete}" method="POST">
+	                            <form th:object="${propertyEdit}" th:action="@{/manager/propertyDelete}" method="POST" onsubmit="return confirm('Usunąć wspólnotę?') ? true : false;">
 	                            	<input type="hidden" name="id" th:value="${propertyEl.id}">
 	     							<input type="submit" class="clickableBtn" id="deleteBtn" value="">
 	                            </form>	                            
