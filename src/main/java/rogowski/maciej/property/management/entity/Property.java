@@ -1,5 +1,6 @@
 package rogowski.maciej.property.management.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="property")
@@ -15,9 +17,11 @@ public class Property {
 	@Column(name="id")
 	private int id;
 	
+	@NotEmpty(message="Cannot be empty")
 	@Column(name="property_name")
 	private String name;
 		
+	@NotEmpty(message="Cannot be empty")
 	@Column(name="address")
     private String address;
 	
@@ -71,5 +75,13 @@ public class Property {
 		this.announcements = announcements;
 	}
 	
-	
+	public List<User> findManagers(){
+		List<User> managersList = new ArrayList<>();
+		for(User u: user) {
+			if(u.getUserPropertyRole().equals("zarząd")) {
+				managersList.add(u);
+			}
+		}
+		return managersList;
+	}
 }

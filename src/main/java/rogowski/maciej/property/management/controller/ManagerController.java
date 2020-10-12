@@ -2,6 +2,7 @@ package rogowski.maciej.property.management.controller;
 
 import javax.validation.Valid;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import rogowski.maciej.property.management.Service.AnnouncementService;
 import rogowski.maciej.property.management.Service.NotificationService;
+import rogowski.maciej.property.management.Service.PropertyService;
 import rogowski.maciej.property.management.Service.UserService;
 import rogowski.maciej.property.management.entity.Property;
 import rogowski.maciej.property.management.entity.User;
@@ -29,12 +31,14 @@ public class ManagerController {
 	private UserService userService;
 	private AnnouncementService announcementService;
 	private NotificationService notificationService;
+	private PropertyService propertyService;
 	
 	@Autowired
-	public ManagerController(UserService theUserService, AnnouncementService theAnnouncementService, NotificationService theNotificationService) {
+	public ManagerController(UserService theUserService, AnnouncementService theAnnouncementService, NotificationService theNotificationService, PropertyService thePropertyService) {
 		userService = theUserService;
 		announcementService = theAnnouncementService;
 		notificationService = theNotificationService;
+		propertyService = thePropertyService;
 	}
 	
 	@GetMapping("/manager")
@@ -47,7 +51,12 @@ public class ManagerController {
 				theModel.addAttribute("userInfo", new DisplayParameter("userPassword"));
 			}
 			if(display.equals("managerProperty")) {
+				theModel.addAttribute("propertyEdit", new Property());
+				theModel.addAttribute("propertyList", propertyService.findAll());
 				theModel.addAttribute("userInfo", new DisplayParameter("managerProperty"));
+			} 
+			if(display.equals("managerPropertyEdit")) {		
+				theModel.addAttribute("userInfo", new DisplayParameter("managerPropertyEdit"));
 			}
 			if(display.equals("managerUser")) {
 				theModel.addAttribute("userInfo", new DisplayParameter("managerUser"));
@@ -59,12 +68,12 @@ public class ManagerController {
 		if (!theModel.containsAttribute("user")) {
 	    	theModel.addAttribute("user", theUser);
 	    }
-		Property theProperty = theUser.getProperty();
-		theModel.addAttribute("property", theProperty);	
-
 	    if (!theModel.containsAttribute("userPasswordModel")) {
 	    	theModel.addAttribute("userPasswordModel", new UserPasswordModel());
 	    }
+		if (!theModel.containsAttribute("newProperty")) {
+	    	theModel.addAttribute("newProperty",  new Property());
+	    }		
 		return "/manager/manager";
 	}
 	
@@ -100,11 +109,31 @@ public class ManagerController {
 			return "redirect:/manager/manager?display=userPass";
 		}
 	}
-	
-	
-	
 
+	@PostMapping("/propertyShowUpdate")
+	public String editProperty(@ModelAttribute("propertyEdit") Property property, RedirectAttributes attr) {
+		property = propertyService.findById(property.getId());
+		attr.addFlashAttribute("newProperty", property);
+		return "redirect:/manager/manager?display=managerPropertyEdit";
+	}
 	
+	@PostMapping("/propertySave")
+	public String saveProperty(@ModelAttribute("newProperty") @Valid Property property, BindingResult bindingResult, RedirectAttributes attr) {
+		if(bindingResult.hasErrors()) {
+			attr.addFlashAttribute("org.springframework.validation.BindingResult.newProperty", bindingResult);
+			attr.addFlashAttribute("newProperty", property);
+			return "redirect:/manager/manager?display=managerPropertyEdit";
+		}else {
+			propertyService.save(property);
+			return "redirect:/manager/manager?display=managerProperty";
+		}
+	}
+
+	@PostMapping("/propertyDelete")
+	public String deleteProperty(@ModelAttribute("propertyEdit") Property property) {
+		propertyService.delete(propertyService.findById(property.getId()));
+		return "redirect:/manager/manager?display=managerProperty";
+	}
 	
 	
 	

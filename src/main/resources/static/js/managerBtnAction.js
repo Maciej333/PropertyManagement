@@ -14,13 +14,18 @@ $(document).ready(function(){
     	$("#managerProperty").hide();
     	$("#managerUser").hide();
 	}   
-	if( ($("#defineDisplay").text()) == 'managerProperty'){
+	if( (($("#defineDisplay").text()) == 'managerProperty') || ($("#defineDisplay").text() == 'managerPropertyEdit')){
     	$(".userInfo").hide();
     	$(".userOnButton").hide();
     	$(".userEdit").hide();
     	$(".userPassword").hide();
     	$("#role").hide();
     	$("#managerProperty").show();
+    	if($("#defineDisplay").text() == 'managerPropertyEdit'){
+    		$(".divContent").hide();
+    		$(".newDiv").show();
+    		$(".buttonDivContent").hide();
+		}
     	$("#managerUser").hide();
     	$(".propertyManager").addClass("active");
 	}  
@@ -39,7 +44,7 @@ $(document).ready(function(){
     	$(".divContent").hide();
     	$(".buttonDivContent").hide();
     	$(".newDiv").show();
-    });  
+    }); 
     $("#newUserProfil").click(function(){
     	$(".divContent").hide();
     	$(".buttonDivContent").hide();

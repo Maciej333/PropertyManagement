@@ -1,5 +1,6 @@
 package rogowski.maciej.property.management.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,21 @@ public class PropertyServiceImpl implements PropertyService {
 			thePropertie = result.get();
 		}
 		return thePropertie;
+	}
+
+	@Override
+	public List<Property> findAll() {
+		return propertyRepository.findAll();
+	}
+
+	@Override
+	public void save(Property property) {
+		propertyRepository.save(property);
+	}
+
+	@Override
+	public void delete(Property property) {
+		propertyRepository.delete(property);
 	}
 
 }

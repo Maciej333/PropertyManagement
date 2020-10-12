@@ -193,8 +193,6 @@
 				     <button style="position: relative; float: right; right: -35px; top: 2px;" onclick='location.href="/manager/manager"'>Cofnij</button>
 			    </div>	
 
-
-<!-- ================================================================================================================= -->
 				<div id="managerProperty">
 					<div class="buttonDivContent">
 	                    <button class="addNewButton" id="newProperty">
@@ -202,11 +200,17 @@
 	                    </button>
                 	</div>
                 	<div class="divContent">
-	                    <div class="announcement">
+	                    <div class="announcement" th:each="propertyEl : ${propertyList}">
 	                        <div class="inHeader">
-	                            <span class="announcementTitle">Stokrotka</span>
-	                            <div class="clickableBtn" id="editBtn"></div>
-	                            <div class="clickableBtn" id="deleteBtn"></div>
+	                            <span class="announcementTitle" th:text="${propertyEl.name}"></span>
+	                            <form th:object="${propertyEdit}" th:action="@{/manager/propertyShowUpdate}" method="POST">
+	                            	<input type="hidden" name="id" th:value="${propertyEl.id}">
+	     							<input type="submit" class="clickableBtn" id="editBtn" value="">
+	                            </form>
+	                            <form th:object="${propertyEdit}" th:action="@{/manager/propertyDelete}" method="POST">
+	                            	<input type="hidden" name="id" th:value="${propertyEl.id}">
+	     							<input type="submit" class="clickableBtn" id="deleteBtn" value="">
+	                            </form>	                            
 	                            <span class="downArrow clickShow rightDiv"></span>
 	                        </div>
 	                        <div class="toToggle" style="display: none;">
@@ -214,25 +218,19 @@
 	                                <span class="annLabel">
 	                                    Nazwa:
 	                                </span>
-	                                <span class="annContent">
-	                                
-	                                </span>
+	                                <span class="annContent" th:text="${propertyEl.name}"></span>
 	                            </p>
 	                            <p>
 	                                <span class="annLabel">
-	                                    liczba lokali:
+	                                    Mieszkańców:
 	                                </span>
-	                                <span class="annContent">
-	                                
-	                                </span>
+	                                <span class="annContent" th:text="${propertyEl.user.size()}"></span>
 	                            </p>
 	                            <p>
 	                                <span class="annLabel">
 	                                    Adres:
 	                                </span>
-	                                <span class="annContent">
-	                                
-	                                </span>
+	                                <span class="annContent" th:text="${propertyEl.address}"></span>
 	                            </p>
 	                            <p>
 	                                <span class="annLabel">
@@ -240,7 +238,7 @@
 	                                </span>
 	                                <span class="annContent">
 	                                    <select>
-	                                        <option value=""></option>
+	                                        <option th:each="menagerEl : ${propertyEl.findManagers()}" th:text="${menagerEl.firstName}+' '+${menagerEl.lastName}"></option>
 	                                    </select>
 	                                </span>
 	                            </p>
@@ -248,32 +246,27 @@
 	                	</div>
                     </div>
 
-                    <div class="newDiv">
-	                    <form>                   
+                    <div class="newDiv" th:object="${newProperty}">
+	                    <form th:action="@{/manager/propertySave}" method="POST">      
+	                    	<input type="hidden" th:field="*{id}">            
 	                        <p>
 	                            <span class="newLab"> 
 	                                Nazwa:
 	                            </span> 
 	                            <span class="newCont">
-	                                <Input class="newWidth" type="text"></Input>
+	                                <Input type="text" class="newWidth" th:field="*{name}" th:value="*{name}">
 	                            </span>
 	                        </p>
-	                        <p>
-	                            <span class="newLab"> 
-	                                liczba lokali: 
-	                            </span> 
-	                            <span class="newCont">
-	                                <Input class="newWidth" type="text"></Input>
-	                            </span>
-	                        </p>
+	                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red; margin: -10px;"></div>
 	                        <p>
 	                            <span class="newLab"> 
 	                                Adres: 
 	                            </span> 
 	                            <span class="newCont">
-	                                <Input class="newWidth" type="text"></Input>
+	                                <Input type="text" class="newWidth" th:field="*{address}" th:value="*{address}">
 	                            </span>
 	                        </p>
+	                        <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" style="color:red; margin: -10px;"></div>
 	                        <p>
 	                            <span style="position: relative; float: right; right: 80px;">
 	                                <input type="submit" name="Dodaj">
@@ -285,8 +278,6 @@
                         </button>
                 	</div>   	
 				</div>
-
-
 
 <!-- ================================================================================================================= -->
 				<div id="managerUser">
