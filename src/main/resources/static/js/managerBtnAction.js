@@ -29,7 +29,7 @@ $(document).ready(function(){
     	$("#managerUser").hide();
     	$(".propertyManager").addClass("active");
 	}  
-    if( ($("#defineDisplay").text()) == "managerUser"){
+    if( ($("#defineDisplay").text()) == "managerUser" || ($("#defineDisplay").text() == 'managerUserEdit')){
     	$(".userInfo").hide();
     	$(".userOnButton").hide();
     	$(".userEdit").hide();
@@ -37,6 +37,11 @@ $(document).ready(function(){
     	$("#role").hide();
     	$("#managerProperty").hide();
     	$("#managerUser").show();
+    	if($("#defineDisplay").text() == 'managerUserEdit'){
+    		$(".divContent").hide();
+    		$(".newUserDiv").show();
+    		$(".buttonDivContent").hide();
+		}
     	$(".userManager").addClass("active");
     }   
     
@@ -48,7 +53,7 @@ $(document).ready(function(){
     $("#newUserProfil").click(function(){
     	$(".divContent").hide();
     	$(".buttonDivContent").hide();
-    	$("#newUser").show();	
+    	$(".newUserDiv").show();	
     });
     $("#genereteUserProfil").click(function(){
     	$(".divContent").hide();

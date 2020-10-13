@@ -6,9 +6,13 @@ import rogowski.maciej.property.management.entity.User;
 
 public interface UserService {
 	
+	public List<User> findAllPropertyUsers();
+	
 	public User findById(String id);
-
-	public void save(User user);
 	
 	public List<User> getAllManagersOfProperty(int id);
+	
+	public void save(User user);
+	
+	public void delete(User user);
 }

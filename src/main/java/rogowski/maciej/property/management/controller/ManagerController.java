@@ -52,14 +52,18 @@ public class ManagerController {
 			}
 			if(display.equals("managerProperty")) {
 				theModel.addAttribute("propertyEdit", new Property());
-				theModel.addAttribute("propertyList", propertyService.findAll());
 				theModel.addAttribute("userInfo", new DisplayParameter("managerProperty"));
 			} 
 			if(display.equals("managerPropertyEdit")) {		
 				theModel.addAttribute("userInfo", new DisplayParameter("managerPropertyEdit"));
 			}
 			if(display.equals("managerUser")) {
+				theModel.addAttribute("userEdit", new User());
+				theModel.addAttribute("userList", userService.findAllPropertyUsers());
 				theModel.addAttribute("userInfo", new DisplayParameter("managerUser"));
+			}
+			if(display.equals("managerUserEdit")) {
+				theModel.addAttribute("userInfo", new DisplayParameter("managerUserEdit"));
 			}
 		}else {
 			theModel.addAttribute("userInfo", new DisplayParameter("userInfo"));
@@ -73,7 +77,13 @@ public class ManagerController {
 	    }
 		if (!theModel.containsAttribute("newProperty")) {
 	    	theModel.addAttribute("newProperty",  new Property());
-	    }		
+	    }	
+		theModel.addAttribute("propertyList", propertyService.findAll());	
+		User newUser = new User();
+		newUser.setProperty(new Property());
+		if (!theModel.containsAttribute("newUser")) {
+	    	theModel.addAttribute("newUser", newUser);
+	    }
 		return "/manager/manager";
 	}
 	
@@ -134,8 +144,35 @@ public class ManagerController {
 		propertyService.delete(propertyService.findById(property.getId()));
 		return "redirect:/manager/manager?display=managerProperty";
 	}
+
+	@PostMapping("/userShowUpdate")
+	public String editUser(@ModelAttribute("userEdit") User user, RedirectAttributes attr) {
+		user = userService.findById(user.getLogin());
+		attr.addFlashAttribute("newUser", user);
+		return "redirect:/manager/manager?display=managerUserEdit";
+	}
 	
-	
+	@PostMapping("/userSave")
+	public String saveUser(@ModelAttribute("newUser") @Valid User user, BindingResult bindingResult, RedirectAttributes attr) {	
+		user.setProperty(propertyService.findById(user.getProperty().getId()));
+		if(bindingResult.hasErrors()) {
+			attr.addFlashAttribute("org.springframework.validation.BindingResult.newUser", bindingResult);
+			attr.addFlashAttribute("newUser", user);
+			return "redirect:/manager/manager?display=managerUserEdit";
+		}else {
+			if(user.getLogin() != null) {
+				user.setPassword(userService.findById(user.getLogin()).getPassword());
+			}	
+			userService.save(user);
+			return "redirect:/manager/manager?display=managerUser";
+		}
+	}
+
+	@PostMapping("/useerDelete")
+	public String deleteUser(@ModelAttribute("userEdit") User user) {
+		userService.delete(userService.findById(user.getLogin()));
+		return "redirect:/manager/manager?display=managerUser";
+	}
 	
 	
 	

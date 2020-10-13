@@ -10,6 +10,8 @@ import rogowski.maciej.property.management.entity.User;
 
 public interface UserRepository extends JpaRepository<User, String> {
 
+	@Query(value="SELECT * FROM user WHERE (ISNULL(property_id ) != true)", nativeQuery = true)
+	public List<User> findAllPropertyUsers();
 	
 	@Query(value="SELECT * FROM user WHERE property_id = ?1 AND user_property_role = ?2", nativeQuery = true)
 	public List<User> getAllManagersOfProperty(int id, String role);

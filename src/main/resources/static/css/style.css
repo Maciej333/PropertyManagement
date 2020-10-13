@@ -390,7 +390,7 @@
     .rightDiv{
         position: relative;
         float: right; 
-        right: 6%;
+        right: 15px;
     }
     .toToggle{
         text-align: justify;
@@ -469,7 +469,7 @@
     }
     .divContent{
         position: relative;
-        height: 100%;
+        height: 100%;		
         width: 70%;
         left: 25%;
         top: -30%;
@@ -526,13 +526,13 @@
         background-image: url(../images/edit.png);
         transform: rotate(45deg);
         width: 8px;
-        right: 20%;
+        right: 60px;
         background-size:100% 100%;
     }
     #deleteBtn {
         background-image: url(../images/delete.png);
         width: 20px;
-        right: 12%;
+        right: 30px;
     }
     
     #managerUser{
@@ -548,7 +548,7 @@
 	}
 	.smallContent{
 		overflow: auto; 
-		height: 90%; 
+		height: 105%; 
 		top: -90%; 
 	}
 	.toSearch{
@@ -731,6 +731,7 @@
 	        top: 5%;
 	        width: 80%;
 	        left: 10%;
+	        height: 90%;
 		}
 		.addNewButton{
 			margin: 0;

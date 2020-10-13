@@ -20,6 +20,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public List<User> findAllPropertyUsers() {
+		return userRepository.findAllPropertyUsers();
+	}
+	
+	@Override
 	public User findById(String id) {
 		Optional<User> result = userRepository.findById(id);
 		User theUser = null;
@@ -30,13 +35,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public List<User> getAllManagersOfProperty(int id) {
+		return userRepository.getAllManagersOfProperty(id, "zarząd");
+	}
+	
+	@Override
 	public void save(User user) {
 		userRepository.save(user);
 	}
 
 	@Override
-	public List<User> getAllManagersOfProperty(int id) {
-		return userRepository.getAllManagersOfProperty(id, "zarząd");
+	public void delete(User user) {
+		userRepository.delete(user);
 	}
 
 }

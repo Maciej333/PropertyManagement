@@ -298,11 +298,17 @@
 	                </div>
 
 	                <div class="divContent smallContent">
-	                    <div class="announcement">
+	                    <div class="announcement" th:each="userEl : ${userList}">
 	                        <div class="inHeader">
-	                            <span class="announcementTitle">Beata Grzęda</span>
-	                            <div class="clickableBtn" id="editBtn"></div>
-	                            <div class="clickableBtn" id="deleteBtn"></div>
+	                            <span class="announcementTitle"  th:text="${userEl.firstName}+' '+${userEl.lastName}"></span>
+	                            <form th:object="${userEdit}" th:action="@{/manager/userShowUpdate}" method="POST">
+	                            	<input type="hidden" name="login" th:value="${userEl.login}">
+	     							<input type="submit" class="clickableBtn" id="editBtn" value="">
+	                            </form>
+	                            <form th:object="${userEdit}" th:action="@{/manager/useerDelete}" method="POST" onsubmit="return confirm('Usunąć użytkownika?') ? true : false;">
+	                            	<input type="hidden" name="login" th:value="${userEl.login}">
+	     							<input type="submit" class="clickableBtn" id="deleteBtn" value="">
+	                            </form>	
 	                            <span class="downArrow clickShow rightDiv"></span>
 	                        </div>
 	                        <div class="toToggle" style="display: none;">
@@ -310,59 +316,62 @@
 	                                <span class="annLabel">
 	                                    Telefon:
 	                                </span>
-	                                <span class="annContent">
-	                                </span>
+	                                <span class="annContent" th:text="${userEl.number}"></span>
 	                            </p>
 	                            <p>
 	                                <span class="annLabel">
 	                                    lokal:
 	                                </span>
-	                                <span class="annContent">
-	                                </span>
+	                                <span class="annContent" th:text="${userEl.apartmentNumber}"></span>
 	                            </p>
 	                            <p>
 	                                <span class="annLabel">
 	                                    Rola:
 	                                </span>
-	                                <span class="annContent">
-	                                </span>
+	                                <span class="annContent" th:text="${userEl.userPropertyRole}"></span>
 	                            </p>
 	                        </div>
 	                    </div> 
 	                </div>
 
-	                <div class="newUserDiv" id="newUser">
-	                    <form>                   
+	                <div class="newUserDiv" th:object="${newUser}">
+	                    <form th:action="@{/manager/userSave}" method="POST">      
+	                    	<input type="hidden" th:field="*{login}">                   
 	                        <p>
 	                            <span class="newLab"> 
 	                                Imie:
 	                            </span> 
 	                            <span class="newCont">
-	                                <Input class="newWidth" type="text"></Input>
+	                                <Input type="text" class="newWidth" th:field="*{firstName}" th:value="*{firstName}">
 	                            </span>
 	                        </p>
+	                        <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="color:red; margin: -10px;"></div>
 	                        <p>
 	                            <span class="newLab"> 
 	                                Nazwisko: 
 	                            </span> 
 	                            <span class="newCont">
-	                                <Input class="newWidth" type="text"></Input>
+	                                <Input type="text" class="newWidth" th:field="*{lastName}" th:value="*{lastName}">
 	                            </span>
 	                        </p>
+	                        <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color:red; margin: -10px;"></div>
 	                        <p>
 	                            <span class="newLab"> 
 	                                Telefon: 
 	                            </span> 
 	                            <span class="newCont">
-	                                <Input class="newWidth" type="text"></Input>
+	                                <Input type="text" class="newWidth" th:field="*{number}" th:value="*{number}">
 	                            </span>
 	                        </p>
+	                        <div th:if="${#fields.hasErrors('number')}" th:errors="*{number}" style="color:red; margin: -10px;"></div>
 	                        <p>
 	                            <span class="newLab"> 
 	                                Wspólnota: 
 	                            </span> 
 	                            <span class="newCont">
-	                                <Input class="newWidth" type="text"></Input>
+	                                <select id="property.id" name="property.id">
+	                            		<option th:each="propertyEl : ${propertyList}" th:value="${propertyEl.id}" th:text="${propertyEl.name}" th:selected="${propertyEl.name} == ${newUser.property.name}"></option>
+	                            	</select>
 	                            </span>
 	                        </p>
 	                        <p>
@@ -370,16 +379,18 @@
 	                                Lokal: 
 	                            </span> 
 	                            <span class="newCont">
-	                                <Input class="newWidth" type="text"></Input>
+	                                <Input type="text" class="newWidth" th:field="*{apartmentNumber}" th:value="*{apartmentNumber}">
 	                            </span>
 	                        </p>
+	                        <div th:if="${#fields.hasErrors('apartmentNumber')}" th:errors="*{apartmentNumber}" style="color:red; margin: -10px;"></div>
 							<p>
 	                            <span class="newLab"> 
 	                                Rola: 
 	                            </span> 
 	                            <span class="newCont">
-	                                <select style="width: 140px;">
-	                                    <option value=""></option>
+	                                <select style="width: 140px;" th:field="*{userPropertyRole}">
+	                                    <option value="zarząd" th:selected="${newUser.userPropertyRole} == 'zarząd'">zarząd</option>
+	                                    <option value="mieszkaniec" th:selected="${newUser.userPropertyRole} == 'mieszkaniec'">mieszkaniec</option>
 	                                </select>
 	                            </span>
 							</p>
@@ -393,6 +404,17 @@
                         	Cofnij
                         </button>
 	                </div>
+
+
+
+
+
+
+
+
+
+
+
 
 					<div id="generateUser">
 	                    <form>                   
