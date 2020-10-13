@@ -14,7 +14,7 @@ $(document).ready(function(){
     	$("#managerProperty").hide();
     	$("#managerUser").hide();
 	}   
-	if( (($("#defineDisplay").text()) == 'managerProperty') || ($("#defineDisplay").text() == 'managerPropertyEdit')){
+	if( (($("#defineDisplay").text()) == 'managerProperty') || ($("#defineDisplay").text() == 'managerPropertyEdit') ){
     	$(".userInfo").hide();
     	$(".userOnButton").hide();
     	$(".userEdit").hide();
@@ -29,7 +29,7 @@ $(document).ready(function(){
     	$("#managerUser").hide();
     	$(".propertyManager").addClass("active");
 	}  
-    if( ($("#defineDisplay").text()) == "managerUser" || ($("#defineDisplay").text() == 'managerUserEdit')){
+    if( ($("#defineDisplay").text()) == "managerUser" || ($("#defineDisplay").text() == 'managerUserEdit') || ($("#defineDisplay").text() == 'generetedInfo') ){
     	$(".userInfo").hide();
     	$(".userOnButton").hide();
     	$(".userEdit").hide();
@@ -41,6 +41,12 @@ $(document).ready(function(){
     		$(".divContent").hide();
     		$(".newUserDiv").show();
     		$(".buttonDivContent").hide();
+		}
+		if($("#defineDisplay").text() == 'generetedInfo'){
+    		$(".divContent").hide();
+    		$(".newDiv").hide();
+    		$(".buttonDivContent").hide();
+    		$("#generetedInfo").show();
 		}
     	$(".userManager").addClass("active");
     }   

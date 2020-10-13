@@ -1,5 +1,8 @@
 package rogowski.maciej.property.management.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import rogowski.maciej.property.management.Service.NotificationService;
 import rogowski.maciej.property.management.Service.PropertyService;
 import rogowski.maciej.property.management.Service.RoleService;
 import rogowski.maciej.property.management.Service.UserService;
+import rogowski.maciej.property.management.entity.GenerateUserModel;
 import rogowski.maciej.property.management.entity.Property;
 import rogowski.maciej.property.management.entity.Role;
 import rogowski.maciej.property.management.entity.User;
@@ -68,6 +72,9 @@ public class ManagerController {
 			if(display.equals("managerUserEdit")) {
 				theModel.addAttribute("userInfo", new DisplayParameter("managerUserEdit"));
 			}
+			if(display.equals("generetedInfo")) {
+				theModel.addAttribute("userInfo", new DisplayParameter("generetedInfo"));
+			}
 		}else {
 			theModel.addAttribute("userInfo", new DisplayParameter("userInfo"));
 		}
@@ -81,6 +88,10 @@ public class ManagerController {
 		if (!theModel.containsAttribute("newProperty")) {
 	    	theModel.addAttribute("newProperty",  new Property());
 	    }	
+		if (!theModel.containsAttribute("generetedList")) {
+	    	theModel.addAttribute("generetedList",  new ArrayList<>());
+	    }
+		theModel.addAttribute("generateUser", new GenerateUserModel());
 		theModel.addAttribute("propertyList", propertyService.findAll());	
 		User newUser = new User();
 		newUser.setProperty(new Property());
@@ -166,24 +177,18 @@ public class ManagerController {
 			if(!(user.getLogin().equals(""))) {
 				user.setPassword(userService.findById(user.getLogin()).getPassword());
 				userService.save(user);
+				return "redirect:/manager/manager?display=managerUser";
 			}else {
 				user.setLogin(user.getProperty().getName()+(userService.findMaxId(user.getProperty().getId())+1));
-				StringBuilder buildPass = new StringBuilder();
-				for(int i=0; i< 6; i++) {
-					buildPass.append( (  (char)(Math.random()*25 +97)  )+""  );
-				}
-				String password = buildPass.toString();				
+				String password = generatePassword();	
+				List<String[]> generetedList = new ArrayList<>();
+				generetedList.add(new String[]{user.getLogin(), password});
 				BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 				user.setPassword("{bcrypt}"+encoder.encode(password));
-
-				userService.save(user);
-				userService.addEnableToOne(user.getLogin());
-				Role role = new Role();
-				role.setUsername(user.getLogin());
-				role.setUserRole("ROLE_INHABITANT");
-				roleService.save(role);
+				createNewUser(user);
+				attr.addFlashAttribute("generetedList", generetedList);
+				return "redirect:/manager/manager?display=generetedInfo";
 			}
-			return "redirect:/manager/manager?display=managerUser";
 		}
 	}
 
@@ -193,7 +198,39 @@ public class ManagerController {
 		return "redirect:/manager/manager?display=managerUser";
 	}
 	
+	@PostMapping("/generateUser")
+	public String generateUser(@ModelAttribute("generateUser") GenerateUserModel generateUserModel, RedirectAttributes attr) {		
+		Property property = propertyService.findById(generateUserModel.getProperty().getId());
+		List<String[]> generetedList = new ArrayList<>();
+		for(int i = 0; i < generateUserModel.getNumberOfUser(); i++) {
+			User generatedUser = new User();
+			generatedUser.fillGeneratedUserField();
+			generatedUser.setProperty(property);
+			generatedUser.setLogin(generatedUser.getProperty().getName()+(userService.findMaxId(generatedUser.getProperty().getId())+1));
+			String password = generatePassword();
+			generetedList.add(new String[]{generatedUser.getLogin(), password});
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			generatedUser.setPassword("{bcrypt}"+encoder.encode(password));		
+			createNewUser(generatedUser);
+		}
+		attr.addFlashAttribute("generetedList", generetedList);
+		return "redirect:/manager/manager?display=generetedInfo";
+	}
+
+	private void createNewUser(User user) {
+		userService.save(user);
+		userService.addEnableToOne(user.getLogin());
+		Role role = new Role();
+		role.setUsername(user.getLogin());
+		role.setUserRole("ROLE_INHABITANT");
+		roleService.save(role);
+	}
 	
-	
-	
+	private String generatePassword() {
+		StringBuilder buildPass = new StringBuilder();
+		for(int j=0; j< 6; j++) {
+			buildPass.append( (  (char)(Math.random()*25 +97)  )+""  );
+		}
+		return buildPass.toString();		
+	}
 }

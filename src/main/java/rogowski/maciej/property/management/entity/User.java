@@ -112,5 +112,12 @@ public class User {
 	public void setUserPropertyRole(String userPropertyRole) {
 		this.userPropertyRole = userPropertyRole;
 	}
-
+	
+	public void fillGeneratedUserField() {
+		firstName = "Imie";
+		lastName ="Nazwisko";
+		number = 100000000;
+		apartmentNumber = 1000;
+		userPropertyRole = "mieszkaniec";
+	}
 }

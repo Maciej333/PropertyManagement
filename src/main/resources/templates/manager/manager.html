@@ -279,7 +279,6 @@
                 	</div>   	
 				</div>
 
-<!-- ================================================================================================================= -->
 				<div id="managerUser">
 					<div class="buttonDivContent smallMenu">
 	                    <select style="width: 100%;">
@@ -405,26 +404,15 @@
                         </button>
 	                </div>
 
-
-
-
-
-
-
-
-
-
-
-
-					<div id="generateUser">
-	                    <form>                   
+					<div id="generateUser" th:object="${generateUser}">
+	                    <form th:action="@{/manager/generateUser}" method="POST">                   
 	                        <p>
 	                            <span class="newLab"> 
 	                                Wspólnota: 
 	                            </span> 
 	                            <span class="newCont">
-	                                <select style="width: 140px;">
-	                                    <option value=""></option>
+	                                <select id="property.id" name="property.id" style="width: 140px;">
+	                                    <option th:each="propertyEl : ${propertyList}" th:value="${propertyEl.id}" th:text="${propertyEl.name}" th:selected="${propertyEl.name} == ${newUser.property.name}"></option>
 	                                </select>
 	                            </span>
 	                        </p>
@@ -433,7 +421,7 @@
 	                                Ilość lokali: 
 	                            </span> 
 	                            <span class="newCont">
-	                                <Input style="display: block; width: 135px;" type="number"></Input>
+	                                <Input style="display: block; width: 135px;" type="number" th:field="*{numberOfUser}"></Input>
 	                            </span>
 	                        </p>
 	                        <p>
@@ -447,10 +435,25 @@
                         	Cofnij
                         </button>
 	                </div>
+
+	                <div id="generetedInfo" style="display:none;">
+	                    <div th:each="genereterEl : ${generetedList}" style = "margin-bottom: 15px ;border-bottom: 1px solid black">
+                            <div class="genereted"> 
+                                Login: 
+                            </div> 
+                            <div class="genereted" style="text-align: left;" th:text="${genereterEl[0]}">
+                            </div>
+                            <div class="genereted"> 
+                                Hasło: 
+                            </div> 
+                            <div class="genereted" style="text-align: left;" th:text="${genereterEl[1]}">
+                            </div>
+                        </div>
+                        <button style="display: block; position: relative; float: right; right: 40px; width: 60px; top:25px" onclick='location.href="/manager/manager?display=managerUser"'>
+                        	Cofnij
+                        </button>
+	                </div>
 				</div>
-<!-- ================================================================================================================= -->
-
-
         </div>
     </div>
 
