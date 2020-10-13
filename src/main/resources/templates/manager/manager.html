@@ -335,7 +335,7 @@
 	                </div>
 
 	                <div class="newUserDiv" th:object="${newUser}">
-	                    <form th:action="@{/manager/userSave}" method="POST">      
+	                    <form th:action="@{/manager/userSave}" method="POST" onsubmit="Dodaj.disabled = true; return true;">     
 	                    	<input type="hidden" th:field="*{login}">                   
 	                        <p>
 	                            <span class="newLab"> 

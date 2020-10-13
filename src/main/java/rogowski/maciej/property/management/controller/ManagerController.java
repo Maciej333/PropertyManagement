@@ -2,7 +2,6 @@ package rogowski.maciej.property.management.controller;
 
 import javax.validation.Valid;
 
-import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,8 +18,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import rogowski.maciej.property.management.Service.AnnouncementService;
 import rogowski.maciej.property.management.Service.NotificationService;
 import rogowski.maciej.property.management.Service.PropertyService;
+import rogowski.maciej.property.management.Service.RoleService;
 import rogowski.maciej.property.management.Service.UserService;
 import rogowski.maciej.property.management.entity.Property;
+import rogowski.maciej.property.management.entity.Role;
 import rogowski.maciej.property.management.entity.User;
 import rogowski.maciej.property.management.entity.UserPasswordModel;
 
@@ -29,13 +30,15 @@ import rogowski.maciej.property.management.entity.UserPasswordModel;
 public class ManagerController {
 
 	private UserService userService;
+	private RoleService roleService;
 	private AnnouncementService announcementService;
 	private NotificationService notificationService;
 	private PropertyService propertyService;
 	
 	@Autowired
-	public ManagerController(UserService theUserService, AnnouncementService theAnnouncementService, NotificationService theNotificationService, PropertyService thePropertyService) {
+	public ManagerController(UserService theUserService, RoleService theRoleService, AnnouncementService theAnnouncementService, NotificationService theNotificationService, PropertyService thePropertyService) {
 		userService = theUserService;
+		roleService = theRoleService;
 		announcementService = theAnnouncementService;
 		notificationService = theNotificationService;
 		propertyService = thePropertyService;
@@ -160,10 +163,26 @@ public class ManagerController {
 			attr.addFlashAttribute("newUser", user);
 			return "redirect:/manager/manager?display=managerUserEdit";
 		}else {
-			if(user.getLogin() != null) {
+			if(!(user.getLogin().equals(""))) {
 				user.setPassword(userService.findById(user.getLogin()).getPassword());
-			}	
-			userService.save(user);
+				userService.save(user);
+			}else {
+				user.setLogin(user.getProperty().getName()+(userService.findMaxId(user.getProperty().getId())+1));
+				StringBuilder buildPass = new StringBuilder();
+				for(int i=0; i< 6; i++) {
+					buildPass.append( (  (char)(Math.random()*25 +97)  )+""  );
+				}
+				String password = buildPass.toString();				
+				BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+				user.setPassword("{bcrypt}"+encoder.encode(password));
+
+				userService.save(user);
+				userService.addEnableToOne(user.getLogin());
+				Role role = new Role();
+				role.setUsername(user.getLogin());
+				role.setUserRole("ROLE_INHABITANT");
+				roleService.save(role);
+			}
 			return "redirect:/manager/manager?display=managerUser";
 		}
 	}

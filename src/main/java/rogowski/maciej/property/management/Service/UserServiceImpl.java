@@ -20,6 +20,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public Integer findMaxId(int propertyId) {
+		return userRepository.getMaxUserIdByProperty(propertyId);
+	}
+	
+	@Override
 	public List<User> findAllPropertyUsers() {
 		return userRepository.findAllPropertyUsers();
 	}
@@ -47,6 +52,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void delete(User user) {
 		userRepository.delete(user);
+	}
+
+	@Override
+	public void addEnableToOne(String userLogin) {
+		userRepository.addEnableToOne(userLogin);
 	}
 
 }

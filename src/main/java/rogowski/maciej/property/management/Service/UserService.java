@@ -6,6 +6,8 @@ import rogowski.maciej.property.management.entity.User;
 
 public interface UserService {
 	
+	public Integer findMaxId(int propertyId);
+	
 	public List<User> findAllPropertyUsers();
 	
 	public User findById(String id);
@@ -15,4 +17,6 @@ public interface UserService {
 	public void save(User user);
 	
 	public void delete(User user);
+	
+	public void addEnableToOne(String userLogin);
 }
