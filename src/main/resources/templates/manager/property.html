@@ -59,31 +59,34 @@
 
             <p id="associationTitle" style="font-size: 3vh; margin: 10px;"></p>
 
-            <div style="position: absolute; left: 5%; top: 3%;">
-                <select style="float: left;">
-                    <option value="Stokrotka">Stokrotka</option>
-                    <option value="Kwiatek">Kwiatek</option>
-                </select>
+            <div style="position: absolute; left: 5%; top: 3%;" >
+            	<form th:action="@{/manager/chooseProperty}" method="POST" th:object="${searchProperty}">
+            		<Input class="fill" type="hidden" th:field="*{name}"></Input>
+	                <select id="selectProperty" style="float: left;" onchange="setPropertyUrl()">
+	                	<option style="display: none"></option>
+	                    <option th:each="propertyEl : ${propertyList}" th:value="${propertyEl.id}" th:text="${propertyEl.name}" th:selected="${propertyEl.id} == ${searchProperty.name}"></option>
+	                </select>
+                </form>
             </div>
-
-            <div class="inMenu smallHide">
-                <button class="inMenuButton current" onclick='location.href="/manager/property"'>Aktualne</button>
-                <button class="inMenuButton all" onclick='location.href="/manager/property?display=all"'>Wszystkie</button>
-                <button class="inMenuButton previous" onclick='location.href="/manager/property?display=previous"'>Przeszłe</button>
-                <button class="inMenuButton new" onclick='location.href="/manager/property?display=new"'>Nowe ogłoszenie</button>
-                <button class="inMenuButton onRight managersBtn" onclick='location.href="/manager/property?display=managers"'>Zarząd</button>
+ 	
+			<div class="inMenu smallHide" th:object="${searchProperty}">
+		                <button class="fill inMenuButton current" th:onclick="'window.location.href = \'' + @{/manager/property(propertyId=${searchProperty.name})}+ '\''" th:field="*{name}">Aktualne</button>
+		                <button class="fill inMenuButton all" th:onclick="'window.location.href = \'' + @{/manager/property(propertyId=${searchProperty.name},display='all')}+ '\''" th:field="*{name}">Wszystkie</button>
+		                <button class="fill inMenuButton previous" th:onclick="'window.location.href = \'' + @{/manager/property(propertyId=${searchProperty.name},display='previous')}+ '\''" th:field="*{name}">Przeszłe</button>
+		                <button class="fill inMenuButton new" th:onclick="'window.location.href = \'' + @{/manager/property(propertyId=${searchProperty.name},display='new')}+ '\''" th:field="*{name}">Nowe ogłoszenie</button>
+		                <button class="fill inMenuButton onRight managersBtn" th:onclick="'window.location.href = \'' + @{/manager/property(propertyId=${searchProperty.name},display='managers')}+ '\''" th:field="*{name}">Zarząd</button>
             </div>
             <div class="smallNav">
                 <div class="smallNavHeader">  
                     <span class="clickShow">Menu wspólnoty ..</span>
                 </div>
                 <div class="smallNavToggle" style="display: none;">
-                    <div class="inMenu mediumHide higherMenu">
-		                <button class="inMenuButton current" onclick='location.href="/manager/property"'>Aktualne</button>
-		                <button class="inMenuButton all" onclick='location.href="/manager/property?display=all"'>Wszystkie</button>
-		                <button class="inMenuButton previous" onclick='location.href="/manager/property?display=previous"'>Przeszłe</button>
-		                <button class="inMenuButton new" onclick='location.href="/manager/property?display=new"'>Nowe ogłoszenie</button>
-		                <button class="inMenuButton onRight managersBtn" onclick='location.href="/manager/property?display=managers"'>Zarząd</button>
+                    <div class="inMenu mediumHide higherMenu" th:object="${searchProperty}">
+		                <button class="fill inMenuButton current" th:onclick="'window.location.href = \'' + @{/manager/property(propertyId=${searchProperty.name})}+ '\''" th:field="*{name}">Aktualne</button>
+		                <button class="fill inMenuButton all" th:onclick="'window.location.href = \'' + @{/manager/property(propertyId=${searchProperty.name},display='all')}+ '\''" th:field="*{name}">Wszystkie</button>
+		                <button class="fill inMenuButton previous" th:onclick="'window.location.href = \'' + @{/manager/property(propertyId=${searchProperty.name},display='previous')}+ '\''" th:field="*{name}">Przeszłe</button>
+		                <button class="fill inMenuButton new" th:onclick="'window.location.href = \'' + @{/manager/property(propertyId=${searchProperty.name},display='new')}+ '\''" th:field="*{name}">Nowe ogłoszenie</button>
+		                <button class="fill inMenuButton onRight managersBtn" th:onclick="'window.location.href = \'' + @{/manager/property(propertyId=${searchProperty.name},display='managers')}+ '\''" th:field="*{name}">Zarząd</button>
                     </div>
                 </div>
             </div>
@@ -172,6 +175,14 @@
 			</div>
         </div>
     </div>
+    
+<script>
+	function setPropertyUrl(){
+		var id = $("#selectProperty").val();
+		$(".fill").val(id);
+		$("#selectProperty").parent().submit();
+	};	
+</script>
     
 </body>
 

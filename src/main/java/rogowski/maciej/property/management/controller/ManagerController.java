@@ -227,7 +227,7 @@ public class ManagerController {
 	
 	@PostMapping("/searchUser")
 	public String searchUser(@ModelAttribute("searchProperty") Property property, @ModelAttribute("searchUser") User searchUser, RedirectAttributes attr) {	
-		if( searchUser.getFirstName() != null) {
+		if( searchUser.getFirstName() != null ) {
 			String[] string = searchUser.getFirstName().split("\\s");
 			if(string.length == 1) {
 				string[0] = string[0]+"%";	
@@ -275,29 +275,70 @@ public class ManagerController {
 	}
 	
 	@GetMapping("/property")
-	public String showProperty(Authentication authentication, Model theModel, @RequestParam(name="display", required = false) String display) {
-//		Property property = userService.findById(authentication.getName()).getProperty();
+	public String showProperty(Authentication authentication, Model theModel, @RequestParam(name="display", required = false) String display, @RequestParam(name="propertyId", required = false) String propertyId) {
+		List<Property> propertyList = propertyService.findAll();
+		theModel.addAttribute("propertyList", propertyList);
+		if(propertyId == null && propertyList.size() >0) {
+			propertyId = propertyList.get(0).getId()+"";
+		}
+		Property property = new Property();
+		property.setName(propertyId);
+		if (!theModel.containsAttribute("searchProperty")) {
+	    	theModel.addAttribute("searchProperty",  property);
+	    }	
+		if(propertyId != null && propertyId.matches("\\d")) {
+			property = propertyService.findById(Integer.parseInt(propertyId));
+		}	
 		if(display != null) {
 			if(display.equals("previous")) {
 				theModel.addAttribute("propertyInfo", new DisplayParameter("previous"));
-//				theModel.addAttribute("announcementList", announcementService.getAnnByLessDate(property.getId()));
+				theModel.addAttribute("announcementList", announcementService.getAnnByLessDate(property.getId()));
 			}
 			if(display.equals("all")) {
 				theModel.addAttribute("propertyInfo", new DisplayParameter("all"));
-//				theModel.addAttribute("announcementList", announcementService.getAllAnn(property));
+				theModel.addAttribute("announcementList", announcementService.getAllAnn(property));
 			}
 			if(display.equals("new")) {
 				theModel.addAttribute("propertyInfo", new DisplayParameter("new"));
-//				theModel.addAttribute("announcementList", announcementService.getAllAnn(property));
+				
 			}
 			if(display.equals("managers")) {
 				theModel.addAttribute("propertyInfo", new DisplayParameter("managers"));
-//				theModel.addAttribute("managersList", userService.getAllManagersOfProperty(property.getId()));
+				theModel.addAttribute("managersList", userService.getAllManagersOfProperty(property.getId()));
 			}
 		}else {
 			theModel.addAttribute("propertyInfo", new DisplayParameter("current"));
-//			theModel.addAttribute("announcementList", announcementService.getAnnByCurrentDate(property.getId()));
+			theModel.addAttribute("announcementList", announcementService.getAnnByCurrentDate(property.getId()));
 		}
 		return "/manager/property";
 	}
+
+	@PostMapping("/chooseProperty")
+	public String chooseProperty(@ModelAttribute("searchProperty") Property property, RedirectAttributes attr) {
+		attr.addFlashAttribute("searchProperty", property);
+		return "redirect:/manager/property?propertyId="+property.getName();
+	}
+	
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
