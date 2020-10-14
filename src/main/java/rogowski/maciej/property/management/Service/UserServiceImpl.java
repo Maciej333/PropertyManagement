@@ -59,4 +59,14 @@ public class UserServiceImpl implements UserService {
 		userRepository.addEnableToOne(userLogin);
 	}
 
+	@Override
+	public List<User> searchUserByName(String firstName, String lastName, String propertyId) {
+		return userRepository.searchUserByName(firstName, lastName, propertyId);
+	}
+
+	@Override
+	public List<User> getAllUserOfProperty(int id) {
+		return userRepository.getAllManagersOfProperty(id, "%");
+	}
+
 }

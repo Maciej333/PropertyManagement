@@ -65,5 +65,5 @@ $(document).ready(function(){
     	$(".divContent").hide();
     	$(".buttonDivContent").hide();
     	$("#generateUser").show();	
-    });
+    });  
 });

@@ -19,4 +19,8 @@ public interface UserService {
 	public void delete(User user);
 	
 	public void addEnableToOne(String userLogin);
+	
+	public List<User> searchUserByName(String firstName, String lastName, String propertyId);
+	
+	public List<User> getAllUserOfProperty(int id);
 }

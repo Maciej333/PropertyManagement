@@ -66,7 +66,9 @@ public class ManagerController {
 			}
 			if(display.equals("managerUser")) {
 				theModel.addAttribute("userEdit", new User());
-				theModel.addAttribute("userList", userService.findAllPropertyUsers());
+				if (!theModel.containsAttribute("userList")) {
+					theModel.addAttribute("userList", userService.findAllPropertyUsers());
+				}
 				theModel.addAttribute("userInfo", new DisplayParameter("managerUser"));
 			}
 			if(display.equals("managerUserEdit")) {
@@ -82,6 +84,12 @@ public class ManagerController {
 		if (!theModel.containsAttribute("user")) {
 	    	theModel.addAttribute("user", theUser);
 	    }
+		if (!theModel.containsAttribute("searchUser")) {												
+			theModel.addAttribute("searchUser", new User());
+		}
+		if (!theModel.containsAttribute("searchProperty")) {
+			theModel.addAttribute("searchProperty", new Property(-1));
+		}
 	    if (!theModel.containsAttribute("userPasswordModel")) {
 	    	theModel.addAttribute("userPasswordModel", new UserPasswordModel());
 	    }
@@ -216,7 +224,39 @@ public class ManagerController {
 		attr.addFlashAttribute("generetedList", generetedList);
 		return "redirect:/manager/manager?display=generetedInfo";
 	}
-
+	
+	@PostMapping("/searchUser")
+	public String searchUser(@ModelAttribute("searchProperty") Property property, @ModelAttribute("searchUser") User searchUser, RedirectAttributes attr) {	
+		if( searchUser.getFirstName() != null) {
+			String[] string = searchUser.getFirstName().split("\\s");
+			if(string.length == 1) {
+				string[0] = string[0]+"%";	
+				if(property.getName() != null) {
+					attr.addFlashAttribute("userList", userService.searchUserByName(string[0], "%", property.getName()));
+				}else {
+					attr.addFlashAttribute("userList", userService.searchUserByName(string[0], "%", "%"));
+				}	
+			}else if(string.length > 1){
+				string[0] = string[0]+"%";	
+				string[1] = string[1]+"%";	
+				if(property.getName() != null) {
+					attr.addFlashAttribute("userList", userService.searchUserByName(string[0], string[1], property.getName()));
+				}else {
+					attr.addFlashAttribute("userList", userService.searchUserByName(string[0], string[1], "%"));
+				}
+			}
+		}else {
+			if(property.getName().matches("0")) {
+				attr.addFlashAttribute("userList", userService.searchUserByName("%", "%", "%"));
+			}else {
+				attr.addFlashAttribute("userList", userService.searchUserByName("%", "%", property.getName()));
+			}
+		}
+		attr.addFlashAttribute("searchProperty", property);
+		attr.addFlashAttribute("searchUser", searchUser);	
+		return "redirect:/manager/manager?display=managerUser";
+	}
+	
 	private void createNewUser(User user) {
 		userService.save(user);
 		userService.addEnableToOne(user.getLogin());

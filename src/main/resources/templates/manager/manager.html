@@ -280,14 +280,25 @@
 				</div>
 
 				<div id="managerUser">
-					<div class="buttonDivContent smallMenu">
-	                    <select style="width: 100%;">
-	                        <option></option>
-	                    </select>
-	                    <form class="toSearch" autocomplete="off">
-	                        <input type="text" placeholder="Search.." name="search">
-	                        <button type="submit"><i class="fa fa-search"></i></button>
-	                    </form>
+					<div class="buttonDivContent smallMenu" th:object="${searchProperty}">
+						<div th:object ="${searchUser}">
+							<form th:action="@{/manager/searchUser}" method="POST">
+								<input type="hidden" id="propertyToDisplay" th:field="${searchProperty.name}">
+			                    <select id="selectProperty" style="width: 100%;" onchange="setPropertyUrl()" >
+			                    	<option th:value="${searchProperty.id}" th:text="Wszystkie"></option>
+		                        	<option th:each="propertyEl : ${propertyList}" th:value="${propertyEl.id}" th:text="${propertyEl.name}" th:selected="${propertyEl.id} == ${searchProperty.name}"></option>
+			                    </select>
+		                    </form>		
+
+		                    <form class="toSearch" autocomplete="off" th:action="@{/manager/searchUser}" method="POST">
+		                    	<input type="hidden" th:field="${searchProperty.name}">
+		                        <input type="hidden" th:field="${searchUser.property}">
+		                        <input type="text" th:field="${searchUser.firstName}" placeholder="Search..">
+		                        <button type="submit"><i class="fa fa-search"></i></button>
+		                    </form>
+	                    
+	                    </div>
+
 	                    <button style="width: 100%;" class="addNewButton" id="newUserProfil">
 	                    	Nowy profil
 	                    </button>
@@ -456,6 +467,14 @@
 				</div>
         </div>
     </div>
+
+<script>
+	function setPropertyUrl(){
+		var id = $("#selectProperty").val();
+		$("#propertyToDisplay").val(id);		
+		$("#selectProperty").parent().submit();
+	};
+</script>
 
 </body>
 

@@ -35,6 +35,10 @@ public class Property {
 		
 	}
 
+	public Property(int id) {
+		this.id = id;
+	}
+	
 	public int getId() {
 		return id;
 	}
