@@ -592,7 +592,14 @@
 		display: inline-block;
 		text-align: right;
 	}
-    
+    #newAnnouncement{
+        display: none;
+        position: relative;
+        left: 5%;
+        width: 80%;
+        height: 60%;
+        padding-top: 3%;
+    }
     
     
     
@@ -740,6 +747,15 @@
 		.addNewButton{
 			margin: 0;
 		}
+	    #newAnnouncement{
+	        width: 90%;
+	        left: 5%;
+	        height: 55%;
+	        margin-top: 5%;
+	    }
+        .higherMenu{
+	        height: 125px;
+	    }
 	}
     
     

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="wclassth=device-wclassth, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script th:src="@{/js/clickShow.js}"></script>
+	<script th:src="@{/js/managerPropertyBtnAction.js}"></script>	
+		
+    <title>Zarządzanie Nieruchomościami</title>
+</head>
+
+<body th:object="${propertyInfo}">
+	
+	<p id="defineDisplay" th:text="*{whatToDisplay}" style="display:none"></p>
+		
+    <div class="header">
+        <div class="name">Zarządzanie Nieruchomościami </div>
+    </div>
+
+	<div class="navigation smallHide navWidth">
+        <ul>
+            <li><button class="buttonNav" onclick="location.href='/manager/manager'">Użytkownik</button></li>
+            <li><button class="buttonNav" onclick="location.href='/manager/property'">Wspólnota</button></li>
+            <li><button class="buttonNav" onclick="location.href='/manager/notification'">Zgłoszenia</button></li>
+            <li id="rightLi">
+            	<form th:action="@{/logout}" method="POST">
+            		<input type="submit" class="buttonNav" value="Wyloguj">
+            	</form>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="smallNav">
+        <div class="smallNavHeader">  
+            <span class="clickShow">Menu ..</span>
+        </div>
+        <div class="smallNavToggle" style="display: none;">
+            <div class="navigation mediumHide">
+                <ul>
+		            <li><button class="buttonNav" onclick="location.href='/manager/manager'">Użytkownik</button></li>
+		            <li><button class="buttonNav" onclick="location.href='/manager/property'">Wspólnota</button></li>
+		            <li><button class="buttonNav" onclick="location.href='/manager/notification'">Zgłoszenia</button></li>
+		            <li id="rightLi">
+		            	<form th:action="@{/logout}" method="POST">
+		            		<input type="submit" class="buttonNav" value="Wyloguj">
+		            	</form>
+		            </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="contentText">
+
+            <p id="associationTitle" style="font-size: 3vh; margin: 10px;"></p>
+
+            <div style="position: absolute; left: 5%; top: 3%;">
+                <select style="float: left;">
+                    <option value="Stokrotka">Stokrotka</option>
+                    <option value="Kwiatek">Kwiatek</option>
+                </select>
+            </div>
+
+            <div class="inMenu smallHide">
+                <button class="inMenuButton current" onclick='location.href="/manager/property"'>Aktualne</button>
+                <button class="inMenuButton all" onclick='location.href="/manager/property?display=all"'>Wszystkie</button>
+                <button class="inMenuButton previous" onclick='location.href="/manager/property?display=previous"'>Przeszłe</button>
+                <button class="inMenuButton new" onclick='location.href="/manager/property?display=new"'>Nowe ogłoszenie</button>
+                <button class="inMenuButton onRight managersBtn" onclick='location.href="/manager/property?display=managers"'>Zarząd</button>
+            </div>
+            <div class="smallNav">
+                <div class="smallNavHeader">  
+                    <span class="clickShow">Menu wspólnoty ..</span>
+                </div>
+                <div class="smallNavToggle" style="display: none;">
+                    <div class="inMenu mediumHide higherMenu">
+		                <button class="inMenuButton current" onclick='location.href="/manager/property"'>Aktualne</button>
+		                <button class="inMenuButton all" onclick='location.href="/manager/property?display=all"'>Wszystkie</button>
+		                <button class="inMenuButton previous" onclick='location.href="/manager/property?display=previous"'>Przeszłe</button>
+		                <button class="inMenuButton new" onclick='location.href="/manager/property?display=new"'>Nowe ogłoszenie</button>
+		                <button class="inMenuButton onRight managersBtn" onclick='location.href="/manager/property?display=managers"'>Zarząd</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info">
+                <span style="float: left; margin-left: 10%;">Nazwa Ogłoszenia</span>
+                <span>Data</span>
+                <span style="position: relative; float: right; right: 5%;">Info</span>
+            </div>
+
+			<div th:each="announcementEl : ${announcementList}" id="announcementShowDiv">
+	            <div class="announcement">
+	                <div class="inHeader">
+	                    <div class="announcementTitle" th:text="${announcementEl.title}"></div>
+	                    <div class="announcementDate" th:text="${announcementEl.dateFrom + '-' + announcementEl.dateTo}"></div>
+	                    <div class="downArrow clickShow rightDiv"></div>
+	                </div>
+	                <div class="toToggle" style="display: none;">
+	                    <p style="text-indent: 10%;" th:text="${announcementEl.announcementText}">
+	                    </p>
+	                    <p style="float: right">Z wyrazami szacunku Zarządca</p>
+	                </div>
+	            </div>
+			</div>
+			
+			<div id="newAnnouncement">
+                <form action="">
+                    <p>
+                        <span class="newLab">
+                            Nazwa:
+                        </span>
+                        <span class="newCont">
+                            <Input class="newWidth" type="text"></Input>
+                        </span>
+                    </p>
+                    <p>
+                        <span class="newLab">
+                            Data od:
+                        </span>
+                        <span class="newCont">
+                            <Input class="newWidth" type="text"></Input>
+                        </span>
+                    </p>
+                    <p>
+                        <span class="newLab">
+                            Data do:
+                        </span>
+                        <span class="newCont">
+                            <Input class="newWidth" type="text"></Input>
+                        </span>
+                    </p>
+                    <p>
+                        <span class="newLab">
+                            Ogłoszenie:
+                        </span>
+                        <span class="newCont">
+                            <textarea style="position: relative; width: 90%; height: 60px; overflow: auto; resize: none;"></textarea>
+                        </span>
+                    </p>
+                    <p>
+                        <span style="position: relative; float: right; right: 80px;">
+                            <input type="submit" name="Zmień">
+                        </span>
+                    </p>
+                </form>
+                <button style="position: relative; float: right; right: -35px;" onclick='location.href="/manager/property"'>Cofnij</button>
+            </div>
+
+			<div th:each="managerEl : ${managersList}" id="managersShowDiv">
+				<div class="managers"> 
+	                <div class="managersLabal">
+	                    Imie:<br>
+	                    Nazwisko:<br>
+	                    Telefon:<br>
+	                    Wspólnota:<br>
+	                    Lokal:<br>
+	                </div>
+	                <div class="managersFill">
+	                    <span th:text="${managerEl.firstName}"></span><br>
+	                    <span th:text="${managerEl.lastName}"></span><br>
+	                    <span th:text="${managerEl.number}"></span><br>
+	                    <span th:text="${managerEl.property.name}"></span><br>
+	                    <span th:text="${managerEl.apartmentNumber}"></span><br>
+	                </div>
+            	</div>
+			</div>
+        </div>
+    </div>
+    
+</body>
+
+</html>

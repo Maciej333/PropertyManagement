@@ -273,4 +273,31 @@ public class ManagerController {
 		}
 		return buildPass.toString();		
 	}
+	
+	@GetMapping("/property")
+	public String showProperty(Authentication authentication, Model theModel, @RequestParam(name="display", required = false) String display) {
+//		Property property = userService.findById(authentication.getName()).getProperty();
+		if(display != null) {
+			if(display.equals("previous")) {
+				theModel.addAttribute("propertyInfo", new DisplayParameter("previous"));
+//				theModel.addAttribute("announcementList", announcementService.getAnnByLessDate(property.getId()));
+			}
+			if(display.equals("all")) {
+				theModel.addAttribute("propertyInfo", new DisplayParameter("all"));
+//				theModel.addAttribute("announcementList", announcementService.getAllAnn(property));
+			}
+			if(display.equals("new")) {
+				theModel.addAttribute("propertyInfo", new DisplayParameter("new"));
+//				theModel.addAttribute("announcementList", announcementService.getAllAnn(property));
+			}
+			if(display.equals("managers")) {
+				theModel.addAttribute("propertyInfo", new DisplayParameter("managers"));
+//				theModel.addAttribute("managersList", userService.getAllManagersOfProperty(property.getId()));
+			}
+		}else {
+			theModel.addAttribute("propertyInfo", new DisplayParameter("current"));
+//			theModel.addAttribute("announcementList", announcementService.getAnnByCurrentDate(property.getId()));
+		}
+		return "/manager/property";
+	}
 }
