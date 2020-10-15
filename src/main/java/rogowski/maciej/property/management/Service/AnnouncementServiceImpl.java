@@ -2,6 +2,7 @@ package rogowski.maciej.property.management.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import rogowski.maciej.property.management.dao.AnnouncementRepository;
 import rogowski.maciej.property.management.entity.Announcement;
 import rogowski.maciej.property.management.entity.Property;
+import rogowski.maciej.property.management.entity.User;
 
 @Service
 public class AnnouncementServiceImpl implements AnnouncementService {
@@ -40,6 +42,19 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		announcementRepository.save(announcement);
 	}
 
-	
+	@Override
+	public Announcement findById(int id) {
+		Optional<Announcement> result = announcementRepository.findById(id);
+		Announcement theAnnouncement = null;
+		if(result.isPresent()) {
+			theAnnouncement = result.get();
+		}
+		return theAnnouncement;
+	}
+
+	@Override
+	public void delete(Announcement announcement) {
+		announcementRepository.delete(announcement);
+	}
 
 }

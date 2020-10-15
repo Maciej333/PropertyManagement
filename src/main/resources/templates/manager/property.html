@@ -102,6 +102,14 @@
 	                <div class="inHeader">
 	                    <div class="announcementTitle" th:text="${announcementEl.title}"></div>
 	                    <div class="announcementDate" th:text="${announcementEl.dateFrom + '-' + announcementEl.dateTo}"></div>
+                        <form th:object="${announcementEdit}" th:action="@{/manager/announcementShowUpdate}" method="POST">
+                            <input type="hidden" name="id" th:value="${announcementEl.id}">
+     						<input type="submit" class="clickableBtn" id="editBtn" value="">
+                        </form>
+                        <form th:object="${announcementEdit}" th:action="@{/manager/announcementDelete}" method="POST" onsubmit="return confirm('Usunąć ogłoszenie?') ? true : false;">
+                            <input type="hidden" name="id" th:value="${announcementEl.id}">
+     						<input type="submit" class="clickableBtn" id="deleteBtn" value="">
+                        </form>	  
 	                    <div class="downArrow clickShow rightDiv"></div>
 	                </div>
 	                <div class="toToggle" style="display: none;">

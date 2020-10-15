@@ -14,4 +14,8 @@ public interface AnnouncementService {
 	public List<Announcement> getAllAnn(Property property);
 	
 	public void save(Announcement announcement);
+	
+	public Announcement findById(int id);
+	
+	public void delete(Announcement announcement);
 }

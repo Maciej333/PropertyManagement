@@ -296,6 +296,7 @@ public class ManagerController {
 		if (!theModel.containsAttribute("newAnnouncement")) {
 			theModel.addAttribute("newAnnouncement", new Announcement());
 	    }
+		theModel.addAttribute("announcementEdit", new Announcement());
 		if(display != null) {
 			if(display.equals("previous")) {
 				theModel.addAttribute("propertyInfo", new DisplayParameter("previous"));
@@ -330,13 +331,27 @@ public class ManagerController {
 		if(bindingResult.hasErrors()) {
 			attr.addFlashAttribute("org.springframework.validation.BindingResult.newAnnouncement", bindingResult);
 			attr.addFlashAttribute("newAnnouncement", newAnnouncement);
-			return "redirect:/manager/property?display=new";
+			return "redirect:/manager/property?display=new&propertyId="+newAnnouncement.getProperty().getId();
 		}else {
 			announcementService.save(newAnnouncement);
 			return "redirect:/manager/property?propertyId="+newAnnouncement.getProperty().getId();
 		}	
 	}
-
+	
+	@PostMapping("/announcementShowUpdate")
+	public String editAnnouncement(@ModelAttribute("announcementEdit") Announcement announcement, RedirectAttributes attr) {
+		announcement = announcementService.findById(announcement.getId());
+		attr.addFlashAttribute("newAnnouncement", announcement);
+		return "redirect:/manager/property?display=new&propertyId="+announcement.getProperty().getId();
+	}
+	
+	
+	@PostMapping("/announcementDelete")
+	public String deleteAnnouncement(@ModelAttribute("announcementEdit") Announcement announcement) {
+		announcement = announcementService.findById(announcement.getId());								
+		announcementService.delete(announcementService.findById(announcement.getId()));
+		return "redirect:/manager/property?propertyId="+announcement.getProperty().getId();
+	}
 }
 
 

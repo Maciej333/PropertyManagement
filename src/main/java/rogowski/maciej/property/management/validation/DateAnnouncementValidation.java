@@ -17,10 +17,8 @@ public class DateAnnouncementValidation implements ConstraintValidator<DateAnnou
 		Announcement announcement = (Announcement)value;
 		if( announcement.getDateFrom() != null && announcement.getDateTo() != null &&
 				(announcement.getDateFrom().isBefore(announcement.getDateTo()) || announcement.getDateFrom().isEqual(announcement.getDateTo()))) {
-			System.out.println("date from mniejsze lub rowne");
 			return true;
 		}else {
-			System.out.println("date from wieksze BLAD !!!!!!!!!!!!");
 			return false;
 		}
 	}
