@@ -35,6 +35,11 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		return announcementRepository.findAllByPropertyOrderByIdDesc(property);
 	}
 
+	@Override
+	public void save(Announcement announcement) {
+		announcementRepository.save(announcement);
+	}
+
 	
 
 }

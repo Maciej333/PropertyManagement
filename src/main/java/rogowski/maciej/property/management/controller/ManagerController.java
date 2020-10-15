@@ -23,6 +23,7 @@ import rogowski.maciej.property.management.Service.NotificationService;
 import rogowski.maciej.property.management.Service.PropertyService;
 import rogowski.maciej.property.management.Service.RoleService;
 import rogowski.maciej.property.management.Service.UserService;
+import rogowski.maciej.property.management.entity.Announcement;
 import rogowski.maciej.property.management.entity.GenerateUserModel;
 import rogowski.maciej.property.management.entity.Property;
 import rogowski.maciej.property.management.entity.Role;
@@ -291,7 +292,10 @@ public class ManagerController {
 	    }	
 		if(propertyId != null && propertyId.matches("\\d")) {
 			property = propertyService.findById(Integer.parseInt(propertyId));
-		}	
+		}
+		if (!theModel.containsAttribute("newAnnouncement")) {
+			theModel.addAttribute("newAnnouncement", new Announcement());
+	    }
 		if(display != null) {
 			if(display.equals("previous")) {
 				theModel.addAttribute("propertyInfo", new DisplayParameter("previous"));
@@ -303,7 +307,6 @@ public class ManagerController {
 			}
 			if(display.equals("new")) {
 				theModel.addAttribute("propertyInfo", new DisplayParameter("new"));
-				
 			}
 			if(display.equals("managers")) {
 				theModel.addAttribute("propertyInfo", new DisplayParameter("managers"));
@@ -322,6 +325,17 @@ public class ManagerController {
 		return "redirect:/manager/property?propertyId="+property.getName();
 	}
 	
+	@PostMapping("/saveAnnouncement")
+	public String saveAnnouncement(@ModelAttribute("newAnnouncement") @Valid Announcement newAnnouncement, BindingResult bindingResult, RedirectAttributes attr) {
+		if(bindingResult.hasErrors()) {
+			attr.addFlashAttribute("org.springframework.validation.BindingResult.newAnnouncement", bindingResult);
+			attr.addFlashAttribute("newAnnouncement", newAnnouncement);
+			return "redirect:/manager/property?display=new";
+		}else {
+			announcementService.save(newAnnouncement);
+			return "redirect:/manager/property?propertyId="+newAnnouncement.getProperty().getId();
+		}	
+	}
 
 }
 

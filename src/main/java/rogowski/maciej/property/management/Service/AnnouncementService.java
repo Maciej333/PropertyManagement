@@ -12,4 +12,6 @@ public interface AnnouncementService {
 	public List<Announcement> getAnnByCurrentDate(int id);
 	
 	public List<Announcement> getAllAnn(Property property);
+	
+	public void save(Announcement announcement);
 }

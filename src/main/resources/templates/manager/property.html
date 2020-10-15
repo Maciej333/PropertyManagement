@@ -112,40 +112,47 @@
 	            </div>
 			</div>
 			
-			<div id="newAnnouncement">
-                <form action="">
+			<div id="newAnnouncement" th:object="${searchProperty}">
+                <form th:action="@{/manager/saveAnnouncement}" method="POST" th:object="${newAnnouncement}">
+                    <Input type="hidden" th:field="*{id}"></Input>
+                    <Input type="hidden" name="property" th:value="${searchProperty.name}"></Input>
                     <p>
                         <span class="newLab">
                             Nazwa:
                         </span>
                         <span class="newCont">
-                            <Input class="newWidth" type="text"></Input>
+                            <Input class="newWidth" type="text" th:field="*{title}"></Input>
                         </span>
                     </p>
+                    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red; margin: -10px; font-size: 1.5vh;"></div>
                     <p>
                         <span class="newLab">
                             Data od:
                         </span>
                         <span class="newCont">
-                            <Input class="newWidth" type="text"></Input>
+                            <Input class="newWidth" type="date" th:field="*{dateFrom}"></Input>
                         </span>
                     </p>
+                    <div th:if="${#fields.hasErrors('dateFrom')}" th:errors="*{dateFrom}" style="color:red; margin: -10px; font-size: 1.5vh;"></div>
                     <p>
                         <span class="newLab">
                             Data do:
                         </span>
                         <span class="newCont">
-                            <Input class="newWidth" type="text"></Input>
+                            <Input class="newWidth" type="date" th:field="*{dateTo}"></Input>
                         </span>
                     </p>
+                    <div th:if="${#fields.hasErrors('dateTo')}" th:errors="*{dateTo}" style="color:red; margin: -10px; font-size: 1.5vh;"></div>
+                    <div th:if="${#fields.hasGlobalErrors()}"  th:errors="*{global}" style="color:red; margin-top: 10px;"></div>
                     <p>
                         <span class="newLab">
                             Ogłoszenie:
                         </span>
                         <span class="newCont">
-                            <textarea style="position: relative; width: 90%; height: 60px; overflow: auto; resize: none;"></textarea>
+                            <textarea th:field="*{announcementText}" style="position: relative; width: 90%; height: 60px; overflow: auto; resize: none;"></textarea>
                         </span>
                     </p>
+                    <div th:if="${#fields.hasErrors('announcementText')}" th:errors="*{announcementText}" style="color:red; margin: -10px; font-size: 1.5vh;"></div>
                     <p>
                         <span style="position: relative; float: right; right: 80px;">
                             <input type="submit" name="Zmień">
