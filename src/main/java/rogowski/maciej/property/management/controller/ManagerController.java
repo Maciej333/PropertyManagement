@@ -88,7 +88,7 @@ public class ManagerController {
 			theModel.addAttribute("searchUser", new User());
 		}
 		if (!theModel.containsAttribute("searchProperty")) {
-			theModel.addAttribute("searchProperty", new Property(-1));
+			theModel.addAttribute("searchProperty", new Property(0));
 		}
 	    if (!theModel.containsAttribute("userPasswordModel")) {
 	    	theModel.addAttribute("userPasswordModel", new UserPasswordModel());
@@ -224,14 +224,17 @@ public class ManagerController {
 		attr.addFlashAttribute("generetedList", generetedList);
 		return "redirect:/manager/manager?display=generetedInfo";
 	}
-	
+
 	@PostMapping("/searchUser")
 	public String searchUser(@ModelAttribute("searchProperty") Property property, @ModelAttribute("searchUser") User searchUser, RedirectAttributes attr) {	
-		if( searchUser.getFirstName() != null ) {
+		if(property.getName().equals("")) {
+			property.setName("0");
+		}
+		if( searchUser.getFirstName() != null && !searchUser.getFirstName().equals("")) {
 			String[] string = searchUser.getFirstName().split("\\s");
 			if(string.length == 1) {
 				string[0] = string[0]+"%";	
-				if(property.getName() != null) {
+				if(!property.getName().equals("0")) {
 					attr.addFlashAttribute("userList", userService.searchUserByName(string[0], "%", property.getName()));
 				}else {
 					attr.addFlashAttribute("userList", userService.searchUserByName(string[0], "%", "%"));
@@ -239,14 +242,14 @@ public class ManagerController {
 			}else if(string.length > 1){
 				string[0] = string[0]+"%";	
 				string[1] = string[1]+"%";	
-				if(property.getName() != null) {
+				if(!property.getName().equals("0")) {
 					attr.addFlashAttribute("userList", userService.searchUserByName(string[0], string[1], property.getName()));
 				}else {
 					attr.addFlashAttribute("userList", userService.searchUserByName(string[0], string[1], "%"));
 				}
 			}
 		}else {
-			if(property.getName().matches("0")) {
+			if(property.getName().equals("0")) {
 				attr.addFlashAttribute("userList", userService.searchUserByName("%", "%", "%"));
 			}else {
 				attr.addFlashAttribute("userList", userService.searchUserByName("%", "%", property.getName()));
@@ -256,7 +259,7 @@ public class ManagerController {
 		attr.addFlashAttribute("searchUser", searchUser);	
 		return "redirect:/manager/manager?display=managerUser";
 	}
-	
+
 	private void createNewUser(User user) {
 		userService.save(user);
 		userService.addEnableToOne(user.getLogin());
