@@ -124,7 +124,7 @@ public class UserController {
 		}
 		return "/user/property";
 	}
-	
+
 	@GetMapping("/notification")
 	public String showNotification(Authentication authentication, Model theModel, @RequestParam(name="display", required = false) String display) {
 		User theUser = userService.findById(authentication.getName());
@@ -132,7 +132,7 @@ public class UserController {
 	    if (!theModel.containsAttribute("responseNotification")) {
 	    	theModel.addAttribute("responseNotification", new Notification());
 	    }
-		if(display != null) {
+		if(display != null && !display.equals("new")) {
 			theModel.addAttribute("notifcationUser", theUser);
 			if(display.equals("send")) {
 				for(Notification n : notificationService.getUserSendNotification(theUser.getLogin())) {
@@ -169,47 +169,52 @@ public class UserController {
 		}
 		return "/user/notification";
 	}
+
+	@PostMapping("/markNotification")
+	public String markNotification(@ModelAttribute("responseNotification") @Valid  Notification notification, BindingResult bindingResult, RedirectAttributes attr) {	
+		Notification mainNotification = notificationService.findById(notification.getNotification().getId());
+		mainNotification.setNewTO(null);
+		notificationService.save(mainNotification);				
+		return "redirect:/user/notification?display=new";
+	}
 	
-	@PostMapping("/notification")
-	public String addResponse(@ModelAttribute("responseNotification") @Valid  Notification notification, BindingResult bindingResult, 
-			@RequestParam(name="do", required = false) String toDo, RedirectAttributes attr, Authentication authentication) {
-		
-		User currentUser = userService.findById(authentication.getName());
-		User admin = userService.findById("admin1");	
-		
-		if(toDo != null) {
-			if(toDo.equals("mark")) {
-				Notification changeMark = notificationService.findById(notification.getNotification().getId());
-				changeMark.setNewTO(null);
-				notificationService.save(changeMark);
-			}
-			if(toDo.equals("add")) {
-				if(bindingResult.hasErrors()) {
-					attr.addFlashAttribute("org.springframework.validation.BindingResult.responseNotification", bindingResult);
-					attr.addFlashAttribute("responseNotification", notification);
-					return "redirect:/user/notification?display=newNotif";
-				}
-				notification.setSendDate(LocalDate.now());		
-				notification.setSender(currentUser);
-				notification.setReceiver(admin);	
-				notification.setNewTO(admin);
-				notificationService.save(notification);
-			}
+	@PostMapping("/responseNotification")
+	public String responseNotification(Authentication authentication, @ModelAttribute("responseNotification") @Valid  Notification notification, BindingResult bindingResult, RedirectAttributes attr, @RequestParam(name="display", required = true) String display) {
+		if(bindingResult.hasErrors()) {
+			attr.addFlashAttribute("org.springframework.validation.BindingResult.responseNotification", bindingResult);
+			attr.addFlashAttribute("responseNotification", notification);
+			return "redirect:/user/notification?display="+display;
 		}else {
-			if(bindingResult.hasErrors()) {
-				attr.addFlashAttribute("org.springframework.validation.BindingResult.responseNotification", bindingResult);
-				attr.addFlashAttribute("responseNotification", notification);
-				return "redirect:/user/notification?display=all";
-			}
+			User sender = userService.findById(authentication.getName());
+			User receiver = userService.findById("admin1");
 			notification.setTitle(notification.getNotification().getTitle());
 			notification.setSendDate(LocalDate.now());		
-			notification.setSender(currentUser);
-			notification.setReceiver(admin);	
+			notification.setSender(sender);
+			notification.setReceiver(receiver);	
 			notificationService.save(notification);
 			Notification changeMark = notificationService.findById(notification.getNotification().getId());
-			changeMark.setNewTO(admin);
+			changeMark.setNewTO(receiver);
 			notificationService.save(changeMark);
+			return "redirect:/user/notification?display="+display;
 		}
-		return "redirect:/user/notification";
+	}
+
+	@PostMapping("/saveNotification")
+	public String saveNotification(Authentication authentication, @ModelAttribute("responseNotification") @Valid  Notification notification, BindingResult bindingResult, RedirectAttributes attr) {
+		if(bindingResult.hasErrors()) {
+			attr.addFlashAttribute("org.springframework.validation.BindingResult.responseNotification", bindingResult);
+			attr.addFlashAttribute("responseNotification", notification);
+			return "redirect:/user/notification?display=newNotif";
+		}else {
+			User sender = userService.findById(authentication.getName());
+			User receiver = userService.findById("admin1");
+			
+			notification.setSendDate(LocalDate.now());		
+			notification.setSender(sender);
+			notification.setReceiver(receiver);	
+			notification.setNewTO(receiver);
+			notificationService.save(notification);
+			return "redirect:/user/notification?display=send";
+		}
 	}
 }

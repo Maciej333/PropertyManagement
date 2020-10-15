@@ -23,4 +23,6 @@ public interface UserService {
 	public List<User> searchUserByName(String firstName, String lastName, String propertyId);
 	
 	public List<User> getAllUserOfProperty(int id);
+
+	public List<User> findAll();
 }

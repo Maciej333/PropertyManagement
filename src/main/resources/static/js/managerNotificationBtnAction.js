@@ -27,4 +27,6 @@ $(document).ready(function(){
 		$(".newNotif").addClass("active");
     }
 
+	$("#receiver").select2();
+  	
 });

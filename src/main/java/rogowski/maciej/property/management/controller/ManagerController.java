@@ -1,5 +1,6 @@
 package rogowski.maciej.property.management.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,8 @@ import rogowski.maciej.property.management.Service.RoleService;
 import rogowski.maciej.property.management.Service.UserService;
 import rogowski.maciej.property.management.entity.Announcement;
 import rogowski.maciej.property.management.entity.GenerateUserModel;
+import rogowski.maciej.property.management.entity.Notification;
+import rogowski.maciej.property.management.entity.NotificationModel;
 import rogowski.maciej.property.management.entity.Property;
 import rogowski.maciej.property.management.entity.Role;
 import rogowski.maciej.property.management.entity.User;
@@ -352,6 +355,124 @@ public class ManagerController {
 		announcementService.delete(announcementService.findById(announcement.getId()));
 		return "redirect:/manager/property?propertyId="+announcement.getProperty().getId();
 	}
+
+	@GetMapping("/notification")
+	public String showNotification(Model theModel, @RequestParam(name="display", required = false) String display) {
+		User theUser = userService.findById("admin1");
+		List<NotificationModel> notificationModelList = new ArrayList<>();
+	    if (!theModel.containsAttribute("responseNotification")) {
+	    	theModel.addAttribute("responseNotification", new Notification());
+	    }    
+	    theModel.addAttribute("propertyList", propertyService.findAll());
+	    if (!theModel.containsAttribute("userList")) {
+	    	theModel.addAttribute("userList", userService.findAll());
+	    }
+	    if (!theModel.containsAttribute("selectedProperty")) {
+	    	Property property = new Property();
+	    	property.setName("0");
+	    	theModel.addAttribute("selectedProperty", property);
+	    }    
+		if(display != null && !display.equals("new")) {
+			theModel.addAttribute("notifcationUser", theUser);
+			if(display.equals("send")) {
+				for(Notification n : notificationService.getUserSendNotification(theUser.getLogin())) {
+					notificationModelList.add(new NotificationModel(n));
+				}
+				for(NotificationModel nm : notificationModelList) {
+					nm.setNotificationResponseList(notificationService.getResponseNotification(nm.getNotification().getId()));
+				}	
+				theModel.addAttribute("notificationList", notificationModelList);
+				theModel.addAttribute("notificationInfo", new DisplayParameter("send"));
+			}
+			if(display.equals("all")) {
+				for(Notification n : notificationService.getUserNotification(theUser.getLogin(), theUser.getLogin())) {
+					notificationModelList.add(new NotificationModel(n));
+				}
+				for(NotificationModel nm : notificationModelList) {
+					nm.setNotificationResponseList(notificationService.getResponseNotification(nm.getNotification().getId()));
+				}	
+				theModel.addAttribute("notificationList", notificationModelList);
+				theModel.addAttribute("notificationInfo", new DisplayParameter("all"));
+			}
+			if(display.equals("newNotif")) {
+				theModel.addAttribute("notificationInfo", new DisplayParameter("newNotif"));
+			}
+		}else {
+			for(Notification n : notificationService.getUserNewNotification(theUser.getLogin())) {
+				notificationModelList.add(new NotificationModel(n));
+			}		
+			for(NotificationModel nm : notificationModelList) {
+				nm.setNotificationResponseList(notificationService.getResponseNotification(nm.getNotification().getId()));
+			}	
+			theModel.addAttribute("notificationList", notificationModelList);
+			theModel.addAttribute("notificationInfo", new DisplayParameter("new"));
+		}
+		return "/manager/notification";
+	}
+	
+
+	@PostMapping("/markNotification")
+	public String markNotification(@ModelAttribute("responseNotification") @Valid  Notification notification, BindingResult bindingResult, RedirectAttributes attr) {	
+		Notification mainNotification = notificationService.findById(notification.getNotification().getId());
+		mainNotification.setNewTO(null);
+		notificationService.save(mainNotification);				
+		return "redirect:/manager/notification?display=new";
+	}
+	
+	@PostMapping("/responseNotification")
+	public String responseNotification(@ModelAttribute("responseNotification") @Valid  Notification notification, BindingResult bindingResult, RedirectAttributes attr, @RequestParam(name="display", required = true) String display) {
+		if(bindingResult.hasErrors()) {
+			attr.addFlashAttribute("org.springframework.validation.BindingResult.responseNotification", bindingResult);
+			attr.addFlashAttribute("responseNotification", notification);
+			return "redirect:/manager/notification?display="+display;
+		}else {
+			User sender = notification.getNotification().getSender();
+			User receiver = null;
+			if(sender == userService.findById("admin1")) {
+				receiver = notification.getNotification().getReceiver();
+			}else {
+				receiver = sender;
+				sender = notification.getNotification().getReceiver();
+			}
+			notification.setTitle(notification.getNotification().getTitle());
+			notification.setSendDate(LocalDate.now());		
+			notification.setSender(sender);
+			notification.setReceiver(receiver);	
+			notificationService.save(notification);
+			Notification changeMark = notificationService.findById(notification.getNotification().getId());
+			changeMark.setNewTO(receiver);
+			notificationService.save(changeMark);
+			return "redirect:/manager/notification?display="+display;
+		}
+	}
+
+	@PostMapping("/saveNotification")
+	public String saveNotification(@ModelAttribute("responseNotification") @Valid  Notification notification, BindingResult bindingResult, RedirectAttributes attr) {
+		if(bindingResult.hasErrors()) {
+			attr.addFlashAttribute("org.springframework.validation.BindingResult.responseNotification", bindingResult);
+			attr.addFlashAttribute("responseNotification", notification);
+			return "redirect:/manager/notification?display=newNotif";
+		}else {
+			User sender = userService.findById("admin1");
+			notification.setSendDate(LocalDate.now());		
+			notification.setSender(sender);			
+			notification.setNewTO(notification.getReceiver());
+			notificationService.save(notification);
+			return "redirect:/manager/notification?display=send";
+		}
+	}
+	
+	@PostMapping("/newNotificationProperty")
+	public String newNotificationProperty(@ModelAttribute("selectedProperty") Property property, RedirectAttributes attr) {
+		if(!property.getName().equals("0") && property.getName().matches("\\d+")) {
+			List<User> userList = userService.getAllUserOfProperty(Integer.parseInt(property.getName()));
+			attr.addFlashAttribute("userList", userList);
+		}		
+		attr.addFlashAttribute("selectedProperty", property);
+		
+		return "redirect:/manager/notification?display=newNotif";		
+	}
+	
 }
 
 

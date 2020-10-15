@@ -69,4 +69,9 @@ public class UserServiceImpl implements UserService {
 		return userRepository.getAllManagersOfProperty(id, "%");
 	}
 
+	@Override
+	public List<User> findAll() {
+		return userRepository.findAll();
+	}
+
 }
