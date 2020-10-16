@@ -3,7 +3,7 @@ $(document).ready(function(){
 		$("#notificationShowDiv").show();
 		$("#newNotificationShowDiv").hide();
 		$(".notificationMark").show();
-		$(".responseNotif").addClass("active");
+		$(".newNotif").addClass("active");
 	}  
 	    
     if( ($("#defineDisplay").text()) == "send"){
@@ -24,9 +24,9 @@ $(document).ready(function(){
     	$("#notificationShowDiv").hide();
 		$("#newNotificationShowDiv").show();
 		$(".info").hide();
-		$(".newNotif").addClass("active");
+		$(".newNewNotif").addClass("active");
+		$("#notificationSelector").hide();
     }
 
-	$("#receiver").select2();
-  	
+	$(".receiver").select2();
 });

@@ -6,9 +6,9 @@ import rogowski.maciej.property.management.entity.Notification;
 
 public interface NotificationService {
 
-	public List<Notification> getUserNewNotification(String receiver);
+	public List<Notification> getUserNewNotification(String newTO, String sender, String receiver);
 	
-	public List<Notification> getUserSendNotification(String sender);
+	public List<Notification> getUserSendNotification(String sender, String receiver);
 	
 	public List<Notification> getUserNotification(String sender, String receiver);
 	

@@ -367,74 +367,81 @@ public class ManagerController {
 	}
 
 	@GetMapping("/notification")
-	public String showNotification(Model theModel, @RequestParam(name="display", required = false) String display) {
-		User theUser = userService.findById("admin1");
+	public String showNotification(Model theModel, @RequestParam(name="display", required = false) String display,
+			@RequestParam(name="property", required = false) String propertyId, @RequestParam(name="user", required = false) String login) {
 		List<NotificationModel> notificationModelList = new ArrayList<>();
 	    if (!theModel.containsAttribute("responseNotification")) {
 	    	theModel.addAttribute("responseNotification", new Notification());
 	    }    
 	    theModel.addAttribute("propertyList", propertyService.findAll());
-	    if (!theModel.containsAttribute("userList")) {
+	    if(propertyId != null && !(propertyId).equals("0") && propertyId.matches("\\d+")) {
+	    	theModel.addAttribute("userList", userService.getAllUserOfProperty(Integer.parseInt(propertyId)));
+	    }else {
 	    	theModel.addAttribute("userList", userService.findAll());
 	    }
-	    if (!theModel.containsAttribute("selectedProperty")) {
-	    	Property property = new Property();
-	    	property.setName("0");
-	    	theModel.addAttribute("selectedProperty", property);
-	    }    
+	    Property property = new Property();
+	    property.setName("0");
+	    if(propertyId != null && !propertyId.matches("0")) {
+	    	property.setName(propertyId);
+	    }
+	    theModel.addAttribute("selectedProperty", property);   
+	    User user = new User();
+	    String searchTo = "%";
+	    if(login == null) {
+	    	user.setLogin("0");
+	    }else {
+	    	user.setLogin(login);
+	    	if(!login.equals("0")) {
+	    		searchTo = user.getLogin();
+	    	}
+	    }
+	    theModel.addAttribute("selectedUser", user);
 		if(display != null && !display.equals("new")) {
-			theModel.addAttribute("notifcationUser", theUser);
 			if(display.equals("send")) {
-				for(Notification n : notificationService.getUserSendNotification(theUser.getLogin())) {
+				for(Notification n : notificationService.getUserSendNotification("admin1", searchTo)) {
 					notificationModelList.add(new NotificationModel(n));
 				}
 				for(NotificationModel nm : notificationModelList) {
 					nm.setNotificationResponseList(notificationService.getResponseNotification(nm.getNotification().getId()));
 				}	
-				theModel.addAttribute("notificationList", notificationModelList);
-				theModel.addAttribute("notificationInfo", new DisplayParameter("send"));
 			}
 			if(display.equals("all")) {
-				for(Notification n : notificationService.getUserNotification(theUser.getLogin(), theUser.getLogin())) {
+				for(Notification n : notificationService.getUserNotification("admin1", searchTo)) {
 					notificationModelList.add(new NotificationModel(n));
 				}
 				for(NotificationModel nm : notificationModelList) {
 					nm.setNotificationResponseList(notificationService.getResponseNotification(nm.getNotification().getId()));
 				}	
-				theModel.addAttribute("notificationList", notificationModelList);
-				theModel.addAttribute("notificationInfo", new DisplayParameter("all"));
 			}
-			if(display.equals("newNotif")) {
-				theModel.addAttribute("notificationInfo", new DisplayParameter("newNotif"));
-			}
+			theModel.addAttribute("notificationInfo", new DisplayParameter(display));
 		}else {
-			for(Notification n : notificationService.getUserNewNotification(theUser.getLogin())) {
+			for(Notification n : notificationService.getUserNewNotification("admin1", searchTo, searchTo)) {
 				notificationModelList.add(new NotificationModel(n));
 			}		
 			for(NotificationModel nm : notificationModelList) {
 				nm.setNotificationResponseList(notificationService.getResponseNotification(nm.getNotification().getId()));
-			}	
-			theModel.addAttribute("notificationList", notificationModelList);
-			theModel.addAttribute("notificationInfo", new DisplayParameter("new"));
+			}		
+			theModel.addAttribute("notificationInfo", new DisplayParameter("new"));	
 		}
+		theModel.addAttribute("notificationList", notificationModelList);
 		return "/manager/notification";
 	}
-	
 
 	@PostMapping("/markNotification")
-	public String markNotification(@ModelAttribute("responseNotification") @Valid  Notification notification, BindingResult bindingResult, RedirectAttributes attr) {	
+	public String markNotification(@ModelAttribute("responseNotification") @Valid  Notification notification, BindingResult bindingResult, RedirectAttributes attr,
+			@RequestParam(name="property", required = false) String propertyId, @RequestParam(name="user", required = false) String login) {	
 		Notification mainNotification = notificationService.findById(notification.getNotification().getId());
 		mainNotification.setNewTO(null);
 		notificationService.save(mainNotification);				
-		return "redirect:/manager/notification?display=new";
+		return "redirect:/manager/notification?display=new&property="+propertyId+"&user="+login;
 	}
 	
 	@PostMapping("/responseNotification")
-	public String responseNotification(@ModelAttribute("responseNotification") @Valid  Notification notification, BindingResult bindingResult, RedirectAttributes attr, @RequestParam(name="display", required = true) String display) {
+	public String responseNotification(@ModelAttribute("responseNotification") @Valid  Notification notification, BindingResult bindingResult, RedirectAttributes attr, @RequestParam(name="display", required = true) String display,
+			@RequestParam(name="property", required = false) String propertyId, @RequestParam(name="user", required = false) String login) {
 		if(bindingResult.hasErrors()) {
 			attr.addFlashAttribute("org.springframework.validation.BindingResult.responseNotification", bindingResult);
 			attr.addFlashAttribute("responseNotification", notification);
-			return "redirect:/manager/notification?display="+display;
 		}else {
 			User sender = notification.getNotification().getSender();
 			User receiver = null;
@@ -452,8 +459,8 @@ public class ManagerController {
 			Notification changeMark = notificationService.findById(notification.getNotification().getId());
 			changeMark.setNewTO(receiver);
 			notificationService.save(changeMark);
-			return "redirect:/manager/notification?display="+display;
 		}
+		return "redirect:/manager/notification?display="+display+"&property="+propertyId+"&user="+login;
 	}
 
 	@PostMapping("/saveNotification")
@@ -468,21 +475,30 @@ public class ManagerController {
 			notification.setSender(sender);			
 			notification.setNewTO(notification.getReceiver());
 			notificationService.save(notification);
-			return "redirect:/manager/notification?display=send";
+			
+			String receiverLogin = notification.getReceiver().getLogin();
+			String propertyId = userService.findById(receiverLogin).getProperty().getId()+"";			
+			return "redirect:/manager/notification?display=send&property="+propertyId+"&user="+receiverLogin;
 		}
 	}
 	
 	@PostMapping("/newNotificationProperty")
-	public String newNotificationProperty(@ModelAttribute("selectedProperty") Property property, RedirectAttributes attr) {
-		if(!property.getName().equals("0") && property.getName().matches("\\d+")) {
-			List<User> userList = userService.getAllUserOfProperty(Integer.parseInt(property.getName()));
-			attr.addFlashAttribute("userList", userList);
-		}		
-		attr.addFlashAttribute("selectedProperty", property);
-		
-		return "redirect:/manager/notification?display=newNotif";		
+	public String newNotificationProperty(@ModelAttribute("selectedProperty") Property property, RedirectAttributes attr, @RequestParam(name="display", required = false) String display) {	
+		if(display == null) {
+			return "redirect:/manager/notification?display=newNotif&property="+property.getName();	
+		}else {
+			return "redirect:/manager/notification?display="+display+"&property="+property.getName();	
+		}
 	}
 	
+	@PostMapping("/showUserNotification")
+	public String showUserNotification(@ModelAttribute("selectedUser") User user, RedirectAttributes attr, @RequestParam(name="display", required = true) String display) {
+		String propertyId = "0";
+		if(!user.getLogin().equals("0")) {
+			propertyId = userService.findById(user.getLogin()).getProperty().getId()+"";
+		}		
+		return "redirect:/manager/notification?display="+display+"&property="+propertyId+"&user="+user.getLogin();
+	}
 }
 
 

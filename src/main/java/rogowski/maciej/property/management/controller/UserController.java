@@ -135,7 +135,7 @@ public class UserController {
 		if(display != null && !display.equals("new")) {
 			theModel.addAttribute("notifcationUser", theUser);
 			if(display.equals("send")) {
-				for(Notification n : notificationService.getUserSendNotification(theUser.getLogin())) {
+				for(Notification n : notificationService.getUserSendNotification(theUser.getLogin(),"admin1")) {
 					notificationModelList.add(new NotificationModel(n));
 				}
 				for(NotificationModel nm : notificationModelList) {
@@ -145,7 +145,7 @@ public class UserController {
 				theModel.addAttribute("notificationInfo", new DisplayParameter("send"));
 			}
 			if(display.equals("all")) {
-				for(Notification n : notificationService.getUserNotification(theUser.getLogin(), theUser.getLogin())) {
+				for(Notification n : notificationService.getUserNotification(theUser.getLogin(), "admin1")) {
 					notificationModelList.add(new NotificationModel(n));
 				}
 				for(NotificationModel nm : notificationModelList) {
@@ -158,7 +158,7 @@ public class UserController {
 				theModel.addAttribute("notificationInfo", new DisplayParameter("newNotif"));
 			}
 		}else {
-			for(Notification n : notificationService.getUserNewNotification(theUser.getLogin())) {
+			for(Notification n : notificationService.getUserNewNotification(theUser.getLogin(),"%","%")) {
 				notificationModelList.add(new NotificationModel(n));
 			}		
 			for(NotificationModel nm : notificationModelList) {

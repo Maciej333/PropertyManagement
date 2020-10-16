@@ -28,7 +28,7 @@
         <ul>
             <li><button class="buttonNav" onclick="location.href='/manager/manager'">Użytkownik</button></li>
             <li><button class="buttonNav" onclick="location.href='/manager/property'">Wspólnota</button></li>
-            <li><button class="buttonNav" onclick="location.href='/manager/notification'">Zgłoszenia</button></li>
+            <li><button class="buttonNav" onclick="location.href='/manager/notification?display=new'">Zgłoszenia</button></li>
             <li id="rightLi">
             	<form th:action="@{/logout}" method="POST">
             		<input type="submit" class="buttonNav" value="Wyloguj">
@@ -46,7 +46,7 @@
                 <ul>
 		            <li><button class="buttonNav" onclick="location.href='/manager/manager'">Użytkownik</button></li>
 		            <li><button class="buttonNav" onclick="location.href='/manager/property'">Wspólnota</button></li>
-		            <li><button class="buttonNav" onclick="location.href='/manager/notification'">Zgłoszenia</button></li>
+		            <li><button class="buttonNav" onclick="location.href='/manager/notification?display=new'">Zgłoszenia</button></li>
 		            <li id="rightLi">
 		            	<form th:action="@{/logout}" method="POST">
 		            		<input type="submit" class="buttonNav" value="Wyloguj">

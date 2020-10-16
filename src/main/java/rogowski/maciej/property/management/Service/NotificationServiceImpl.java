@@ -20,13 +20,13 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@Override
-	public List<Notification> getUserNewNotification(String receiver) {
-		return notificationRepository.findUserNewNotification(receiver);
+	public List<Notification> getUserNewNotification(String newTO, String sender, String receiver) {
+		return notificationRepository.findUserNewNotification(newTO, sender, receiver);
 	}
 
 	@Override
-	public List<Notification> getUserSendNotification(String sender) {
-		return notificationRepository.findUserSendNotification(sender);
+	public List<Notification> getUserSendNotification(String sender, String receiver) {
+		return notificationRepository.findUserSendNotification(sender, receiver);
 	}
 	
 	@Override
