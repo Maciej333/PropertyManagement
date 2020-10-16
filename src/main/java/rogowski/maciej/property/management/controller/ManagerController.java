@@ -191,7 +191,7 @@ public class ManagerController {
 				userService.save(user);
 				return "redirect:/manager/manager?display=managerUser";
 			}else {
-				user.setLogin(user.getProperty().getName()+(userService.findMaxId(user.getProperty().getId())+1));
+				user.setLogin(user.getProperty().getName()+getMaxId(user));
 				String password = generatePassword();	
 				List<String[]> generetedList = new ArrayList<>();
 				generetedList.add(new String[]{user.getLogin(), password});
@@ -202,6 +202,16 @@ public class ManagerController {
 				return "redirect:/manager/manager?display=generetedInfo";
 			}
 		}
+	}
+
+	private Integer getMaxId(User user) {
+		Integer maxId = userService.findMaxId(user.getProperty().getId());
+		if(maxId == null) {
+			maxId = 1;
+		}else {
+			maxId = maxId + 1;
+		}
+		return maxId;
 	}
 
 	@PostMapping("/useerDelete")
@@ -218,7 +228,7 @@ public class ManagerController {
 			User generatedUser = new User();
 			generatedUser.fillGeneratedUserField();
 			generatedUser.setProperty(property);
-			generatedUser.setLogin(generatedUser.getProperty().getName()+(userService.findMaxId(generatedUser.getProperty().getId())+1));
+			generatedUser.setLogin(generatedUser.getProperty().getName()+getMaxId(generatedUser));
 			String password = generatePassword();
 			generetedList.add(new String[]{generatedUser.getLogin(), password});
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
