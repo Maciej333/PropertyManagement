@@ -14,8 +14,8 @@ public class PasswordConfirmValidation implements ConstraintValidator<PasswordMa
 
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
-		UserPasswordModel upm = (UserPasswordModel) value;	
-		if( (upm.getNewPassword()!=null) && (upm.getConfirmNewPassword()!=null) ) {
+		UserPasswordModel upm = (UserPasswordModel) value;
+		if ((upm.getNewPassword() != null) && (upm.getConfirmNewPassword() != null)) {
 			return (upm.getNewPassword()).equals(upm.getConfirmNewPassword());
 		}
 		return true;

@@ -13,43 +13,43 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name="notification")
+@Table(name = "notification")
 public class Notification {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
-	
-	@NotEmpty(message="title cannot be empty")
-	@Column(name="title")
+
+	@NotEmpty(message = "title cannot be empty")
+	@Column(name = "title")
 	private String title;
-	
-	@Column(name="send_date")
+
+	@Column(name = "send_date")
 	private LocalDate sendDate;
-	
+
 	@OneToOne
-	@JoinColumn(name="sender")
+	@JoinColumn(name = "sender")
 	private User sender;
-	
+
 	@OneToOne
-	@JoinColumn(name="receiver")
+	@JoinColumn(name = "receiver")
 	private User receiver;
-	
+
 	@OneToOne
-	@JoinColumn(name="new_to")
+	@JoinColumn(name = "new_to")
 	private User newTO;
-	
-	@NotEmpty(message="text cannot be empty")
-	@Column(name="notification_text")
+
+	@NotEmpty(message = "text cannot be empty")
+	@Column(name = "notification_text")
 	private String notificationText;
-	
+
 	@OneToOne
-	@JoinColumn(name="response_to_id")
+	@JoinColumn(name = "response_to_id")
 	private Notification notification;
-	
+
 	public Notification() {
-		
+
 	}
 
 	public int getId() {
@@ -115,5 +115,5 @@ public class Notification {
 	public void setNotification(Notification notification) {
 		this.notification = notification;
 	}
-	
+
 }

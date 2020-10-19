@@ -7,55 +7,55 @@
     <link rel="stylesheet" href="../css/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script th:src="@{/js/clickShow.js}"></script>
-	<script th:src="@{/js/userBtnAction.js}"></script>
-	
+    <script th:src="@{/js/clickShow.js}"></script>
+    <script th:src="@{/js/userBtnAction.js}"></script>
+
     <title>Zarządzanie Nieruchomościami</title>
 </head>
 
 <body th:object="${userInfo}">
-	
-	<p id="defineDisplay" th:text="*{whatToDisplay}" style="display:none"></p>
-	
-	
+
+    <p id="defineDisplay" th:text="*{whatToDisplay}" style="display:none"></p>
+
+
     <div class="header">
         <div class="name">Zarządzanie Nieruchomościami </div>
     </div>
 
-	<div class="navigation smallHide navWidth">
+    <div class="navigation smallHide navWidth">
         <ul>
             <li><button class="buttonNav" onclick="location.href='/user/user'">Użytkownik</button></li>
             <li><button class="buttonNav" onclick="location.href='/user/property'">Wspólnota</button></li>
             <li><button class="buttonNav" onclick="location.href='/user/notification'">Zgłoszenia</button></li>
             <li id="rightLi">
-            	<form th:action="@{/logout}" method="POST">
-            		<input type="submit" class="buttonNav" value="Wyloguj">
-            	</form>
+                <form th:action="@{/logout}" method="POST">
+                    <input type="submit" class="buttonNav" value="Wyloguj">
+                </form>
             </li>
         </ul>
     </div>
-    
+
     <div class="smallNav">
-        <div class="smallNavHeader">  
+        <div class="smallNavHeader">
             <span class="clickShow">Menu ..</span>
         </div>
         <div class="smallNavToggle" style="display: none;">
             <div class="navigation mediumHide">
                 <ul>
                     <li><button class="buttonNav" onclick="location.href='/user/user'">Użytkownik</button></li>
-		            <li><button class="buttonNav" onclick="location.href='/user/property'">Wspólnota</button></li>
-		            <li><button class="buttonNav" onclick="location.href='/user/notification'">Zgłoszenia</button></li>
-		            <li id="rightLi">
-		            	<form th:action="@{/logout}" method="POST">
-		            		<input type="submit" class="buttonNav" value="Wyloguj">
-		            	</form>
-		            </li>
+                    <li><button class="buttonNav" onclick="location.href='/user/property'">Wspólnota</button></li>
+                    <li><button class="buttonNav" onclick="location.href='/user/notification'">Zgłoszenia</button></li>
+                    <li id="rightLi">
+                        <form th:action="@{/logout}" method="POST">
+                            <input type="submit" class="buttonNav" value="Wyloguj">
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
 
-	<div class="userInfo user" th:object="${user}" style="height: 20vh;">
+    <div class="userInfo user" th:object="${user}" style="height: 20vh;">
         <div class="inLabel">
             <p>Imie:</p>
             <p>Nazwisko:</p>
@@ -63,20 +63,22 @@
             <p>Wspólnota:</p>
             <p>Lokal:</p>
         </div>
-        <div class="inText" >
+        <div class="inText">
             <p th:text="*{firstName}"></p>
             <p th:text="*{lastName}"></p>
             <p th:text="*{number}"></p>
             <p th:object="${property}" th:text="*{name}"></p>
-            <p th:text="*{apartmentNumber}"></p>  
+            <p th:text="*{apartmentNumber}"></p>
         </div>
     </div>
     <div class="userOnButton">
-        <button class="buttonNav userButton" id="userChangePassword" onclick='location.href="/user/user?display=userPass"'>zmień hasło</button>
-        <button class="buttonNav userButton" id="userEditInfo" onclick='location.href="/user/user?display=userEdit"'>Edytuj</button>
+        <button class="buttonNav userButton" id="userChangePassword"
+            onclick='location.href="/user/user?display=userPass"'>zmień hasło</button>
+        <button class="buttonNav userButton" id="userEditInfo"
+            onclick='location.href="/user/user?display=userEdit"'>Edytuj</button>
     </div>
 
-	<div class="userEdit user">
+    <div class="userEdit user">
         <form th:object="${user}" th:action="@{/user/userUpdate}" method="POST">
             <Input type="hidden" th:field="*{login}"></Input>
             <p>

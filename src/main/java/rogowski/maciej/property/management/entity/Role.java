@@ -11,16 +11,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "role")
 @IdClass(RoleId.class)
-public class Role implements Serializable{
+public class Role implements Serializable {
 
 	@Id
 	private String username;
-	
+
 	@Id
 	private String userRole;
-	
+
 	public Role() {
-		
+
 	}
 
 	public String getUsername() {
@@ -65,5 +65,5 @@ public class Role implements Serializable{
 			return false;
 		return true;
 	}
-	
+
 }

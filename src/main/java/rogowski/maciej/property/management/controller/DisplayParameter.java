@@ -5,7 +5,7 @@ public class DisplayParameter {
 
 	public DisplayParameter() {
 	}
-	
+
 	public DisplayParameter(String whatToDisplay) {
 		this.whatToDisplay = whatToDisplay;
 	}
@@ -17,5 +17,5 @@ public class DisplayParameter {
 	public void setWhatToDisplay(String whatToDisplay) {
 		this.whatToDisplay = whatToDisplay;
 	}
-	
+
 }

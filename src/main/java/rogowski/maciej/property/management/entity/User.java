@@ -11,43 +11,43 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User {
-	
+
 	@Id
-	@Column(name="username")
+	@Column(name = "username")
 	private String login;
-	
-	@Column(name="user_password")
+
+	@Column(name = "user_password")
 	private String password;
-	
+
 	@Pattern(regexp = "[A-Z][a-z]{2,}", message = "{user.name}")
-	@Column(name="first_name")
+	@Column(name = "first_name")
 	private String firstName;
-	
+
 	@Pattern(regexp = "[A-Z][a-z]{2,}", message = "{user.name}")
-	@Column(name="last_name")
+	@Column(name = "last_name")
 	private String lastName;
-	
-	@Min(value=100000000, message="{user.nine}")
-	@Max(value=999999999, message="{user.nine}")
-	@Column(name="phone_number")
+
+	@Min(value = 100000000, message = "{user.nine}")
+	@Max(value = 999999999, message = "{user.nine}")
+	@Column(name = "phone_number")
 	private int number;
-	
+
 	@ManyToOne
-	@JoinColumn(name="property_id")
+	@JoinColumn(name = "property_id")
 	private Property property;
-	
-	@Min(value=1, message="must be a positive number")
-	@Column(name="apartment_number")
+
+	@Min(value = 1, message = "must be a positive number")
+	@Column(name = "apartment_number")
 	private int apartmentNumber;
 
-	@Column(name="user_property_role")
+	@Column(name = "user_property_role")
 	private String userPropertyRole;
-	
-    public User() {
-    	
-    }
+
+	public User() {
+
+	}
 
 	public String getLogin() {
 		return login;
@@ -112,10 +112,10 @@ public class User {
 	public void setUserPropertyRole(String userPropertyRole) {
 		this.userPropertyRole = userPropertyRole;
 	}
-	
+
 	public void fillGeneratedUserField() {
 		firstName = "Imie";
-		lastName ="Nazwisko";
+		lastName = "Nazwisko";
 		number = 100000000;
 		apartmentNumber = 1000;
 		userPropertyRole = "mieszkaniec";

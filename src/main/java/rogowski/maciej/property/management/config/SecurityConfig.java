@@ -16,36 +16,30 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private AuthenticationSuccessHandler successHandler;
-	
+
 	private DataSource securityDataSource;
-	
+
 	@Autowired
-	public SecurityConfig(AuthenticationSuccessHandler successHandler, @Qualifier("securityDataSource") DataSource securityDataSource) {
+	public SecurityConfig(AuthenticationSuccessHandler successHandler,
+			@Qualifier("securityDataSource") DataSource securityDataSource) {
 		this.successHandler = successHandler;
 		this.securityDataSource = securityDataSource;
 	}
 
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {		
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(securityDataSource)
-		.usersByUsernameQuery("SELECT username, user_password, enabled FROM user WHERE username=?")
-		.authoritiesByUsernameQuery("SELECT username, user_role FROM role WHERE username=?");
-	}
-		
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().
-		antMatchers("/user/user").hasRole("INHABITANT").
-		antMatchers("/manager/manager").hasRole("MANAGER").
-		antMatchers("/user/**").hasRole("INHABITANT").
-		antMatchers("/manager/**").hasRole("MANAGER").
-		antMatchers("/resources/**").permitAll()
-		.and().formLogin().loginPage("/main/login")
-		.loginProcessingUrl("/authenticate").successHandler(successHandler).permitAll()
-		.and().logout().permitAll()
-		.and().exceptionHandling().accessDeniedPage("/main/login?error");
+				.usersByUsernameQuery("SELECT username, user_password, enabled FROM user WHERE username=?")
+				.authoritiesByUsernameQuery("SELECT username, user_role FROM role WHERE username=?");
 	}
 
-	
-	
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().antMatchers("/user/user").hasRole("INHABITANT").antMatchers("/manager/manager")
+				.hasRole("MANAGER").antMatchers("/user/**").hasRole("INHABITANT").antMatchers("/manager/**")
+				.hasRole("MANAGER").antMatchers("/resources/**").permitAll().and().formLogin().loginPage("/main/login")
+				.loginProcessingUrl("/authenticate").successHandler(successHandler).permitAll().and().logout()
+				.permitAll().and().exceptionHandling().accessDeniedPage("/main/login?error");
+	}
+
 }

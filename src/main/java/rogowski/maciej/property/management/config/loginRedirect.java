@@ -14,15 +14,16 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 @Configuration
 public class loginRedirect implements AuthenticationSuccessHandler {
-	
+
 	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {	
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication) throws IOException, ServletException {
 		Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 		if (roles.contains("ROLE_MANAGER")) {
-        	response.sendRedirect("/manager/manager");
-        } else {
-        	response.sendRedirect("/user/user");
-        }
+			response.sendRedirect("/manager/manager");
+		} else {
+			response.sendRedirect("/user/user");
+		}
 	}
-	
+
 }

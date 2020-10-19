@@ -7,48 +7,48 @@
     <link rel="stylesheet" href="../css/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script th:src="@{/js/clickShow.js}"></script>
-	<script th:src="@{/js/userNotificationBtnAction.js}"></script>		
-		
+    <script th:src="@{/js/clickShow.js}"></script>
+    <script th:src="@{/js/userNotificationBtnAction.js}"></script>
+
     <title>Zarządzanie Nieruchomościami</title>
 </head>
 
 <body th:object="${notificationInfo}">
-		
-	<p id="defineDisplay" th:text="*{whatToDisplay}" style="display:none"></p>
-			
+
+    <p id="defineDisplay" th:text="*{whatToDisplay}" style="display: none"></p>
+
     <div class="header">
-        <div class="name">Zarządzanie Nieruchomościami </div>
+        <div class="name">Zarządzanie Nieruchomościami</div>
     </div>
 
-	<div class="navigation smallHide navWidth">
+    <div class="navigation smallHide navWidth">
         <ul>
             <li><button class="buttonNav" onclick="location.href='/user/user'">Użytkownik</button></li>
             <li><button class="buttonNav" onclick="location.href='/user/property'">Wspólnota</button></li>
             <li><button class="buttonNav" onclick="location.href='/user/notification'">Zgłoszenia</button></li>
             <li id="rightLi">
-            	<form th:action="@{/logout}" method="POST">
-            		<input type="submit" class="buttonNav" value="Wyloguj">
-            	</form>
+                <form th:action="@{/logout}" method="POST">
+                    <input type="submit" class="buttonNav" value="Wyloguj">
+                </form>
             </li>
         </ul>
     </div>
-    
+
     <div class="smallNav">
-        <div class="smallNavHeader">  
+        <div class="smallNavHeader">
             <span class="clickShow">Menu ..</span>
         </div>
         <div class="smallNavToggle" style="display: none;">
             <div class="navigation mediumHide">
                 <ul>
                     <li><button class="buttonNav" onclick="location.href='/user/user'">Użytkownik</button></li>
-		            <li><button class="buttonNav" onclick="location.href='/user/property'">Wspólnota</button></li>
-		            <li><button class="buttonNav" onclick="location.href='/user/notification'">Zgłoszenia</button></li>
-		            <li id="rightLi">
-		            	<form th:action="@{/logout}" method="POST">
-		            		<input type="submit" class="buttonNav" value="Wyloguj">
-		            	</form>
-		            </li>
+                    <li><button class="buttonNav" onclick="location.href='/user/property'">Wspólnota</button></li>
+                    <li><button class="buttonNav" onclick="location.href='/user/notification'">Zgłoszenia</button></li>
+                    <li id="rightLi">
+                        <form th:action="@{/logout}" method="POST">
+                            <input type="submit" class="buttonNav" value="Wyloguj">
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -56,115 +56,140 @@
 
     <div class="content">
         <div class="contentText">
-			
-			<p style="font-size: 3vh; margin: 10px;">Zgłoszenia</p>
+
+            <p style="font-size: 3vh; margin: 10px;">Zgłoszenia</p>
 
             <div class="inMenu smallHide">
                 <button class="inMenuButton responseNotif" onclick='location.href="/user/notification"'>Nowe</button>
-                <button class="inMenuButton sentNotif" onclick='location.href="/user/notification?display=send"'>Wysłane</button>
-                <button class="inMenuButton allNotif" onclick='location.href="/user/notification?display=all"'>Wszystkie</button>
-                <button class="inMenuButton onRight newNotif" onclick='location.href="/user/notification?display=newNotif"'>Nowe Zgłoszenie</button>
+                <button class="inMenuButton sentNotif"
+                    onclick='location.href="/user/notification?display=send"'>Wysłane</button>
+                <button class="inMenuButton allNotif"
+                    onclick='location.href="/user/notification?display=all"'>Wszystkie</button>
+                <button class="inMenuButton onRight newNotif"
+                    onclick='location.href="/user/notification?display=newNotif"'>Nowe
+                    Zgłoszenie</button>
             </div>
             <div class="smallNav">
-                <div class="smallNavHeader">  
+                <div class="smallNavHeader">
                     <span class="clickShow">Menu zgłoszeń ..</span>
                 </div>
                 <div class="smallNavToggle" style="display: none;">
                     <div class="inMenu mediumHide">
-		                <button class="inMenuButton responseNotif" onclick='location.href="/user/notification"'>Nowe</button>
-		                <button class="inMenuButton sentNotif" onclick='location.href="/user/notification?display=send"'>Wysłane</button>
-		                <button class="inMenuButton allNotif" onclick='location.href="/user/notification?display=all"'>Wszystkie</button>
-		                <button class="inMenuButton onRight newNotif" onclick='location.href="/user/notification?display=newNotif"'>Nowe Zgłoszenie</button>
+                        <button class="inMenuButton responseNotif"
+                            onclick='location.href="/user/notification"'>Nowe</button>
+                        <button class="inMenuButton sentNotif"
+                            onclick='location.href="/user/notification?display=send"'>Wysłane</button>
+                        <button class="inMenuButton allNotif"
+                            onclick='location.href="/user/notification?display=all"'>Wszystkie</button>
+                        <button class="inMenuButton onRight newNotif"
+                            onclick='location.href="/user/notification?display=newNotif"'>Nowe
+                            Zgłoszenie</button>
                     </div>
                 </div>
             </div>
 
             <div class="info">
                 <span style="float: left; margin-left: 10%;">Nazwa Zgłoszenia</span>
-                <span>Data</span>
-                <span style="position: relative; float: right; right: 5%;">Info</span>
+                <span>Data</span> <span style="position: relative; float: right; right: 5%;">Info</span>
             </div>
 
             <div th:each="notificationtEl : ${notificationList}" id="notificationShowDiv">
-	            <div class="announcement">
-	                <div class="inHeader">
-	                    <div class="announcementTitle" th:text="${notificationtEl.notification.title}"></div>
-	                    <div class="announcementDate" th:text="${notificationtEl.notification.sendDate}"></div>
-	                    <div class="downArrow clickShow rightDiv"></div>
-	                </div>
-	                <div class="toToggle" style="display: none;">
+                <div class="announcement">
+                    <div class="inHeader">
+                        <div class="announcementTitle" th:text="${notificationtEl.notification.title}"></div>
+                        <div class="announcementDate" th:text="${notificationtEl.notification.sendDate}"></div>
+                        <div class="downArrow clickShow rightDiv"></div>
+                    </div>
+                    <div class="toToggle" style="display: none;">
 
-		                <div class="notification">
-	                        <p th:text="${notificationtEl.notification.notificationText}"></p>
-	                        <p style="text-align: right;" th:text="${notificationtEl.notification.sender.firstName + ' ' + notificationtEl.notification.sender.lastName}"></p>
-	                    </div>
-	                    
-	                    <div th:each="notificationtResponseEl : ${notificationtEl.notificationResponseList}">
-	                    	<div style="border-top: 1px solid black;">
-	                    		<p th:text="${notificationtResponseEl.notificationText}"></p>
-	                        	<p style="text-align: right;" th:text="${notificationtResponseEl.sender.firstName + ' ' + notificationtResponseEl.sender.lastName}"></p>
-	                        </div>
-	                    </div>
-	                    
-	                    <div class="responseBtnDiv">
-	                        <button class="responseBtn clickShow">Response</button>
-	                        <form th:action="@{/user/markNotification}" method="POST" th:object="${responseNotification}">
-	                        	<input type="hidden" th:name="notification" th:value="(*{notification} != null)? *{notification} : ${notificationtEl.notification.id}">
-	                        	<input type="hidden" th:name="title" th:value="(*{title} != null)? *{title} : ${notificationtEl.notification.title}">	
-	                        	<input type="hidden" th:name="notificationText" th:value="(*{notificationText} != null)? *{notificationText} : ${notificationtEl.notification.notificationText}">
-	                    		<button class="responseBtn notificationMark" style="display: none">Oznacz jako przeczytane</button>
-	                    	</form>
-	                    </div>
-	                    <div class="divToResponse">									
-	                    	<form th:action="@{/user/responseNotification(display=${notificationInfo.whatToDisplay})}" method="POST" th:object="${responseNotification}">
-		                        <input type="hidden" th:name="notification" th:value="(*{notification} != null)? *{notification} : ${notificationtEl.notification.id}">	
-		                        <input type="hidden" th:name="title" th:value="(*{title} != null)? *{title} : ${notificationtEl.notification.title}">		                      
-		                        <textarea style="width: 100%; height: 45px; resize: none;" th:field="*{notificationText}"></textarea>
-				                <div th:if="${#fields.hasErrors('notificationText')}" th:errors="*{notificationText}" style="color:red;"></div>
-		                        <span style="position: relative; float: right; right: 5%;">
-		                            <input type="submit" name="Add" style="margin: 10px 0">
-		                        </span>
-	                        </form>
-	                    </div>
-	                </div>
-	            </div>
+                        <div class="notification">
+                            <p th:text="${notificationtEl.notification.notificationText}"></p>
+                            <p style="text-align: right;"
+                                th:text="${notificationtEl.notification.sender.firstName + ' ' + notificationtEl.notification.sender.lastName}">
+                            </p>
+                        </div>
+
+                        <div th:each="notificationtResponseEl : ${notificationtEl.notificationResponseList}">
+                            <div style="border-top: 1px solid black;">
+                                <p th:text="${notificationtResponseEl.notificationText}"></p>
+                                <p style="text-align: right;"
+                                    th:text="${notificationtResponseEl.sender.firstName + ' ' + notificationtResponseEl.sender.lastName}">
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="responseBtnDiv">
+                            <button class="responseBtn clickShow">Response</button>
+                            <form th:action="@{/user/markNotification}" method="POST"
+                                th:object="${responseNotification}">
+                                <input type="hidden" th:name="notification"
+                                    th:value="(*{notification} != null)? *{notification} : ${notificationtEl.notification.id}">
+                                <input type="hidden" th:name="title"
+                                    th:value="(*{title} != null)? *{title} : ${notificationtEl.notification.title}">
+                                <input type="hidden" th:name="notificationText"
+                                    th:value="(*{notificationText} != null)? *{notificationText} : ${notificationtEl.notification.notificationText}">
+                                <button class="responseBtn notificationMark" style="display: none">Oznacz jako
+                                    przeczytane</button>
+                            </form>
+                        </div>
+                        <div class="divToResponse">
+                            <form th:action="@{/user/responseNotification(display=${notificationInfo.whatToDisplay})}"
+                                method="POST" th:object="${responseNotification}">
+                                <input type="hidden" th:name="notification"
+                                    th:value="(*{notification} != null)? *{notification} : ${notificationtEl.notification.id}">
+                                <input type="hidden" th:name="title"
+                                    th:value="(*{title} != null)? *{title} : ${notificationtEl.notification.title}">
+                                <textarea style="width: 100%; height: 45px; resize: none;"
+                                    th:field="*{notificationText}"></textarea>
+                                <div th:if="${#fields.hasErrors('notificationText')}"
+									th:errors="*{notificationText}" style="color: red;"></div>
+								<span style="position: relative; float: right; right: 5%;">
+									<input type="submit" name="Add" style="margin: 10px 0">
+								</span>
+							</form>
+						</div>
+					</div>
+				</div>
 			</div>
-			
+
 			<div id="newNotificationShowDiv">
-				<form th:action="@{/user/saveNotification}" method="POST" th:object="${responseNotification}">                   
-                    <p>
-                        <span class="newLab"> 
-                            Nazwa zgłoszenia:
-                        </span> 
-                        <span class="newCont">
-                            <Input class="newWidth" type="text" th:field="*{title}"></Input>
-                        </span>
-                    </p>
-                    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red; margin: -15px;"></div>
-                    <p>
-                        <span class="newLab"> 
-                            Opis zgłoszenia: 
-                        </span> 
-                        <span class="newCont">
-                            <textarea class="newWidth" style="height: 80px; overflow: auto; resize: none;" th:field="*{notificationText}"></textarea>
-                        </span>
-                    </p>
-                    <div th:if="${#fields.hasErrors('notificationText')}" th:errors="*{notificationText}" style="color:red; margin: -15px;"></div>
-                    <p>
-                        <span class="newLab"> 
-                        </span> 
-                        <span class="newCont">
-                            <span style="position: relative; float: right; right: 10%;">
+				<form th:action="@{/user/saveNotification}" method="POST"
+					th:object="${responseNotification}">
+					<p>
+                        <span class="newLab"> Nazwa zgłoszenia: </span> 
+                        <span class="newCont"> 
+                            <Input class="newWidth" type="text"
+                            th:field="*{title}">
+                            </Input>
+						</span>
+					</p>
+					<div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+						style="color: red; margin: -15px;"></div>
+					<p>
+                        <span class="newLab"> Opis zgłoszenia: </span>
+                        <span class="newCont"> 
+                            <textarea class="newWidth"
+								style="height: 80px; overflow: auto; resize: none;"
+                                th:field="*{notificationText}">
+                            </textarea>
+						</span>
+					</p>
+					<div th:if="${#fields.hasErrors('notificationText')}"
+						th:errors="*{notificationText}" style="color: red; margin: -15px;"></div>
+					<p>
+                        <span class="newLab"> </span> 
+                        <span class="newCont"> 
+                            <span style="position: relative; float: right; right: 10%;"> 
                                 <input type="submit" name="Dodaj">
                             </span>
-                        </span>
-                    </p>
-                </form>
+						</span>
+					</p>
+				</form>
 			</div>
-			
-        </div>
-    </div>
-    
+
+		</div>
+	</div>
+
 </body>
 
 </html>

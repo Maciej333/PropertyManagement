@@ -13,35 +13,35 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name="property")
+@Table(name = "property")
 public class Property {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
-	
-	@NotEmpty(message="Cannot be empty")
-	@Column(name="property_name")
+
+	@NotEmpty(message = "Cannot be empty")
+	@Column(name = "property_name")
 	private String name;
-		
-	@NotEmpty(message="Cannot be empty")
-	@Column(name="address")
-    private String address;
-	
-	@OneToMany(mappedBy="property")
+
+	@NotEmpty(message = "Cannot be empty")
+	@Column(name = "address")
+	private String address;
+
+	@OneToMany(mappedBy = "property")
 	private List<User> user;
-	
-	@OneToMany(mappedBy="property")
+
+	@OneToMany(mappedBy = "property")
 	private List<Announcement> announcements;
-	
+
 	public Property() {
-		
+
 	}
 
 	public Property(int id) {
 		this.id = id;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -81,11 +81,11 @@ public class Property {
 	public void setAnnouncements(List<Announcement> announcements) {
 		this.announcements = announcements;
 	}
-	
-	public List<User> findManagers(){
+
+	public List<User> findManagers() {
 		List<User> managersList = new ArrayList<>();
-		for(User u: user) {
-			if(u.getUserPropertyRole().equals("zarząd")) {
+		for (User u : user) {
+			if (u.getUserPropertyRole().equals("zarząd")) {
 				managersList.add(u);
 			}
 		}

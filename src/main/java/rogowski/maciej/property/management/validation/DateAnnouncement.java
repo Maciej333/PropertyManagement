@@ -13,11 +13,13 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 @Documented
-@Constraint(validatedBy = DateAnnouncementValidation.class )
+@Constraint(validatedBy = DateAnnouncementValidation.class)
 @Retention(RUNTIME)
 @Target({ TYPE, FIELD, ANNOTATION_TYPE })
 public @interface DateAnnouncement {
-    public String message() default "date to can't be less than date from";
-    Class<?>[] groups() default {};
-    Class<? extends Payload>[] payload() default {};
+	public String message() default "date to can't be less than date from";
+
+	Class<?>[] groups() default {};
+
+	Class<? extends Payload>[] payload() default {};
 }

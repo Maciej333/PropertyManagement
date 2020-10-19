@@ -7,15 +7,15 @@
     <link rel="stylesheet" href="../css/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script th:src="@{/js/clickShow.js}"></script>
-	
+    <script th:src="@{/js/clickShow.js}"></script>
+
     <title>Zarządzanie Nieruchomościami</title>
 </head>
 
 <body>
 
     <div class="header">
-        <div class="name">Zarządzanie Nieruchomościami </div>
+        <div class="name">Zarządzanie Nieruchomościami</div>
     </div>
 
     <div class="navigation smallHide">
@@ -26,7 +26,7 @@
         </ul>
     </div>
     <div class="smallNav">
-        <div class="smallNavHeader">  
+        <div class="smallNavHeader">
             <span class="clickShow">Menu ..</span>
         </div>
         <div class="smallNavToggle" style="display: none;">
@@ -41,28 +41,23 @@
     </div>
 
     <div id="loginContent">
-        <div id="loginContentText">           
+        <div id="loginContentText">
             <form autocomplete="off" th:action="@{/authenticate}" method="POST">
                 <p id="toLogin">
-                    <label for="inLogin">Login</label>
-                    <input type="text" name="username" id="inLogin"> <br>
+                    <label for="inLogin">Login</label> <input type="text" name="username" id="inLogin"> <br>
                 </p>
                 <p id="toPassword">
-                    <label for="inPassword">Hasło</label>
-                    <input type="password" name="password" id="inPassword"><br>
+                    <label for="inPassword">Hasło</label> <input type="password" name="password" id="inPassword"><br>
                 </p>
                 <p id="loginSubmit">
                     <input type="submit" value="Login"><br>
                 </p>
-        		<div th:if="${param.error}">
-						Invalid username and password.
-				</div>
-				<div th:if="${param.logout}">
-						You have been logged out.
-				</div>
-            </form> 
+                <div th:if="${param.error}">Invalid username and password.</div>
+                <div th:if="${param.logout}">You have been logged out.</div>
+            </form>
         </div>
     </div>
 
 </body>
+
 </html>

@@ -8,19 +8,19 @@ import rogowski.maciej.property.management.validation.PasswordMatch;
 @PasswordMatch
 public class UserPasswordModel {
 
-	@NotBlank(message="old password is required")
+	@NotBlank(message = "old password is required")
 	private String oldPassword;
-	
-	@NotBlank(message="new password is required")
-	@Pattern(regexp = "[\\w|\\.|!]{6,}", message="password must be at least 6 char length, can contain letters, digits, _ , . or !")
+
+	@NotBlank(message = "new password is required")
+	@Pattern(regexp = "[\\w|\\.|!]{6,}", message = "password must be at least 6 char length, can contain letters, digits, _ , . or !")
 	private String newPassword;
-	
+
 	private String confirmNewPassword;
-	
+
 	private String confirmOldPassword;
-	
+
 	public UserPasswordModel() {
-		
+
 	}
 
 	public String getOldPassword() {

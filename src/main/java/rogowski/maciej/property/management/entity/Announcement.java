@@ -18,40 +18,40 @@ import org.springframework.format.annotation.DateTimeFormat;
 import rogowski.maciej.property.management.validation.DateAnnouncement;
 
 @Entity
-@Table(name="announcement")
+@Table(name = "announcement")
 @DateAnnouncement
 public class Announcement {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
-	
+
 	@ManyToOne
 	@NotNull
-	@JoinColumn(name="property_id")
+	@JoinColumn(name = "property_id")
 	private Property property;
-	
-	@Column(name="title")
-	@NotEmpty(message="Cannot be empty")
+
+	@Column(name = "title")
+	@NotEmpty(message = "Cannot be empty")
 	private String title;
-	
-	@Column(name="date_from")
-	@NotNull(message="date cannot be null")
+
+	@Column(name = "date_from")
+	@NotNull(message = "date cannot be null")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateFrom;
-	
-	@Column(name="date_to")
-	@NotNull(message="date cannot be null")
+
+	@Column(name = "date_to")
+	@NotNull(message = "date cannot be null")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateTo;
-	
-	@Column(name="announcement_text")
-	@NotEmpty(message="Cannot be empty")
+
+	@Column(name = "announcement_text")
+	@NotEmpty(message = "Cannot be empty")
 	private String announcementText;
-	
+
 	public Announcement() {
-		
+
 	}
 
 	public int getId() {

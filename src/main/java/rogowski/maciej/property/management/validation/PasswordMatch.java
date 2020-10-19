@@ -13,12 +13,14 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 @Documented
-@Constraint(validatedBy = PasswordConfirmValidation.class )
+@Constraint(validatedBy = PasswordConfirmValidation.class)
 @Retention(RUNTIME)
 @Target({ TYPE, FIELD, ANNOTATION_TYPE })
 public @interface PasswordMatch {
-    public String message() default "Password don't match";
-    Class<?>[] groups() default {};
-    Class<? extends Payload>[] payload() default {};
+	public String message() default "Password don't match";
+
+	Class<?>[] groups() default {};
+
+	Class<? extends Payload>[] payload() default {};
 
 }

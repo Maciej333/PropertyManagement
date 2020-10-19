@@ -3,13 +3,13 @@ package rogowski.maciej.property.management.entity;
 import java.util.List;
 
 public class NotificationModel {
-	
+
 	private Notification notification;
-	
+
 	private List<Notification> notificationResponseList;
-	
+
 	public NotificationModel() {
-		
+
 	}
 
 	public NotificationModel(Notification notification) {
@@ -31,5 +31,5 @@ public class NotificationModel {
 	public void setNotificationResponseList(List<Notification> notificationResponseList) {
 		this.notificationResponseList = notificationResponseList;
 	}
-	
+
 }

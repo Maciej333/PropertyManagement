@@ -8,473 +8,477 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script th:src="@{/js/clickShow.js}"></script>
-	<script th:src="@{/js/userBtnAction.js}"></script>
-	<script th:src="@{/js/managerBtnAction.js}"></script>
-	
+    <script th:src="@{/js/clickShow.js}"></script>
+    <script th:src="@{/js/userBtnAction.js}"></script>
+    <script th:src="@{/js/managerBtnAction.js}"></script>
+
     <title>Zarządzanie Nieruchomościami</title>
 </head>
 
 <body th:object="${userInfo}">
-	
-	<p id="defineDisplay" th:text="*{whatToDisplay}" style="display:none"></p>
-	
-	
+
+    <p id="defineDisplay" th:text="*{whatToDisplay}" style="display: none"></p>
+
+
     <div class="header">
-        <div class="name">Zarządzanie Nieruchomościami </div>
+        <div class="name">Zarządzanie Nieruchomościami</div>
     </div>
 
-	<div class="navigation smallHide navWidth">
+    <div class="navigation smallHide navWidth">
         <ul>
             <li><button class="buttonNav" onclick="location.href='/manager/manager'">Użytkownik</button></li>
             <li><button class="buttonNav" onclick="location.href='/manager/property'">Wspólnota</button></li>
-            <li><button class="buttonNav" onclick="location.href='/manager/notification?display=new'">Zgłoszenia</button></li>
+            <li><button class="buttonNav"
+                    onclick="location.href='/manager/notification?display=new'">Zgłoszenia</button></li>
             <li id="rightLi">
-            	<form th:action="@{/logout}" method="POST">
-            		<input type="submit" class="buttonNav" value="Wyloguj">
-            	</form>
+                <form th:action="@{/logout}" method="POST">
+                    <input type="submit" class="buttonNav" value="Wyloguj">
+                </form>
             </li>
         </ul>
     </div>
-    
+
     <div class="smallNav">
-        <div class="smallNavHeader">  
+        <div class="smallNavHeader">
             <span class="clickShow">Menu ..</span>
         </div>
         <div class="smallNavToggle" style="display: none;">
             <div class="navigation mediumHide">
                 <ul>
-		            <li><button class="buttonNav" onclick="location.href='/manager/manager'">Użytkownik</button></li>
-		            <li><button class="buttonNav" onclick="location.href='/manager/property'">Wspólnota</button></li>
-		            <li><button class="buttonNav" onclick="location.href='/manager/notification?display=new'">Zgłoszenia</button></li>
-		            <li id="rightLi">
-		            	<form th:action="@{/logout}" method="POST">
-		            		<input type="submit" class="buttonNav" value="Wyloguj">
-		            	</form>
-		            </li>
+                    <li><button class="buttonNav" onclick="location.href='/manager/manager'">Użytkownik</button></li>
+                    <li><button class="buttonNav" onclick="location.href='/manager/property'">Wspólnota</button></li>
+                    <li><button class="buttonNav"
+                            onclick="location.href='/manager/notification?display=new'">Zgłoszenia</button></li>
+                    <li id="rightLi">
+                        <form th:action="@{/logout}" method="POST">
+                            <input type="submit" class="buttonNav" value="Wyloguj">
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
 
-	<div class="content">
-		<div class="contentText">
-			<p id="associationTitle" style="font-size: 3vh; margin: 10px;">Panel zarządcy</p>
-			<div class="inMenu smallHide">
-			    <button class="inMenuButton infoManager" onclick='location.href="/manager/manager"'>Info</button>
-			    <button class="inMenuButton propertyManager" onclick='location.href="/manager/manager?display=managerProperty"'>Wspólnoty</button>
-			    <button class="inMenuButton userManager" onclick='location.href="/manager/manager?display=managerUser"'>Użytkownicy</button>
-			</div>
-			<div class="smallNav">
-                <div class="smallNavHeader">  
+    <div class="content">
+        <div class="contentText">
+            <p id="associationTitle" style="font-size: 3vh; margin: 10px;">Panel
+                zarządcy</p>
+            <div class="inMenu smallHide">
+                <button class="inMenuButton infoManager" onclick='location.href="/manager/manager"'>Info</button>
+                <button class="inMenuButton propertyManager"
+                    onclick='location.href="/manager/manager?display=managerProperty"'>Wspólnoty</button>
+                <button class="inMenuButton userManager"
+                    onclick='location.href="/manager/manager?display=managerUser"'>Użytkownicy</button>
+            </div>
+            <div class="smallNav">
+                <div class="smallNavHeader">
                     <span class="clickShow">Menu ..</span>
                 </div>
                 <div class="smallNavToggle" style="display: none;">
                     <div class="inMenu mediumHide" style="height: 75px">
-					    <button class="inMenuButton infoManager" onclick='location.href="/manager/manager"'>Info</button>
-					    <button class="inMenuButton propertyManager" onclick='location.href="/manager/manager?display=managerProperty"'>Wspólnoty</button>
-					    <button class="inMenuButton userManager" onclick='location.href="/manager/manager?display=managerUser"'>Użytkownicy</button>
-					 </div>
+                        <button class="inMenuButton infoManager"
+                            onclick='location.href="/manager/manager"'>Info</button>
+                        <button class="inMenuButton propertyManager"
+                            onclick='location.href="/manager/manager?display=managerProperty"'>Wspólnoty</button>
+                        <button class="inMenuButton userManager"
+                            onclick='location.href="/manager/manager?display=managerUser"'>Użytkownicy</button>
+                    </div>
                 </div>
             </div>
-			
-			<div id="role">
-			    Prezes
+
+            <div id="role">Prezes</div>
+            <div class="userInfo user" th:object="${user}" style="height: 15vh;">
+                <div class="inLabel">
+                    <p>Imie:</p>
+                    <p>Nazwisko:</p>
+                    <p>Telefon:</p>
+                    <p>Nr licencji:</p>
+                </div>
+                <div class="inText">
+                    <p th:text="*{firstName}"></p>
+                    <p th:text="*{lastName}"></p>
+                    <p th:text="*{number}"></p>
+                    <p th:text="*{apartmentNumber}"></p>
+                </div>
+            </div>
+            <div class="userOnButton">
+                <button class="buttonNav userButton" id="userChangePassword"
+                    onclick='location.href="/manager/manager?display=userPass"'>zmień
+                    hasło</button>
+                <button class="buttonNav userButton" id="userEditInfo"
+                    onclick='location.href="/manager/manager?display=userEdit"'>Edytuj</button>
+            </div>
+
+            <div class="userEdit user">
+                <form th:object="${user}" th:action="@{/manager/userUpdate}" method="POST">
+                    <Input type="hidden" th:field="*{login}"></Input>
+                    <p>
+                        <span class="newLab"> Imie: </span> <span class="newCont">
+                            <Input class="newWidth" type="text" th:field="*{firstName}" th:value="*{firstName}"></Input>
+                        </span>
+                    </p>
+                    <div th:if="${#fields.hasErrors('firstName')}"
+						th:errors="*{firstName}"
+						style="color: red; margin: -10px; font-size: 1.5vh;"></div>
+					<p>
+						<span class="newLab"> Nazwisko: </span> <span class="newCont">
+							<Input class="newWidth" type="text" th:field="*{lastName}"
+							th:value="*{lastName}"></Input>
+						</span>
+					</p>
+					<div th:if="${#fields.hasErrors('lastName')}"
+						th:errors="*{lastName}"
+						style="color: red; margin: -10px; font-size: 1.5vh;"></div>
+					<p>
+						<span class="newLab"> Telefon: </span> <span class="newCont">
+							<Input class="newWidth" type="text" th:field="*{number}"
+							th:value="*{number}"></Input>
+						</span>
+					</p>
+					<div th:if="${#fields.hasErrors('number')}" th:errors="*{number}"
+						style="color: red; margin: -10px; font-size: 1.5vh;"></div>
+					<p>
+						<span class="newLab"> Nr licencji: </span> <span class="newCont">
+							<Input class="newWidth" type="text" th:field="*{apartmentNumber}"
+							th:value="*{apartmentNumber}"></Input>
+						</span>
+					</p>
+					<div th:if="${#fields.hasErrors('apartmentNumber')}"
+						th:errors="*{apartmentNumber}"
+						style="color: red; margin: -10px; font-size: 1.5vh;"></div>
+					<p>
+						<span style="position: relative; float: right; right: 80px;">
+							<input type="submit" name="Zmień">
+						</span>
+					</p>
+				</form>
+				<button
+					style="position: relative; float: right; right: -35px; top: 2px;"
+					onclick='location.href="/manager/manager"'>Cofnij</button>
 			</div>
-				<div class="userInfo user" th:object="${user}" style="height: 15vh;">
-			        <div class="inLabel">
-			            <p>Imie:</p>
-			            <p>Nazwisko:</p>
-			            <p>Telefon:</p>
-						<p>Nr licencji:</p>
-			        </div>
-			        <div class="inText" >
-			            <p th:text="*{firstName}"></p>
-			            <p th:text="*{lastName}"></p>
-			            <p th:text="*{number}"></p>
-						<p th:text="*{apartmentNumber}"></p>
-			        </div>
-			    </div>
-			    <div class="userOnButton">
-			        <button class="buttonNav userButton" id="userChangePassword" onclick='location.href="/manager/manager?display=userPass"'>zmień hasło</button>
-			        <button class="buttonNav userButton" id="userEditInfo" onclick='location.href="/manager/manager?display=userEdit"'>Edytuj</button>
-			    </div>
-			
-				<div class="userEdit user">
-			        <form th:object="${user}" th:action="@{/manager/userUpdate}" method="POST">
-			            <Input type="hidden" th:field="*{login}"></Input>
-			            <p>
-			                <span class="newLab">
-			                    Imie:
-			                </span>
-			                <span class="newCont">
-			                    <Input class="newWidth" type="text" th:field="*{firstName}" th:value="*{firstName}"></Input>
-			                </span>
-			            </p>
-			            <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="color:red; margin: -10px; font-size: 1.5vh;"></div>
-			            <p>
-			                <span class="newLab">
-			                    Nazwisko:
-			                </span>
-			                <span class="newCont">
-			                    <Input class="newWidth" type="text" th:field="*{lastName}" th:value="*{lastName}"></Input>
-			                </span>
-			            </p>
-			            <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color:red; margin: -10px; font-size: 1.5vh;"></div>
-			            <p>
-			                <span class="newLab">
-			                    Telefon:
-			                </span>
-			                <span class="newCont">
-			                    <Input class="newWidth" type="text" th:field="*{number}" th:value="*{number}"></Input>
-			                </span>
-			            </p>
-			            <div th:if="${#fields.hasErrors('number')}" th:errors="*{number}" style="color:red; margin: -10px; font-size: 1.5vh;"></div>
-			            <p>
-			                <span class="newLab">
-			                    Nr licencji:
-			                </span>
-			                <span class="newCont">
-			                    <Input class="newWidth" type="text" th:field="*{apartmentNumber}" th:value="*{apartmentNumber}"></Input>
-			                </span>
-			            </p>
-			            <div th:if="${#fields.hasErrors('apartmentNumber')}" th:errors="*{apartmentNumber}" style="color:red; margin: -10px; font-size: 1.5vh;"></div>
-			            <p>
-			                <span style="position: relative; float: right; right: 80px;">
-			                    <input type="submit" name="Zmień">
-			                </span>
-			            </p>
-			        </form>
-			        <button style="position: relative; float: right; right: -35px; top: 2px;" onclick='location.href="/manager/manager"'>Cofnij</button>
-			    </div>
-			
-				<div class="userPassword">
-			        <span style="display: inline-block; margin: 15px;"><b>Zmiana hasła</b></span>
-			        
-			        <form th:object="${user}" th:action="@{/manager/userPassword}" method="POST">    
-				       <Input type="hidden" th:field="*{login}"></Input> 
-				       <div th:object="${userPasswordModel}">    
-				           <p>
-				               <span class="newLab">
-				                   Stare hasło:
-				               </span>
-				               <span class="newCont">
-				                   <Input class="newWidth" type="password" th:field="*{oldPassword}"></Input>
-				               </span>
-				           </p>
-				           <div th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}" style="color:red; margin: -10px;"></div>
-				           <p>
-				               <span class="newLab">
-				                   Nowe hasło:
-				               </span>
-				               <span class="newCont">
-				                   <Input class="newWidth" type="password" th:field="*{newPassword}"></Input>
-				               </span>
-				           </p>
-				           <div th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}" style="color:red; margin: -10px;"></div>
-				           <p>
-				               <span class="newLab">
-				                   Powtórz hasło:
-				               </span>
-				               <span class="newCont">
-				                   <Input class="newWidth" type="password" th:field="*{confirmNewPassword}"></Input>
-				               </span>
-				           </p>
-				           <div th:if="*{confirmOldPassword}==${'Old password mismatch'}"  th:text="*{confirmOldPassword}" style="color:red"></div>
-				           <div th:if="${#fields.hasGlobalErrors()}"  th:errors="*{global}" style="color:red"></div>
-				           <div>
-					           <span style="position: relative; float: right; right: 80px;">
-					               <input type="submit" name="Zmień">
-					           </span>
-				           </div>
-			
-				        </div>
-				     </form>
-				     <button style="position: relative; float: right; right: -35px; top: 2px;" onclick='location.href="/manager/manager"'>Cofnij</button>
-			    </div>	
 
-				<div id="managerProperty">
-					<div class="buttonDivContent">
-	                    <button class="addNewButton" id="newProperty">
-	                        Dodaj<br>wspólnotę
-	                    </button>
-                	</div>
-                	<div class="divContent">
-	                    <div class="announcement" th:each="propertyEl : ${propertyList}">
-	                        <div class="inHeader">
-	                            <span class="announcementTitle" th:text="${propertyEl.name}"></span>
-	                            <form th:object="${propertyEdit}" th:action="@{/manager/propertyShowUpdate}" method="POST">
-	                            	<input type="hidden" name="id" th:value="${propertyEl.id}">
-	     							<input type="submit" class="clickableBtn" id="editBtn" value="">
-	                            </form>
-	                            <form th:object="${propertyEdit}" th:action="@{/manager/propertyDelete}" method="POST" onsubmit="return confirm('Usunąć wspólnotę?') ? true : false;">
-	                            	<input type="hidden" name="id" th:value="${propertyEl.id}">
-	     							<input type="submit" class="clickableBtn" id="deleteBtn" value="">
-	                            </form>	                            
-	                            <span class="downArrow clickShow rightDiv"></span>
-	                        </div>
-	                        <div class="toToggle" style="display: none;">
-	                            <p>
-	                                <span class="annLabel">
-	                                    Nazwa:
-	                                </span>
-	                                <span class="annContent" th:text="${propertyEl.name}"></span>
-	                            </p>
-	                            <p>
-	                                <span class="annLabel">
-	                                    Mieszkańców:
-	                                </span>
-	                                <span class="annContent" th:text="${propertyEl.user.size()}"></span>
-	                            </p>
-	                            <p>
-	                                <span class="annLabel">
-	                                    Adres:
-	                                </span>
-	                                <span class="annContent" th:text="${propertyEl.address}"></span>
-	                            </p>
-	                            <p>
-	                                <span class="annLabel">
-	                                    Zarząd:
-	                                </span>
-	                                <span class="annContent">
-	                                    <select>
-	                                        <option th:each="menagerEl : ${propertyEl.findManagers()}" th:text="${menagerEl.firstName}+' '+${menagerEl.lastName}"></option>
-	                                    </select>
-	                                </span>
-	                            </p>
-	                        </div>
-	                	</div>
-                    </div>
+			<div class="userPassword">
+				<span style="display: inline-block; margin: 15px;"><b>Zmiana
+						hasła</b></span>
 
-                    <div class="newDiv" th:object="${newProperty}">
-	                    <form th:action="@{/manager/propertySave}" method="POST">      
-	                    	<input type="hidden" th:field="*{id}">            
-	                        <p>
-	                            <span class="newLab"> 
-	                                Nazwa:
-	                            </span> 
-	                            <span class="newCont">
-	                                <Input type="text" class="newWidth" th:field="*{name}" th:value="*{name}">
-	                            </span>
-	                        </p>
-	                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red; margin: -10px;"></div>
-	                        <p>
-	                            <span class="newLab"> 
-	                                Adres: 
-	                            </span> 
-	                            <span class="newCont">
-	                                <Input type="text" class="newWidth" th:field="*{address}" th:value="*{address}">
-	                            </span>
-	                        </p>
-	                        <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" style="color:red; margin: -10px;"></div>
-	                        <p>
-	                            <span style="position: relative; float: right; right: 80px;">
-	                                <input type="submit" name="Dodaj">
-	                            </span>
-	                        </p>
-	                    </form>
-                   	    <button style="position: relative; float: right; right: -35px;" onclick='location.href="/manager/manager?display=managerProperty"'>
-                        	Cofnij
-                        </button>
-                	</div>   	
+				<form th:object="${user}" th:action="@{/manager/userPassword}"
+					method="POST">
+					<Input type="hidden" th:field="*{login}"></Input>
+					<div th:object="${userPasswordModel}">
+						<p>
+							<span class="newLab"> Stare hasło: </span> <span class="newCont">
+								<Input class="newWidth" type="password"
+								th:field="*{oldPassword}"></Input>
+							</span>
+						</p>
+						<div th:if="${#fields.hasErrors('oldPassword')}"
+							th:errors="*{oldPassword}" style="color: red; margin: -10px;"></div>
+						<p>
+							<span class="newLab"> Nowe hasło: </span> <span class="newCont">
+								<Input class="newWidth" type="password"
+								th:field="*{newPassword}"></Input>
+							</span>
+						</p>
+						<div th:if="${#fields.hasErrors('newPassword')}"
+							th:errors="*{newPassword}" style="color: red; margin: -10px;"></div>
+						<p>
+							<span class="newLab"> Powtórz hasło: </span> <span
+								class="newCont"> <Input class="newWidth" type="password"
+								th:field="*{confirmNewPassword}"></Input>
+							</span>
+						</p>
+						<div th:if="*{confirmOldPassword}==${'Old password mismatch'}"
+							th:text="*{confirmOldPassword}" style="color: red"></div>
+						<div th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}"
+							style="color: red"></div>
+						<div>
+							<span style="position: relative; float: right; right: 80px;">
+								<input type="submit" name="Zmień">
+							</span>
+						</div>
+
+					</div>
+				</form>
+				<button
+					style="position: relative; float: right; right: -35px; top: 2px;"
+					onclick='location.href="/manager/manager"'>Cofnij</button>
+			</div>
+
+			<div id="managerProperty">
+				<div class="buttonDivContent">
+					<button class="addNewButton" id="newProperty">
+						Dodaj<br>wspólnotę
+					</button>
 				</div>
-
-				<div id="managerUser">
-					<div class="buttonDivContent smallMenu" th:object="${searchProperty}">
-						<div th:object ="${searchUser}">
-							<form th:action="@{/manager/searchUser}" method="POST">
-								<input type="hidden" id="propertyToDisplay" th:field="${searchProperty.name}">
-			                    <select id="selectProperty" style="width: 100%;" onchange="setPropertyUrl()" >
-			                    	<option th:value="${searchProperty.id}" th:text="Wszystkie"></option>
-		                        	<option th:each="propertyEl : ${propertyList}" th:value="${propertyEl.id}" th:text="${propertyEl.name}" th:selected="${propertyEl.id} == ${searchProperty.name}"></option>
-			                    </select>
-		                    </form>		
-
-		                    <form class="toSearch" autocomplete="off" th:action="@{/manager/searchUser}" method="POST">
-		                    	<input type="hidden" th:field="${searchProperty.name}">
-		                        <input type="hidden" th:field="${searchUser.property}">
-		                        <input type="text" th:field="${searchUser.firstName}" placeholder="Search..">
-		                        <button type="submit"><i class="fa fa-search"></i></button>
-		                    </form>
-	                    
-	                    </div>
-
-	                    <button style="width: 100%;" class="addNewButton" id="newUserProfil">
-	                    	Nowy profil
-	                    </button>
-	                    <button style="width: 100%;" class="addNewButton" id="genereteUserProfil">
-	                    	Generuj profile
-	                    </button>
-	                </div>
-
-	                <div class="divContent smallContent">
-	                    <div class="announcement" th:each="userEl : ${userList}">
-	                        <div class="inHeader">
-	                            <span class="announcementTitle"  th:text="${userEl.firstName}+' '+${userEl.lastName}"></span>
-	                            <form th:object="${userEdit}" th:action="@{/manager/userShowUpdate}" method="POST">
-	                            	<input type="hidden" name="login" th:value="${userEl.login}">
-	     							<input type="submit" class="clickableBtn" id="editBtn" value="">
-	                            </form>
-	                            <form th:object="${userEdit}" th:action="@{/manager/useerDelete}" method="POST" onsubmit="return confirm('Usunąć użytkownika?') ? true : false;">
-	                            	<input type="hidden" name="login" th:value="${userEl.login}">
-	     							<input type="submit" class="clickableBtn" id="deleteBtn" value="">
-	                            </form>	
-	                            <span class="downArrow clickShow rightDiv"></span>
-	                        </div>
-	                        <div class="toToggle" style="display: none;">
-	                            <p>
-	                                <span class="annLabel">
-	                                    Telefon:
-	                                </span>
-	                                <span class="annContent" th:text="${userEl.number}"></span>
-	                            </p>
-	                            <p>
-	                                <span class="annLabel">
-	                                    lokal:
-	                                </span>
-	                                <span class="annContent" th:text="${userEl.apartmentNumber}"></span>
-	                            </p>
-	                            <p>
-	                                <span class="annLabel">
-	                                    Rola:
-	                                </span>
-	                                <span class="annContent" th:text="${userEl.userPropertyRole}"></span>
-	                            </p>
-	                        </div>
-	                    </div> 
-	                </div>
-
-	                <div class="newUserDiv" th:object="${newUser}">
-	                    <form th:action="@{/manager/userSave}" method="POST" onsubmit="Dodaj.disabled = true; return true;">     
-	                    	<input type="hidden" th:field="*{login}">                   
-	                        <p>
-	                            <span class="newLab"> 
-	                                Imie:
-	                            </span> 
-	                            <span class="newCont">
-	                                <Input type="text" class="newWidth" th:field="*{firstName}" th:value="*{firstName}">
-	                            </span>
-	                        </p>
-	                        <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="color:red; margin: -10px;"></div>
-	                        <p>
-	                            <span class="newLab"> 
-	                                Nazwisko: 
-	                            </span> 
-	                            <span class="newCont">
-	                                <Input type="text" class="newWidth" th:field="*{lastName}" th:value="*{lastName}">
-	                            </span>
-	                        </p>
-	                        <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color:red; margin: -10px;"></div>
-	                        <p>
-	                            <span class="newLab"> 
-	                                Telefon: 
-	                            </span> 
-	                            <span class="newCont">
-	                                <Input type="text" class="newWidth" th:field="*{number}" th:value="*{number}">
-	                            </span>
-	                        </p>
-	                        <div th:if="${#fields.hasErrors('number')}" th:errors="*{number}" style="color:red; margin: -10px;"></div>
-	                        <p>
-	                            <span class="newLab"> 
-	                                Wspólnota: 
-	                            </span> 
-	                            <span class="newCont">
-	                                <select id="property.id" name="property.id">
-	                            		<option th:each="propertyEl : ${propertyList}" th:value="${propertyEl.id}" th:text="${propertyEl.name}" th:selected="${propertyEl.name} == ${newUser.property.name}"></option>
-	                            	</select>
-	                            </span>
-	                        </p>
-	                        <p>
-	                            <span class="newLab"> 
-	                                Lokal: 
-	                            </span> 
-	                            <span class="newCont">
-	                                <Input type="text" class="newWidth" th:field="*{apartmentNumber}" th:value="*{apartmentNumber}">
-	                            </span>
-	                        </p>
-	                        <div th:if="${#fields.hasErrors('apartmentNumber')}" th:errors="*{apartmentNumber}" style="color:red; margin: -10px;"></div>
+				<div class="divContent">
+					<div class="announcement" th:each="propertyEl : ${propertyList}">
+						<div class="inHeader">
+							<span class="announcementTitle" th:text="${propertyEl.name}"></span>
+							<form th:object="${propertyEdit}"
+								th:action="@{/manager/propertyShowUpdate}" method="POST">
+								<input type="hidden" name="id" th:value="${propertyEl.id}">
+								<input type="submit" class="clickableBtn" id="editBtn" value="">
+							</form>
+							<form th:object="${propertyEdit}"
+								th:action="@{/manager/propertyDelete}" method="POST"
+								onsubmit="return confirm('Usunąć wspólnotę?') ? true : false;">
+								<input type="hidden" name="id" th:value="${propertyEl.id}">
+								<input type="submit" class="clickableBtn" id="deleteBtn"
+									value="">
+							</form>
+							<span class="downArrow clickShow rightDiv"></span>
+						</div>
+						<div class="toToggle" style="display: none;">
 							<p>
-	                            <span class="newLab"> 
-	                                Rola: 
-	                            </span> 
-	                            <span class="newCont">
-	                                <select style="width: 140px;" th:field="*{userPropertyRole}">
-	                                    <option value="zarząd" th:selected="${newUser.userPropertyRole} == 'zarząd'">zarząd</option>
-	                                    <option value="mieszkaniec" th:selected="${newUser.userPropertyRole} == 'mieszkaniec'">mieszkaniec</option>
-	                                </select>
-	                            </span>
+								<span class="annLabel"> Nazwa: </span> <span class="annContent"
+									th:text="${propertyEl.name}"></span>
 							</p>
-	                        <p>
-	                            <span style="position: relative; float: right; right: 80px;">
-	                                <input type="submit" name="Dodaj">
-	                            </span>
-	                        </p>
-	                    </form>
-	                    <button style="position: relative; float: right; right: -35px;" onclick='location.href="/manager/manager?display=managerUser"'>
-                        	Cofnij
-                        </button>
-	                </div>
-
-					<div id="generateUser" th:object="${generateUser}">
-	                    <form th:action="@{/manager/generateUser}" method="POST">                   
-	                        <p>
-	                            <span class="newLab"> 
-	                                Wspólnota: 
-	                            </span> 
-	                            <span class="newCont">
-	                                <select id="property.id" name="property.id" style="width: 140px;">
-	                                    <option th:each="propertyEl : ${propertyList}" th:value="${propertyEl.id}" th:text="${propertyEl.name}" th:selected="${propertyEl.name} == ${newUser.property.name}"></option>
-	                                </select>
-	                            </span>
-	                        </p>
-	                        <p>
-	                            <span class="newLab" > 
-	                                Ilość lokali: 
-	                            </span> 
-	                            <span class="newCont">
-	                                <Input style="display: block; width: 135px;" type="number" th:field="*{numberOfUser}"></Input>
-	                            </span>
-	                        </p>
-	                        <p>
-	                            <span style="position: relative; float: right; right: 100px">
-	                                <input type="submit" name="Gemeruj" style="width: 60px">
-	                            </span>
-	                        </p>
-	                    </form>
-	                    
-	                    <button style="display: block; position: relative; float: right; right: 40px; width: 60px; top:25px" onclick='location.href="/manager/manager?display=managerUser"'>
-                        	Cofnij
-                        </button>
-	                </div>
-
-	                <div id="generetedInfo" style="display:none;">
-	                    <div th:each="genereterEl : ${generetedList}" style = "margin-bottom: 15px ;border-bottom: 1px solid black">
-                            <div class="genereted"> 
-                                Login: 
-                            </div> 
-                            <div class="genereted" style="text-align: left;" th:text="${genereterEl[0]}">
-                            </div>
-                            <div class="genereted"> 
-                                Hasło: 
-                            </div> 
-                            <div class="genereted" style="text-align: left;" th:text="${genereterEl[1]}">
-                            </div>
-                        </div>
-                        <button style="display: block; position: relative; float: right; right: 40px; width: 60px; top:25px" onclick='location.href="/manager/manager?display=managerUser"'>
-                        	Cofnij
-                        </button>
-	                </div>
+							<p>
+								<span class="annLabel"> Mieszkańców: </span> <span
+									class="annContent" th:text="${propertyEl.user.size()}"></span>
+							</p>
+							<p>
+								<span class="annLabel"> Adres: </span> <span class="annContent"
+									th:text="${propertyEl.address}"></span>
+							</p>
+							<p>
+								<span class="annLabel"> Zarząd: </span> <span class="annContent">
+									<select>
+										<option th:each="menagerEl : ${propertyEl.findManagers()}"
+											th:text="${menagerEl.firstName}+' '+${menagerEl.lastName}"></option>
+								</select>
+								</span>
+							</p>
+						</div>
+					</div>
 				</div>
-        </div>
-    </div>
 
-<script>
-	function setPropertyUrl(){
-		var id = $("#selectProperty").val();
-		$("#propertyToDisplay").val(id);		
-		$("#selectProperty").parent().submit();
-	};
-</script>
+				<div class="newDiv" th:object="${newProperty}">
+					<form th:action="@{/manager/propertySave}" method="POST">
+						<input type="hidden" th:field="*{id}">
+						<p>
+							<span class="newLab"> Nazwa: </span> <span class="newCont">
+								<Input type="text" class="newWidth" th:field="*{name}"
+								th:value="*{name}">
+							</span>
+						</p>
+						<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+							style="color: red; margin: -10px;"></div>
+						<p>
+							<span class="newLab"> Adres: </span> <span class="newCont">
+								<Input type="text" class="newWidth" th:field="*{address}"
+								th:value="*{address}">
+							</span>
+						</p>
+						<div th:if="${#fields.hasErrors('address')}"
+							th:errors="*{address}" style="color: red; margin: -10px;"></div>
+						<p>
+							<span style="position: relative; float: right; right: 80px;">
+								<input type="submit" name="Dodaj">
+							</span>
+						</p>
+					</form>
+					<button style="position: relative; float: right; right: -35px;"
+						onclick='location.href="/manager/manager?display=managerProperty"'>
+						Cofnij</button>
+				</div>
+			</div>
+
+			<div id="managerUser">
+				<div class="buttonDivContent smallMenu"
+					th:object="${searchProperty}">
+					<div th:object="${searchUser}">
+						<form th:action="@{/manager/searchUser}" method="POST">
+							<input type="hidden" id="propertyToDisplay"
+								th:field="${searchProperty.name}"> <select
+								id="selectProperty" style="width: 100%;"
+								onchange="setPropertyUrl()">
+								<option th:value="${searchProperty.id}" th:text="Wszystkie"></option>
+								<option th:each="propertyEl : ${propertyList}"
+									th:value="${propertyEl.id}" th:text="${propertyEl.name}"
+									th:selected="${propertyEl.id} == ${searchProperty.name}"></option>
+							</select>
+						</form>
+
+						<form class="toSearch" autocomplete="off"
+							th:action="@{/manager/searchUser}" method="POST">
+							<input type="hidden" th:field="${searchProperty.name}"> <input
+								type="hidden" th:field="${searchUser.property}"> <input
+								type="text" th:field="${searchUser.firstName}"
+								placeholder="Search..">
+							<button type="submit">
+								<i class="fa fa-search"></i>
+							</button>
+						</form>
+
+					</div>
+
+					<button style="width: 100%;" class="addNewButton"
+						id="newUserProfil">Nowy profil</button>
+					<button style="width: 100%;" class="addNewButton"
+						id="genereteUserProfil">Generuj profile</button>
+				</div>
+
+				<div class="divContent smallContent">
+					<div class="announcement" th:each="userEl : ${userList}">
+						<div class="inHeader">
+							<span class="announcementTitle"
+								th:text="${userEl.firstName}+' '+${userEl.lastName}"></span>
+							<form th:object="${userEdit}"
+								th:action="@{/manager/userShowUpdate}" method="POST">
+								<input type="hidden" name="login" th:value="${userEl.login}">
+								<input type="submit" class="clickableBtn" id="editBtn" value="">
+							</form>
+							<form th:object="${userEdit}" th:action="@{/manager/useerDelete}"
+								method="POST"
+								onsubmit="return confirm('Usunąć użytkownika?') ? true : false;">
+								<input type="hidden" name="login" th:value="${userEl.login}">
+								<input type="submit" class="clickableBtn" id="deleteBtn"
+									value="">
+							</form>
+							<span class="downArrow clickShow rightDiv"></span>
+						</div>
+						<div class="toToggle" style="display: none;">
+							<p>
+								<span class="annLabel"> Telefon: </span> <span
+									class="annContent" th:text="${userEl.number}"></span>
+							</p>
+							<p>
+								<span class="annLabel"> lokal: </span> <span class="annContent"
+									th:text="${userEl.apartmentNumber}"></span>
+							</p>
+							<p>
+								<span class="annLabel"> Rola: </span> <span class="annContent"
+									th:text="${userEl.userPropertyRole}"></span>
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="newUserDiv" th:object="${newUser}">
+					<form th:action="@{/manager/userSave}" method="POST"
+						onsubmit="Dodaj.disabled = true; return true;">
+						<input type="hidden" th:field="*{login}">
+						<p>
+							<span class="newLab"> Imie: </span> <span class="newCont">
+								<Input type="text" class="newWidth" th:field="*{firstName}"
+								th:value="*{firstName}">
+							</span>
+						</p>
+						<div th:if="${#fields.hasErrors('firstName')}"
+							th:errors="*{firstName}" style="color: red; margin: -10px;"></div>
+						<p>
+							<span class="newLab"> Nazwisko: </span> <span class="newCont">
+								<Input type="text" class="newWidth" th:field="*{lastName}"
+								th:value="*{lastName}">
+							</span>
+						</p>
+						<div th:if="${#fields.hasErrors('lastName')}"
+							th:errors="*{lastName}" style="color: red; margin: -10px;"></div>
+						<p>
+							<span class="newLab"> Telefon: </span> <span class="newCont">
+								<Input type="text" class="newWidth" th:field="*{number}"
+								th:value="*{number}">
+							</span>
+						</p>
+						<div th:if="${#fields.hasErrors('number')}" th:errors="*{number}"
+							style="color: red; margin: -10px;"></div>
+						<p>
+							<span class="newLab"> Wspólnota: </span> <span class="newCont">
+								<select id="property.id" name="property.id">
+									<option th:each="propertyEl : ${propertyList}"
+										th:value="${propertyEl.id}" th:text="${propertyEl.name}"
+										th:selected="${propertyEl.name} == ${newUser.property.name}"></option>
+							</select>
+							</span>
+						</p>
+						<p>
+							<span class="newLab"> Lokal: </span> <span class="newCont">
+								<Input type="text" class="newWidth"
+								th:field="*{apartmentNumber}" th:value="*{apartmentNumber}">
+							</span>
+						</p>
+						<div th:if="${#fields.hasErrors('apartmentNumber')}"
+							th:errors="*{apartmentNumber}" style="color: red; margin: -10px;"></div>
+						<p>
+							<span class="newLab"> Rola: </span> <span class="newCont">
+								<select style="width: 140px;" th:field="*{userPropertyRole}">
+									<option value="zarząd"
+										th:selected="${newUser.userPropertyRole} == 'zarząd'">zarząd</option>
+									<option value="mieszkaniec"
+										th:selected="${newUser.userPropertyRole} == 'mieszkaniec'">mieszkaniec</option>
+							</select>
+							</span>
+						</p>
+						<p>
+							<span style="position: relative; float: right; right: 80px;">
+								<input type="submit" name="Dodaj">
+							</span>
+						</p>
+					</form>
+					<button style="position: relative; float: right; right: -35px;"
+						onclick='location.href="/manager/manager?display=managerUser"'>
+						Cofnij</button>
+				</div>
+
+				<div id="generateUser" th:object="${generateUser}">
+					<form th:action="@{/manager/generateUser}" method="POST">
+						<p>
+							<span class="newLab"> Wspólnota: </span> <span class="newCont">
+								<select id="property.id" name="property.id"
+								style="width: 140px;">
+									<option th:each="propertyEl : ${propertyList}"
+										th:value="${propertyEl.id}" th:text="${propertyEl.name}"
+										th:selected="${propertyEl.name} == ${newUser.property.name}"></option>
+							</select>
+							</span>
+						</p>
+						<p>
+							<span class="newLab"> Ilość lokali: </span> <span
+								class="newCont"> <Input
+								style="display: block; width: 135px;" type="number"
+								th:field="*{numberOfUser}"></Input>
+							</span>
+						</p>
+						<p>
+							<span style="position: relative; float: right; right: 100px">
+								<input type="submit" name="Gemeruj" style="width: 60px">
+							</span>
+						</p>
+					</form>
+
+					<button
+						style="display: block; position: relative; float: right; right: 40px; width: 60px; top: 25px"
+						onclick='location.href="/manager/manager?display=managerUser"'>
+						Cofnij</button>
+				</div>
+
+				<div id="generetedInfo" style="display: none;">
+					<div th:each="genereterEl : ${generetedList}"
+						style="margin-bottom: 15px; border-bottom: 1px solid black">
+						<div class="genereted">Login:</div>
+						<div class="genereted" style="text-align: left;"
+							th:text="${genereterEl[0]}"></div>
+						<div class="genereted">Hasło:</div>
+						<div class="genereted" style="text-align: left;"
+							th:text="${genereterEl[1]}"></div>
+					</div>
+					<button
+						style="display: block; position: relative; float: right; right: 40px; width: 60px; top: 25px"
+						onclick='location.href="/manager/manager?display=managerUser"'>
+						Cofnij</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+        function setPropertyUrl() {
+            var id = $("#selectProperty").val();
+            $("#propertyToDisplay").val(id);
+            $("#selectProperty").parent().submit();
+        };
+    </script>
 
 </body>
 

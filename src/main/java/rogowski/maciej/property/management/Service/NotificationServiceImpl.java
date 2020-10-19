@@ -13,7 +13,7 @@ import rogowski.maciej.property.management.entity.Notification;
 public class NotificationServiceImpl implements NotificationService {
 
 	private NotificationRepository notificationRepository;
-	
+
 	@Autowired
 	public NotificationServiceImpl(NotificationRepository theNotificationRepository) {
 		notificationRepository = theNotificationRepository;
@@ -28,7 +28,7 @@ public class NotificationServiceImpl implements NotificationService {
 	public List<Notification> getUserSendNotification(String sender, String receiver) {
 		return notificationRepository.findUserSendNotification(sender, receiver);
 	}
-	
+
 	@Override
 	public List<Notification> getUserNotification(String sender, String receiver) {
 		return notificationRepository.findUserNotification(sender, receiver);
@@ -38,12 +38,12 @@ public class NotificationServiceImpl implements NotificationService {
 	public List<Notification> getResponseNotification(int responseId) {
 		return notificationRepository.findResponseNotification(responseId);
 	}
-	
+
 	@Override
 	public Notification findById(Integer id) {
 		Notification notification = null;
 		Optional<Notification> optNotification = notificationRepository.findById(id);
-		if(optNotification.isPresent()) {
+		if (optNotification.isPresent()) {
 			notification = optNotification.get();
 		}
 		return notification;

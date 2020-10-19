@@ -1,5 +1,5 @@
-$(document).ready(function(){
-    $("#indexArrow").click(function(){
-      $("#indexFootbar").slideToggle("slow");
-    });
-  });
+$(document).ready(function() {
+	$("#indexArrow").click(function() {
+		$("#indexFootbar").slideToggle("slow");
+	});
+});

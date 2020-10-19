@@ -7,48 +7,48 @@
     <link rel="stylesheet" href="../css/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script th:src="@{/js/clickShow.js}"></script>
-	<script th:src="@{/js/userPropertyBtnAction.js}"></script>	
-		
+    <script th:src="@{/js/clickShow.js}"></script>
+    <script th:src="@{/js/userPropertyBtnAction.js}"></script>
+
     <title>Zarządzanie Nieruchomościami</title>
 </head>
 
 <body th:object="${propertyInfo}">
-	
-	<p id="defineDisplay" th:text="*{whatToDisplay}" style="display:none"></p>
-		
+
+    <p id="defineDisplay" th:text="*{whatToDisplay}" style="display: none"></p>
+
     <div class="header">
-        <div class="name">Zarządzanie Nieruchomościami </div>
+        <div class="name">Zarządzanie Nieruchomościami</div>
     </div>
 
-	<div class="navigation smallHide navWidth">
+    <div class="navigation smallHide navWidth">
         <ul>
             <li><button class="buttonNav" onclick="location.href='/user/user'">Użytkownik</button></li>
             <li><button class="buttonNav" onclick="location.href='/user/property'">Wspólnota</button></li>
             <li><button class="buttonNav" onclick="location.href='/user/notification'">Zgłoszenia</button></li>
             <li id="rightLi">
-            	<form th:action="@{/logout}" method="POST">
-            		<input type="submit" class="buttonNav" value="Wyloguj">
-            	</form>
+                <form th:action="@{/logout}" method="POST">
+                    <input type="submit" class="buttonNav" value="Wyloguj">
+                </form>
             </li>
         </ul>
     </div>
-    
+
     <div class="smallNav">
-        <div class="smallNavHeader">  
+        <div class="smallNavHeader">
             <span class="clickShow">Menu ..</span>
         </div>
         <div class="smallNavToggle" style="display: none;">
             <div class="navigation mediumHide">
                 <ul>
                     <li><button class="buttonNav" onclick="location.href='/user/user'">Użytkownik</button></li>
-		            <li><button class="buttonNav" onclick="location.href='/user/property'">Wspólnota</button></li>
-		            <li><button class="buttonNav" onclick="location.href='/user/notification'">Zgłoszenia</button></li>
-		            <li id="rightLi">
-		            	<form th:action="@{/logout}" method="POST">
-		            		<input type="submit" class="buttonNav" value="Wyloguj">
-		            	</form>
-		            </li>
+                    <li><button class="buttonNav" onclick="location.href='/user/property'">Wspólnota</button></li>
+                    <li><button class="buttonNav" onclick="location.href='/user/notification'">Zgłoszenia</button></li>
+                    <li id="rightLi">
+                        <form th:action="@{/logout}" method="POST">
+                            <input type="submit" class="buttonNav" value="Wyloguj">
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -62,68 +62,67 @@
             <div class="inMenu smallHide">
                 <button class="inMenuButton current" onclick='location.href="/user/property"'>Aktualne</button>
                 <button class="inMenuButton all" onclick='location.href="/user/property?display=all"'>Wszystkie</button>
-                <button class="inMenuButton previous" onclick='location.href="/user/property?display=previous"'>Przeszłe</button>
-                <button class="inMenuButton onRight managersBtn" onclick='location.href="/user/property?display=managers"'>Zarząd</button>
+                <button class="inMenuButton previous"
+                    onclick='location.href="/user/property?display=previous"'>Przeszłe</button>
+                <button class="inMenuButton onRight managersBtn"
+                    onclick='location.href="/user/property?display=managers"'>Zarząd</button>
             </div>
             <div class="smallNav">
-                <div class="smallNavHeader">  
+                <div class="smallNavHeader">
                     <span class="clickShow">Menu wspólnoty ..</span>
                 </div>
                 <div class="smallNavToggle" style="display: none;">
                     <div class="inMenu mediumHide">
-		                <button class="inMenuButton current" onclick='location.href="/user/property"'>Aktualne</button>
-		                <button class="inMenuButton all" onclick='location.href="/user/property?display=all"'>Wszystkie</button>
-		                <button class="inMenuButton previous" onclick='location.href="/user/property?display=previous"'>Przeszłe</button>
-		                <button class="inMenuButton onRight managersBtn" onclick='location.href="/user/property?display=managers"'>Zarząd</button>
+                        <button class="inMenuButton current" onclick='location.href="/user/property"'>Aktualne</button>
+                        <button class="inMenuButton all"
+                            onclick='location.href="/user/property?display=all"'>Wszystkie</button>
+                        <button class="inMenuButton previous"
+                            onclick='location.href="/user/property?display=previous"'>Przeszłe</button>
+                        <button class="inMenuButton onRight managersBtn"
+                            onclick='location.href="/user/property?display=managers"'>Zarząd</button>
                     </div>
                 </div>
             </div>
 
             <div class="info">
                 <span style="float: left; margin-left: 10%;">Nazwa Ogłoszenia</span>
-                <span>Data</span>
-                <span style="position: relative; float: right; right: 5%;">Info</span>
+                <span>Data</span> <span style="position: relative; float: right; right: 5%;">Info</span>
             </div>
 
-			<div th:each="announcementEl : ${announcementList}" id="announcementShowDiv">
-	            <div class="announcement">
-	                <div class="inHeader">
-	                    <div class="announcementTitle" th:text="${announcementEl.title}"></div>
-	                    <div class="announcementDate" th:text="${announcementEl.dateFrom + '-' + announcementEl.dateTo}"></div>
-	                    <div class="downArrow clickShow rightDiv"></div>
-	                </div>
-	                <div class="toToggle" style="display: none;">
-	                    <p style="text-indent: 10%;" th:text="${announcementEl.announcementText}">
-	                    </p>
-	                    <p style="float: right">Z wyrazami szacunku Zarządca</p>
-	                </div>
-	            </div>
-			</div>
+            <div th:each="announcementEl : ${announcementList}" id="announcementShowDiv">
+                <div class="announcement">
+                    <div class="inHeader">
+                        <div class="announcementTitle" th:text="${announcementEl.title}"></div>
+                        <div class="announcementDate"
+                            th:text="${announcementEl.dateFrom + '-' + announcementEl.dateTo}"></div>
+                        <div class="downArrow clickShow rightDiv"></div>
+                    </div>
+                    <div class="toToggle" style="display: none;">
+                        <p style="text-indent: 10%;" th:text="${announcementEl.announcementText}"></p>
+                        <p style="float: right">Z wyrazami szacunku Zarządca</p>
+                    </div>
+                </div>
+            </div>
 
-			<div th:each="managerEl : ${managersList}" id="managersShowDiv">
-				<div class="managers"> 
-	                <div class="managersLabal">
-	                    Imie:<br>
-	                    Nazwisko:<br>
-	                    Telefon:<br>
-	                    Wspólnota:<br>
-	                    Lokal:<br>
-	                </div>
-	                <div class="managersFill">
-	                    <span th:text="${managerEl.firstName}"></span><br>
-	                    <span th:text="${managerEl.lastName}"></span><br>
-	                    <span th:text="${managerEl.number}"></span><br>
-	                    <span th:text="${managerEl.property.name}"></span><br>
-	                    <span th:text="${managerEl.apartmentNumber}"></span><br>
-	                </div>
-            	</div>
-			</div>
-			
-			
-			
+            <div th:each="managerEl : ${managersList}" id="managersShowDiv">
+                <div class="managers">
+                    <div class="managersLabal">
+                        Imie:<br> Nazwisko:<br> Telefon:<br> Wspólnota:<br>
+                        Lokal:<br>
+                    </div>
+                    <div class="managersFill">
+                        <span th:text="${managerEl.firstName}"></span><br> 
+                        <span th:text="${managerEl.lastName}"></span><br> 
+                        <span th:text="${managerEl.number}"></span><br>
+                        <span th:text="${managerEl.property.name}"></span><br> 
+                        <span th:text="${managerEl.apartmentNumber}"></span><br>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-    
+
 </body>
 
 </html>

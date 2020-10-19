@@ -12,12 +12,12 @@ public class MainController {
 	public String showIndex() {
 		return "/index";
 	}
-	
+
 	@GetMapping("/contact")
 	public String showContact() {
 		return "/contact";
 	}
-	
+
 	@GetMapping("/login")
 	public String showLogin() {
 		return "/login";

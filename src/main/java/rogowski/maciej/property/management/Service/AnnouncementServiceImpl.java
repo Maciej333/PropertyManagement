@@ -14,11 +14,11 @@ import rogowski.maciej.property.management.entity.Property;
 @Service
 public class AnnouncementServiceImpl implements AnnouncementService {
 
-	private AnnouncementRepository  announcementRepository;
-	
+	private AnnouncementRepository announcementRepository;
+
 	@Autowired
-	public AnnouncementServiceImpl(AnnouncementRepository  theAnnouncementRepository) {
-		announcementRepository = theAnnouncementRepository; 
+	public AnnouncementServiceImpl(AnnouncementRepository theAnnouncementRepository) {
+		announcementRepository = theAnnouncementRepository;
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	}
 
 	@Override
-	public List<Announcement> getAllAnn(Property property){
+	public List<Announcement> getAllAnn(Property property) {
 		return announcementRepository.findAllByPropertyOrderByIdDesc(property);
 	}
 
@@ -45,7 +45,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	public Announcement findById(int id) {
 		Optional<Announcement> result = announcementRepository.findById(id);
 		Announcement theAnnouncement = null;
-		if(result.isPresent()) {
+		if (result.isPresent()) {
 			theAnnouncement = result.get();
 		}
 		return theAnnouncement;

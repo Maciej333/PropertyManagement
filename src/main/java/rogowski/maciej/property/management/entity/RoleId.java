@@ -6,11 +6,11 @@ import java.util.Objects;
 public class RoleId implements Serializable {
 
 	private String username;
-	
+
 	private String userRole;
-	
+
 	public RoleId() {
-		
+
 	}
 
 	public RoleId(String username, String userRole) {
@@ -44,5 +44,5 @@ public class RoleId implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 }

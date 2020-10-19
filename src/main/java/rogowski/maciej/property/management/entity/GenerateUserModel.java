@@ -1,13 +1,13 @@
 package rogowski.maciej.property.management.entity;
 
 public class GenerateUserModel {
-	
+
 	private Property property;
-	
+
 	private int numberOfUser;
-	
+
 	public GenerateUserModel() {
-		
+
 	}
 
 	public Property getProperty() {

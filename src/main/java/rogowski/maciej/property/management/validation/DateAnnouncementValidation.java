@@ -11,14 +11,15 @@ public class DateAnnouncementValidation implements ConstraintValidator<DateAnnou
 	public void initialize(DateAnnouncement constraintAnnotation) {
 
 	}
-	
+
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
-		Announcement announcement = (Announcement)value;
-		if( announcement.getDateFrom() != null && announcement.getDateTo() != null &&
-				(announcement.getDateFrom().isBefore(announcement.getDateTo()) || announcement.getDateFrom().isEqual(announcement.getDateTo()))) {
+		Announcement announcement = (Announcement) value;
+		if (announcement.getDateFrom() != null && announcement.getDateTo() != null
+				&& (announcement.getDateFrom().isBefore(announcement.getDateTo())
+						|| announcement.getDateFrom().isEqual(announcement.getDateTo()))) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
