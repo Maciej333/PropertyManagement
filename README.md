@@ -19,6 +19,7 @@ All users login can be read from sql-script file all default password are "fun12
 
 -----------------------------
 
+Every html page is responsive
 
 ## 1. Part permitted to all
 
