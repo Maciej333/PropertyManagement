@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import rogowski.maciej.property.management.dao.AnnouncementRepository;
 import rogowski.maciej.property.management.entity.Announcement;
 import rogowski.maciej.property.management.entity.Property;
-import rogowski.maciej.property.management.entity.User;
 
 @Service
 public class AnnouncementServiceImpl implements AnnouncementService {
